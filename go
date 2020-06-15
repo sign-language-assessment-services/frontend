@@ -29,6 +29,13 @@ goal_run() {
   yarn start
 }
 
+##DOC precommit: builds and tests the application
+goal_precommit() {
+  yarn install
+  yarn build
+  CI=true yarn test  # run all tests in non-interactive mode
+}
+
 ## ========================================================================================
 
 ## Include go.helpers script which invokes specified task or prints usage hint
