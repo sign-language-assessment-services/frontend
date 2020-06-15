@@ -11,18 +11,21 @@
 
 ## Tasks  ================================================================================
 
-##DOC build: build the application
+##DOC build: builds the application for production to the build folder
 goal_build() {
+  yarn install
   yarn build
 }
 
-##DOC test: execute all tests
+##DOC test: launches the test runner in the interactive watch mode
 goal_test() {
+  yarn install
   yarn test
 }
 
-##DOC run: run the application
+##DOC run: runs the application in development mode
 goal_run() {
+  yarn install
   yarn start
 }
 
