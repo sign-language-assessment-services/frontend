@@ -17,6 +17,12 @@ goal_build() {
   yarn build
 }
 
+##DOC lint: statically analyzes code to quickly find problems
+goal_lint() {
+  yarn install
+  yarn lint
+}
+
 ##DOC test: launches the test runner in the interactive watch mode
 goal_test() {
   yarn install
@@ -33,6 +39,7 @@ goal_run() {
 goal_precommit() {
   yarn install
   yarn build
+  yarn lint
   CI=true yarn test  # run all tests in non-interactive mode
 }
 
