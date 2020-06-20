@@ -8,6 +8,10 @@
 #    -> Usage hints will be displayed when running this script without any argument or with an unknown argument
 # 3. The task can now be invoked with `./go example`
 
+## Global variables ======================================================================
+
+REPO_DIR="$(dirname "$0")" # base directory of this repository
+
 
 ## Tasks  ================================================================================
 
@@ -43,8 +47,12 @@ goal_precommit() {
   CI=true yarn test  # run all tests in non-interactive mode
 }
 
+##DOC image: builds docker image
+goal_image() {
+  docker build -t slas-frontend "$REPO_DIR"
+}
+
 ## ========================================================================================
 
 ## Include go.helpers script which invokes specified task or prints usage hint
-DIR_NAME="$(dirname "$0")"
-source "$DIR_NAME/go.helpers"
+source "$REPO_DIR/go.helpers"
