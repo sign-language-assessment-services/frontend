@@ -52,6 +52,12 @@ goal_image() {
   docker build -t slas-frontend "$REPO_DIR"
 }
 
+##DOC run-container: runs docker container
+goal_run-container() {
+  docker run -p 80:80 slas-frontend
+}
+
+
 ## ========================================================================================
 
 ## Include go.helpers script which invokes specified task or prints usage hint
