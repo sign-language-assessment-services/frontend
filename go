@@ -11,6 +11,7 @@
 ## Global variables ======================================================================
 
 REPO_DIR="$(dirname "$0")" # base directory of this repository
+IMAGE_TAG=slas-frontend
 
 
 ## Tasks  ================================================================================
@@ -49,12 +50,12 @@ goal_precommit() {
 
 ##DOC image: builds docker image
 goal_image() {
-  docker build -t slas-frontend "$REPO_DIR"
+  docker build -t "$IMAGE_TAG" "$REPO_DIR"
 }
 
 ##DOC run-container: runs docker container
 goal_run-container() {
-  docker run -p 80:80 slas-frontend
+  docker run -p 80:80 "$IMAGE_TAG"
 }
 
 
