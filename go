@@ -2,16 +2,18 @@
 
 # This script contains all tasks related to building, testing and running the application
 
-## Adding a new task:
-# 1. To add a task named 'example', implement it as a function named 'goal_example()'
+## How to add a new task ================================================================
+
+# 1. To add a task named 'example', implement it as a function named 'goal_example()' in the "Tasks" section below
 # 2. Above the function name, add a usage hint, e.g. '##DOC: example: this is an example'
 #    -> Usage hints will be displayed when running this script without any argument or with an unknown argument
 # 3. The task can now be invoked with `./go example`
 
+
 ## Global variables ======================================================================
 
-REPO_DIR="$(dirname "$0")" # base directory of this repository
-IMAGE_TAG=slas-frontend
+REPO_DIR=$(dirname "$0") # base directory of this repository
+IMAGE_TAG=slas-frontend # docker image tag
 
 
 ## Tasks  ================================================================================
