@@ -17,6 +17,7 @@ The following software is required to use this app:
     - [Cygwin](https://www.cygwin.com/)
   - **MacOS**: bash is already pre-installed
   - **Linux**: In nearly all distributions, bash is already pre-installed
+- [Docker](https://www.docker.com/) if you want to run the app in a Docker container
 
 ## Build automation: `./go`
 
