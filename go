@@ -60,23 +60,6 @@ goal_run-container() {
   docker run --rm -p 80:80 "$IMAGE_TAG"
 }
 
-##DOC run-compose: Get web api running through docker-compose.
-goal_run-compose() {
-  # `docker-compose` will start all configured services from the file
-  # `docker-compose.yml`.  They will also (re)build if necessary.  Note
-  # that the services has to be stopped via `./go stop-compose` to avoid
-  # service restarts, even after a system reboot.
-  docker-compose -f "$REPO_DIR/docker-compose.yml" up -d
-}
-
-##DOC stop-compose: Stop running fastapi network and attached services
-goal_stop-compose() {
-  # `docker-compose` will restart the app if possible, even after a
-  # system reboot.  You have to explicitely stop the docker services.
-  docker-compose -f "$REPO_DIR/docker-compose.yml" down
-}
-
-
 ## ========================================================================================
 
 ## Include go.helpers script which invokes specified task or prints usage hint
