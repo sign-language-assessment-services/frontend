@@ -57,7 +57,7 @@ goal_image() {
 
 ##DOC run-container: runs docker container
 goal_run-container() {
-  docker run -p 80:80 "$IMAGE_TAG"
+  docker run --rm -p 80:80 "$IMAGE_TAG"
 }
 
 ##DOC run-compose: Get web api running through docker-compose.
