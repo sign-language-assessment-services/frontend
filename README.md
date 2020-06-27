@@ -1,6 +1,7 @@
 # Sign Language Assessment Services - Frontend
 
 This app is written in [TypeScript](https://www.typescriptlang.org/) and uses the [React](https://reactjs.org/) framework.
+It serves as a frontend for [sign-language-assessment-services/backend](https://github.com/sign-language-assessment-services/backend).
 
 ## Prerequisites
 
@@ -47,6 +48,8 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 ## Run
 
 `./go run`
+
+**NOTE**: Requires [backend](https://github.com/sign-language-assessment-services/backend) to run locally on port 8000.
 
 Runs the app in development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.

@@ -55,7 +55,7 @@ goal_image() {
   docker build -t "$IMAGE_TAG" "$REPO_DIR"
 }
 
-##DOC run-container: runs docker container
+##DOC run-container: runs application in a docker container on port 80
 goal_run-container() {
   docker run --rm -p 80:80 "$IMAGE_TAG"
 }
