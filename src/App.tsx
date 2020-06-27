@@ -1,7 +1,4 @@
-import React from 'react';
+import React from "react";
+import { HelloWorld } from "./hello-world";
 
-export const App = (): JSX.Element => (
-  <>
-    Hello, world!
-  </>
-);
+export const App = (): JSX.Element => <HelloWorld />;
