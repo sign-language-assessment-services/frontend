@@ -13,7 +13,7 @@
 ## Global variables ======================================================================
 
 REPO_DIR=$(dirname "$0") # base directory of this repository
-IMAGE_TAG=slas-frontend # docker image tag
+IMAGE_TAG=slportal_frontend # docker image tag
 
 
 ## Tasks  ================================================================================
