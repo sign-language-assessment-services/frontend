@@ -1,3 +1,3 @@
 export interface HelloWorldResponse {
-  msg: string;
+  msg: string
 }
