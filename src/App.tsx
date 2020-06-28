@@ -1,4 +1,4 @@
-import React from "react";
-import { HelloWorld } from "./hello-world";
+import React from 'react'
+import { HelloWorld } from './hello-world'
 
-export const App = (): JSX.Element => <HelloWorld />;
+export const App = (): JSX.Element => <HelloWorld />
