@@ -30,6 +30,12 @@ goal_lint() {
   yarn lint
 }
 
+##DOC lint-fix: statically analyzes code and corrects automatically fixable problems
+goal_lint-fix() {
+  yarn install
+  yarn lint-fix
+}
+
 ##DOC test: launches the test runner in the interactive watch mode
 goal_test() {
   yarn install
@@ -46,7 +52,7 @@ goal_run() {
 goal_precommit() {
   yarn install
   yarn build
-  yarn lint
+  yarn lint-fix
   CI=true yarn test  # run all tests in non-interactive mode
 }
 
