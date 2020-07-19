@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen, wait } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import { HelloWorld } from './HelloWorld'
 import { getHelloWorldMessage } from './helloWorldService'
 import { mocked } from 'ts-jest/utils'
@@ -15,7 +15,7 @@ describe('HelloWorld', () => {
     render(<HelloWorld />)
 
     // then
-    await wait(() => expect(screen.getByText(/Hello Mocked World!/)).toBeInTheDocument())
+    await waitFor(() => expect(screen.getByText(/Hello Mocked World!/)).toBeInTheDocument())
   })
 
   it('shows error message when request for hello world message fails', async () => {
@@ -26,7 +26,7 @@ describe('HelloWorld', () => {
     render(<HelloWorld />)
 
     // then
-    await wait(() => expect(screen.getByText(/error/i)).toBeInTheDocument())
+    await waitFor(() => expect(screen.getByText(/error/i)).toBeInTheDocument())
   })
 
   it('shows loading message while request is pending', async () => {
@@ -35,6 +35,6 @@ describe('HelloWorld', () => {
 
     // then
     expect(screen.getByText(/loading/i)).toBeInTheDocument()
-    await wait(() => expect(getHelloWorldMessage).toHaveBeenCalled())
+    await waitFor(() => expect(getHelloWorldMessage).toHaveBeenCalled())
   })
 })
