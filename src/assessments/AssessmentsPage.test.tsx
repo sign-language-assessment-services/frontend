@@ -1,8 +1,8 @@
+import { render, screen, waitFor } from '@testing-library/react'
 import React from 'react'
-import { render, screen, wait } from '@testing-library/react'
-import { getAssessmentById } from './assessmentsService'
 import { mocked } from 'ts-jest/utils'
 import { AssessmentsPage } from './AssessmentsPage'
+import { getAssessmentById } from './assessmentsService'
 import { Assessment } from './models'
 
 jest.mock('./assessmentsService')
@@ -27,7 +27,7 @@ describe('AssessmentsPage', () => {
     render(<AssessmentsPage />)
 
     // then
-    await wait(() => expect(getAssessmentById).toHaveBeenCalled())
+    await waitFor(() => expect(getAssessmentById).toHaveBeenCalled())
     expect(screen.getByRole('heading', { name: 'Animals' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Who is better?' })).toBeInTheDocument()
     expect(screen.getByText('Cats')).toBeInTheDocument()

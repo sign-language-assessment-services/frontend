@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { wait } from '@testing-library/react'
+import { waitFor } from '@testing-library/react'
 import { getHelloWorldMessage } from './helloWorldService'
 import { mocked } from 'ts-jest/utils'
 
@@ -17,7 +17,7 @@ describe('helloWorldService', () => {
     await getHelloWorldMessage()
 
     // then
-    await wait(() => expect(axios.get).toHaveBeenCalledTimes(1))
+    await waitFor(() => expect(axios.get).toHaveBeenCalledTimes(1))
     expect(axios.get).toHaveBeenCalledWith('/api/')
   })
 
