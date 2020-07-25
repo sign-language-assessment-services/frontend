@@ -1,6 +1,6 @@
-export interface Choice {
-  label: string
-  is_correct: boolean
+export interface Assessment {
+  name: string
+  items: Item[]
 }
 
 export interface Item {
@@ -8,7 +8,7 @@ export interface Item {
   choices: Choice[]
 }
 
-export interface Assessment {
-  name: string
-  items: Item[]
+export interface Choice {
+  label: string
+  is_correct: boolean
 }
