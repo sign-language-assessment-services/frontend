@@ -15,7 +15,7 @@ describe('HelloWorld', () => {
     render(<HelloWorld />)
 
     // then
-    await waitFor(() => expect(screen.getByText(/Hello Mocked World!/)).toBeInTheDocument())
+    await waitFor(() => expect(screen.getByText(/hello mocked world!/i)).toBeInTheDocument())
   })
 
   it('shows error message when request for hello world message fails', async () => {

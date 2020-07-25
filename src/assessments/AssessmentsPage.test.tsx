@@ -4,23 +4,33 @@ import { mocked } from 'ts-jest/utils'
 import { AssessmentsPage } from './AssessmentsPage'
 import { getAssessmentById } from './assessmentsService'
 import { Assessment } from './models'
+import userEvent from '@testing-library/user-event'
 
 jest.mock('./assessmentsService')
 
 describe('AssessmentsPage', () => {
-  it('renders assessment', async () => {
-    const sampleAssessment: Assessment = {
-      name: 'Animals',
-      items: [
-        {
-          description: 'Who is better?',
-          choices: [
-            { label: 'Cats', is_correct: true },
-            { label: 'Dogs', is_correct: false },
-          ],
-        },
-      ],
-    }
+  const sampleAssessment: Assessment = {
+    name: 'Animals',
+    items: [
+      {
+        description: 'Who is better?',
+        choices: [
+          { label: 'Cats', is_correct: true },
+          { label: 'Dogs', is_correct: false },
+        ],
+      },
+      {
+        description: 'Which Buffy character is the best?',
+        choices: [
+          { label: 'Giles', is_correct: true },
+          { label: 'Spike', is_correct: true },
+          { label: 'Xander', is_correct: true },
+        ],
+      },
+    ],
+  }
+
+  it('renders only first assessment item initially', async () => {
     mocked(getAssessmentById).mockResolvedValue(sampleAssessment)
 
     // when
@@ -28,9 +38,35 @@ describe('AssessmentsPage', () => {
 
     // then
     await waitFor(() => expect(getAssessmentById).toHaveBeenCalled())
-    expect(screen.getByRole('heading', { name: 'Animals' })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Who is better?' })).toBeInTheDocument()
-    expect(screen.getByText('Cats')).toBeInTheDocument()
-    expect(screen.getByText('Dogs')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /animals/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /who is better[?]/i })).toBeInTheDocument()
+    expect(screen.getByText(/cats/i)).toBeInTheDocument()
+    expect(screen.getByText(/dogs/i)).toBeInTheDocument()
+
+    expect(
+      screen.queryByRole('heading', { name: /which buffy character is the best[?]/i }),
+    ).not.toBeInTheDocument()
+  })
+
+  it('renders next assessment after clicking on Next', async () => {
+    mocked(getAssessmentById).mockResolvedValue(sampleAssessment)
+    render(<AssessmentsPage />)
+    await waitFor(() => expect(getAssessmentById).toHaveBeenCalled())
+    userEvent.click(screen.getByRole('button', { name: /next/i }))
+
+    expect(
+      screen.getByRole('heading', { name: /which buffy character is the best[?]/i }),
+    ).toBeInTheDocument()
+  })
+
+  it('hides Next button on last item', async () => {
+    mocked(getAssessmentById).mockResolvedValue(sampleAssessment)
+    render(<AssessmentsPage />)
+    await waitFor(() => expect(getAssessmentById).toHaveBeenCalled())
+
+    const nextButton = screen.getByRole('button', { name: /next/i })
+    userEvent.click(nextButton)
+
+    expect(nextButton).not.toBeInTheDocument()
   })
 })
