@@ -43,10 +43,12 @@ describe('assessmentsService', () => {
       1: [0, 2],
     }
 
+    // const x = { 0: [ false, true], 1: [ true, false, true } }
+
     const result = await scoreAssessment(assessmentId, submission)
 
     expect(axios.post).toHaveBeenCalledWith(
-      `/api/assessments/${assessmentId}/submissions`,
+      `/api/assessments/${assessmentId}/submissions/`,
       submission,
     )
     expect(result).toBe(scoringResult)

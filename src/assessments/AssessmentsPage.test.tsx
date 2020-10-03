@@ -2,7 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import React from 'react'
 import { mocked } from 'ts-jest/utils'
 import { AssessmentsPage } from './AssessmentsPage'
-import { getAssessmentById } from './assessmentsService'
+import { getAssessmentById, scoreAssessment } from './assessmentsService'
 import { Assessment } from './models'
 import userEvent from '@testing-library/user-event'
 
@@ -45,7 +45,7 @@ describe('AssessmentsPage', () => {
     mocked(getAssessmentById).mockResolvedValue(sampleAssessment)
     render(<AssessmentsPage />)
     await waitFor(() => expect(getAssessmentById).toHaveBeenCalled())
-    userEvent.click(screen.getByRole('button', { name: /next/i }))
+    userEvent.click(nextButton())
 
     expect(
       screen.getByRole('heading', { name: /which buffy character is the best[?]/i }),
@@ -57,9 +57,29 @@ describe('AssessmentsPage', () => {
     render(<AssessmentsPage />)
     await waitFor(() => expect(getAssessmentById).toHaveBeenCalled())
 
-    const nextButton = screen.getByRole('button', { name: /next/i })
-    userEvent.click(nextButton)
+    userEvent.click(nextButton())
 
-    expect(nextButton).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /next/i })).not.toBeInTheDocument()
+  })
+
+  it('submits chosen input', async () => {
+    mocked(getAssessmentById).mockResolvedValue(sampleAssessment)
+    render(<AssessmentsPage />)
+    await waitFor(() => expect(getAssessmentById).toHaveBeenCalled())
+
+    userEvent.click(screen.getByLabelText(/cats/i))
+    userEvent.click(nextButton())
+
+    userEvent.click(screen.getByLabelText(/xander/i))
+    userEvent.click(submitButton())
+
+    await waitFor(() => expect(scoreAssessment).toHaveBeenCalledTimes(1))
+    expect(scoreAssessment).toHaveBeenCalledWith('1', {
+      '0': ['0'],
+      '1': ['2'],
+    })
   })
 })
+const nextButton = () => button(/next/i)
+const submitButton = () => button(/submit/i)
+const button = (name: RegExp) => screen.getByRole('button', { name })
