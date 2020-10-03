@@ -11,7 +11,7 @@ export const scoreAssessment = async (
   submission: Submission,
 ): Promise<ScoringResult> => {
   const response: AxiosResponse<ScoringResult> = await axios.post(
-    `/api/assessments/${assessmentId}/submissions`,
+    `/api/assessments/${assessmentId}/submissions/`,
     submission,
   )
   return response.data

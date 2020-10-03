@@ -12,7 +12,7 @@ export interface Choice {
   label: string
 }
 
-export type Submission = Record<number, number[]>
+export type Submission = Record<string, string[]>
 
 export interface ScoringResult {
   score: number
