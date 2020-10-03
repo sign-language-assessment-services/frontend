@@ -10,5 +10,4 @@ export interface Item {
 
 export interface Choice {
   label: string
-  is_correct: boolean
 }

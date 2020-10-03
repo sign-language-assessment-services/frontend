@@ -14,18 +14,11 @@ describe('AssessmentsPage', () => {
     items: [
       {
         description: 'Who is better?',
-        choices: [
-          { label: 'Cats', is_correct: true },
-          { label: 'Dogs', is_correct: false },
-        ],
+        choices: [{ label: 'Cats' }, { label: 'Dogs' }],
       },
       {
         description: 'Which Buffy character is the best?',
-        choices: [
-          { label: 'Giles', is_correct: true },
-          { label: 'Spike', is_correct: true },
-          { label: 'Xander', is_correct: true },
-        ],
+        choices: [{ label: 'Giles' }, { label: 'Spike' }, { label: 'Xander' }],
       },
     ],
   }
