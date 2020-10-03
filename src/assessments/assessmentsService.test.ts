@@ -1,7 +1,7 @@
-import { getAssessmentById } from './assessmentsService'
+import { getAssessmentById, scoreAssessment } from './assessmentsService'
 import { mocked } from 'ts-jest/utils'
 import axios from 'axios'
-import { Assessment } from './models'
+import { Assessment, Submission } from './models'
 
 jest.mock('axios')
 
@@ -30,5 +30,25 @@ describe('assessmentsService', () => {
 
     const actualAssessment = await getAssessmentById('1')
     expect(actualAssessment).toBe(sampleAssessment)
+  })
+
+  it('submits solutions to backend and returns score', async () => {
+    const assessmentId = '42'
+    const scoringResult = { score: 2 }
+    mocked(axios.post).mockResolvedValue({
+      data: scoringResult,
+    })
+    const submission: Submission = {
+      0: [1],
+      1: [0, 2],
+    }
+
+    const result = await scoreAssessment(assessmentId, submission)
+
+    expect(axios.post).toHaveBeenCalledWith(
+      `/api/assessments/${assessmentId}/submissions`,
+      submission,
+    )
+    expect(result).toBe(scoringResult)
   })
 })

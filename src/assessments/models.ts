@@ -11,3 +11,9 @@ export interface Item {
 export interface Choice {
   label: string
 }
+
+export type Submission = Record<number, number[]>
+
+export interface ScoringResult {
+  score: number
+}
