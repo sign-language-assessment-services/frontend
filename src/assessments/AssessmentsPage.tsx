@@ -23,7 +23,9 @@ export const AssessmentsPage = (): ReactElement | null => {
     return (
       <>
         <h1>{assessment.name}</h1>
-        <MultipleChoiceItem item={assessment.items[currentItemIndex]} />
+        {assessment.items.map((item, index) => (
+          <MultipleChoiceItem item={item} visible={index === currentItemIndex} key={index} />
+        ))}
         {hasNextItem ? <button onClick={incrementItemIndex}>Next</button> : null}
       </>
     )
