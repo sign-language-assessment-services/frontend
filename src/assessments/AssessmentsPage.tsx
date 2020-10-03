@@ -1,6 +1,6 @@
 import React, { ReactElement, useState, useEffect } from 'react'
 import { Formik, Form } from 'formik'
-import { Assessment } from './models'
+import { Assessment, Choice, Item, Submission } from './models'
 import { getAssessmentById, scoreAssessment } from './assessmentsService'
 import MultipleChoiceItem from './MultipleChoiceItem'
 
@@ -22,31 +22,11 @@ export const AssessmentsPage = (): ReactElement | null => {
   if (assessment) {
     const hasNextItem = currentItemIndex < assessment.items.length - 1
 
-    const initialValues: Record<string, Record<string, boolean>> = {}
-    for (const itemIndex in assessment.items) {
-      const choices: Record<string, boolean> = {}
-      for (const choiceIndex in assessment.items[itemIndex].choices) {
-        choices[choiceIndex] = false
-      }
-      initialValues[itemIndex] = choices
-    }
-
     return (
       <Formik
-        initialValues={initialValues}
-        onSubmit={(values) => {
-          const transformedValues: Record<string, string[]> = {}
-
-          for (const itemId in values) {
-            const selectedChoices: string[] = []
-            for (const choiceId in values[itemId]) {
-              if (values[itemId][choiceId]) {
-                selectedChoices.push(choiceId)
-              }
-            }
-            transformedValues[itemId] = selectedChoices
-          }
-          scoreAssessment('1', transformedValues)
+        initialValues={initialValues(assessment.items)}
+        onSubmit={(formValues) => {
+          scoreAssessment('1', toSubmission(formValues))
         }}
       >
         <Form>
@@ -72,3 +52,21 @@ export const AssessmentsPage = (): ReactElement | null => {
   }
   return null
 }
+
+const initialValues = (items: Item[]): Record<string, Record<string, boolean>> =>
+  Object.fromEntries(
+    items.map((item, index) => [index.toString(), initialChoiceIdMapping(item.choices)]),
+  )
+
+const initialChoiceIdMapping = (choices: Choice[]): Record<string, boolean> =>
+  Object.fromEntries(choices.map((_, index) => [index.toString(), false]))
+
+const toSubmission = (formValues: Record<string, Record<string, boolean>>): Submission =>
+  Object.fromEntries(
+    Object.entries(formValues).map(([itemId, choices]) => [itemId, selectedChoiceIds(choices)]),
+  )
+
+const selectedChoiceIds = (choiceIdToSelected: Record<string, boolean>): string[] =>
+  Object.entries(choiceIdToSelected)
+    .filter(([, selected]) => selected)
+    .map(([choiceId]) => choiceId)
