@@ -39,11 +39,9 @@ describe('assessmentsService', () => {
       data: scoringResult,
     })
     const submission: Submission = {
-      0: [1],
-      1: [0, 2],
+      0: ['1'],
+      1: ['0', '2'],
     }
-
-    // const x = { 0: [ false, true], 1: [ true, false, true } }
 
     const result = await scoreAssessment(assessmentId, submission)
 
