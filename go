@@ -24,6 +24,12 @@ goal_build() {
   yarn build
 }
 
+##DOC typecheck: check for type errors
+goal_typecheck() {
+  yarn install
+  yarn typecheck
+}
+
 ##DOC lint: statically analyzes code to quickly find problems
 goal_lint() {
   yarn install
@@ -51,6 +57,7 @@ goal_run() {
 ##DOC precommit: builds and tests the application
 goal_precommit() {
   yarn install
+  yarn typecheck
   yarn build
   yarn lint-fix
   CI=true yarn test  # run all tests in non-interactive mode
