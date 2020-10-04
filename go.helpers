@@ -3,6 +3,8 @@
 # This script interprets the command-line arguments and invokes the matching build task
 # If no matching build task can be found, a usage hint is printed instead
 
+set -e # exit if any statement returns a non-true return value
+
 TASK_NAME=${1:-} # First positional argument (e.g. "build" in "./go build")
 
 is_valid_task() {
