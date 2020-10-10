@@ -9,23 +9,24 @@ import userEvent from '@testing-library/user-event'
 jest.mock('./assessmentsService')
 
 describe('AssessmentsPage', () => {
-  const sampleAssessment: Assessment = {
-    name: 'Animals',
-    items: [
-      {
-        description: 'Who is better?',
-        choices: [{ label: 'Cats' }, { label: 'Dogs' }],
-      },
-      {
-        description: 'Which Buffy character is the best?',
-        choices: [{ label: 'Giles' }, { label: 'Spike' }, { label: 'Xander' }],
-      },
-    ],
-  }
+  beforeEach(() => {
+    const sampleAssessment: Assessment = {
+      name: 'Animals',
+      items: [
+        {
+          description: 'Who is better?',
+          choices: [{ label: 'Cats' }, { label: 'Dogs' }],
+        },
+        {
+          description: 'Which Buffy character is the best?',
+          choices: [{ label: 'Giles' }, { label: 'Spike' }, { label: 'Xander' }],
+        },
+      ],
+    }
+    mocked(getAssessmentById).mockResolvedValue(sampleAssessment)
+  })
 
   it('renders only first assessment item initially', async () => {
-    mocked(getAssessmentById).mockResolvedValue(sampleAssessment)
-
     // when
     render(<AssessmentsPage />)
 
@@ -42,7 +43,6 @@ describe('AssessmentsPage', () => {
   })
 
   it('renders next assessment after clicking on Next', async () => {
-    mocked(getAssessmentById).mockResolvedValue(sampleAssessment)
     render(<AssessmentsPage />)
     await waitFor(() => expect(getAssessmentById).toHaveBeenCalled())
     userEvent.click(nextButton())
@@ -53,7 +53,6 @@ describe('AssessmentsPage', () => {
   })
 
   it('hides Next button on last item', async () => {
-    mocked(getAssessmentById).mockResolvedValue(sampleAssessment)
     render(<AssessmentsPage />)
     await waitFor(() => expect(getAssessmentById).toHaveBeenCalled())
 
@@ -63,7 +62,6 @@ describe('AssessmentsPage', () => {
   })
 
   it('submits chosen input', async () => {
-    mocked(getAssessmentById).mockResolvedValue(sampleAssessment)
     render(<AssessmentsPage />)
     await waitFor(() => expect(getAssessmentById).toHaveBeenCalled())
 
@@ -79,7 +77,20 @@ describe('AssessmentsPage', () => {
       '1': ['2'],
     })
   })
+  it('displays score returned from backend after submission', async () => {
+    const mockedScore = 12345
+    mocked(scoreAssessment).mockResolvedValue({ score: mockedScore })
+
+    render(<AssessmentsPage />)
+    await waitFor(() => expect(getAssessmentById).toHaveBeenCalled())
+    userEvent.click(nextButton())
+    userEvent.click(submitButton())
+    await waitFor(() => expect(scoreAssessment).toHaveBeenCalledTimes(1))
+
+    expect(screen.getByText(new RegExp(mockedScore.toString()))).toBeInTheDocument()
+  })
 })
+
 const nextButton = () => button(/next/i)
 const submitButton = () => button(/submit/i)
 const button = (name: RegExp) => screen.getByRole('button', { name })
