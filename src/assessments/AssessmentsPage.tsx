@@ -24,8 +24,17 @@ export const AssessmentsPage = (): ReactElement | null => {
   if (assessment) {
     const hasNextItem = currentItemIndex < assessment.items.length - 1
 
+    if (scoringResult)
+      return (
+        <>
+          <h1>{assessment.name}</h1>
+          <ScoringResultComponent scoringResult={scoringResult} />
+        </>
+      )
+
     return (
       <>
+        <h1>{assessment.name}</h1>
         <Formik
           initialValues={initialValues(assessment.items)}
           onSubmit={async (formValues) => {
@@ -34,7 +43,6 @@ export const AssessmentsPage = (): ReactElement | null => {
           }}
         >
           <Form>
-            <h1>{assessment.name}</h1>
             {assessment.items.map((item, index) => (
               <MultipleChoiceItem
                 item={item}
@@ -52,7 +60,6 @@ export const AssessmentsPage = (): ReactElement | null => {
             </button>
           </Form>
         </Formik>
-        {scoringResult ? <ScoringResultComponent scoringResult={scoringResult} /> : undefined}
       </>
     )
   }
