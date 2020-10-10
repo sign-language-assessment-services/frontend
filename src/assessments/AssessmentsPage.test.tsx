@@ -24,6 +24,12 @@ describe('AssessmentsPage', () => {
       ],
     }
     mocked(getAssessmentById).mockResolvedValue(sampleAssessment)
+    mocked(scoreAssessment).mockResolvedValue({ score: 0 })
+  })
+
+  afterEach(() => {
+    mocked(getAssessmentById).mockClear()
+    mocked(scoreAssessment).mockClear()
   })
 
   it('renders only first assessment item initially', async () => {
@@ -80,14 +86,28 @@ describe('AssessmentsPage', () => {
   it('displays score returned from backend after submission', async () => {
     const mockedScore = 12345
     mocked(scoreAssessment).mockResolvedValue({ score: mockedScore })
-
     render(<AssessmentsPage />)
     await waitFor(() => expect(getAssessmentById).toHaveBeenCalled())
     userEvent.click(nextButton())
+
     userEvent.click(submitButton())
     await waitFor(() => expect(scoreAssessment).toHaveBeenCalledTimes(1))
 
     expect(screen.getByText(new RegExp(mockedScore.toString()))).toBeInTheDocument()
+  })
+  it('hides Submit button and Form after getting scoring results', async () => {
+    render(<AssessmentsPage />)
+    await waitFor(() => expect(getAssessmentById).toHaveBeenCalled())
+    userEvent.click(nextButton())
+
+    userEvent.click(submitButton())
+    await waitFor(() => expect(scoreAssessment).toHaveBeenCalledTimes(1))
+
+    expect(screen.queryByRole('button', { name: /submit/i })).not.toBeInTheDocument()
+    expect(
+      screen.queryByRole('heading', { name: /which buffy character is the best[?]/i }),
+    ).not.toBeInTheDocument()
+    expect(screen.queryByLabelText(/xander/i)).not.toBeInTheDocument()
   })
 })
 
