@@ -60,11 +60,9 @@ export const AssessmentsPage = (): ReactElement | null => {
 }
 
 const initialValues = (items: Item[]): Record<string, Record<string, boolean>> =>
-  Object.fromEntries(
-    items.map((item, index) => [index.toString(), initialChoiceIdMapping(item.choices)]),
-  )
+  Object.fromEntries(items.map((item, index) => [index.toString(), setAllToFalse(item.choices)]))
 
-const initialChoiceIdMapping = (choices: Choice[]): Record<string, boolean> =>
+const setAllToFalse = (choices: Choice[]): Record<string, boolean> =>
   Object.fromEntries(choices.map((_, index) => [index.toString(), false]))
 
 const toSubmission = (formValues: Record<string, Record<string, boolean>>): Submission =>
