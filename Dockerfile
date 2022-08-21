@@ -7,7 +7,7 @@ COPY public ./public
 COPY tsconfig.json ./
 RUN yarn build
 
-FROM nginx:1.17-alpine
+FROM nginx:1.22-alpine
 COPY --from=build-deps /usr/src/app/build /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
 EXPOSE 80
