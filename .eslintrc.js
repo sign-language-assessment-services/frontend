@@ -1,8 +1,6 @@
 module.exports = {
   extends: [
-    'plugin:prettier/recommended', // Prettier: an opinionated code formatter (https://prettier.io/)
-    'prettier/react', // React specific rules for Prettier
-    'prettier/standard', // Standard Prettier rules
+    'prettier',  // Prettier: an opinionated code formatter (https://prettier.io/)
     'plugin:@typescript-eslint/recommended', // enables ESLint to support TypeScript
     'plugin:react/recommended', // React specific linting rules for ESLint
   ],
