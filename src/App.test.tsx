@@ -1,15 +1,9 @@
 import { render, screen } from '@testing-library/react'
 import React, { ReactNode } from 'react'
 import { MemoryRouter } from 'react-router-dom'
-import { Routes } from './Routes'
+import { App } from './App'
 
 // Mock sub-components so that we can assert they are rendered without retesting their internals
-jest.mock('./hello-world', () => ({
-  HelloWorld: function HelloWorld() {
-    return <span data-testid="HelloWorld" />
-  },
-}))
-
 jest.mock('./assessments', () => ({
   AssessmentsPage: function AssessmentsPage() {
     return <span data-testid="AssessmentsPage" />
@@ -17,13 +11,8 @@ jest.mock('./assessments', () => ({
 }))
 
 describe('Routes', () => {
-  it('includes HelloWorld component', () => {
-    renderWithRouter(<Routes />, '/')
-    expect(screen.getByTestId('HelloWorld')).toBeInTheDocument()
-  })
-
   it('renders Assessments if route matches', () => {
-    renderWithRouter(<Routes />, '/assessments')
+    renderWithRouter(<App />, '/assessments')
     expect(screen.getByTestId('AssessmentsPage')).toBeInTheDocument()
   })
 })

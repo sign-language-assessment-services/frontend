@@ -1,12 +1,11 @@
 import { getAssessmentById, scoreAssessment } from './assessmentsService'
-import { mocked } from 'ts-jest/utils'
 import axios from 'axios'
 import { Assessment, Submission } from './models'
 
 jest.mock('axios')
 
-beforeAll(() => {
-  mocked(axios.get).mockResolvedValue({
+beforeEach(() => {
+  jest.mocked(axios.get).mockResolvedValue({
     data: {},
   })
 })
@@ -24,7 +23,7 @@ describe('assessmentsService', () => {
       items: [],
     }
 
-    mocked(axios.get).mockResolvedValue({
+    jest.mocked(axios.get).mockResolvedValue({
       data: sampleAssessment,
     })
 
@@ -35,7 +34,7 @@ describe('assessmentsService', () => {
   it('submits solutions to backend and returns score', async () => {
     const assessmentId = '42'
     const scoringResult = { score: 2 }
-    mocked(axios.post).mockResolvedValue({
+    jest.mocked(axios.post).mockResolvedValue({
       data: scoringResult,
     })
     const submission: Submission = {
