@@ -25,11 +25,11 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Build the application
-      run: ./go build
+      run: make build
     - name: Lint with ESLint
-      run: ./go lint
+      run: make lint
     - name: Test with Jest
-      run: ./go test
+      run: make test
       
   publish:
     needs: build
@@ -42,9 +42,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
+ 
       - name: Build Docker image
-        run: ./go image
+        run: make image
         
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
