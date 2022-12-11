@@ -40,8 +40,12 @@ run: install	## runs the application in development mode
 .PHONY: precommit
 precommit: typecheck build lint-fix test	## builds and tests the application
 
-.PHONY: image
-image:	## builds docker image
+.PHONY: docker-build
+docker-build:	## builds docker image from source code
+	docker build -f Dockerfile.local -t ${IMAGE_TAG} .
+
+.PHONY: docker-build-ci
+docker-build-ci:	## builds docker image from existing build directory
 	docker build -t ${IMAGE_TAG} .
 
 .PHONY: run-container

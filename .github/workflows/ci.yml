@@ -39,7 +39,7 @@ jobs:
       - uses: actions/checkout@v2
  
       - name: Build Docker image
-        run: make image
+        run: make docker-build-ci
         
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
