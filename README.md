@@ -7,7 +7,7 @@ It serves as a frontend for [sign-language-assessment-services/backend](https://
 
 The following software is required to use this app:
 
-- [Node.js](https://nodejs.org/) >= 12.4.0
+- [Node.js](https://nodejs.org/) >= 18
 - [bash](https://www.gnu.org/software/bash/) if you want to use the `make` script for build automation
   - **Windows**: there are several options to use bash, e.g.
     - [Git BASH](https://gitforwindows.org/)
