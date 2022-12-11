@@ -11,14 +11,13 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Setup Node.js
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3
       with:
-        node-version: 18.x
+        node-version: 18
     - name: Build the application
       run: make build
     - name: Lint with ESLint
@@ -35,23 +34,18 @@ jobs:
     env:
       IMAGE_NAME: slportal_frontend
       IMAGE_VERSION: latest
-
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
-
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/download-artifact@master
+      - uses: actions/checkout@v3
+      - uses: actions/download-artifact@v3
         with:
           name: build-directory
           path: build
- 
       - name: Build Docker image
         run: make docker-build-ci
-        
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
-
       - name: Push image
         run: |
           IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME          
