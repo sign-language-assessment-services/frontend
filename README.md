@@ -10,7 +10,7 @@ The following software is required to use this app:
 - [Node.js](https://nodejs.org/) >= 12.4.0
 - [yarn](https://yarnpkg.com/) >= 1.22.0 (package manager)
   - `npm install -g yarn`
-- [bash](https://www.gnu.org/software/bash/) if you want to use the `./go` script for build automation
+- [bash](https://www.gnu.org/software/bash/) if you want to use the `make` script for build automation
   - **Windows**: there are several options to use bash, e.g.
     - [Git BASH](https://gitforwindows.org/)
     - [Windows Subsystem for Linux](https://docs.microsoft.com/windows/wsl/install-win10)
@@ -19,17 +19,18 @@ The following software is required to use this app:
   - **Linux**: In nearly all distributions, bash is already pre-installed
 - [Docker](https://www.docker.com/) if you want to run the app in a Docker container
 
-## Build automation: `./go`
+## Build automation: `Makefile`
 
-All tasks related to building, testing, and running can be invoked with the `./go` script.<br/>
-Run `./go` without any argument to see a list of all available tasks.
+All tasks related to building, testing, and running can be invoked with
+make commands. Run `make help` to see a list of all available tasks.
 
-**NOTE**: You need _bash_ to run the `./go` script (see _Prerequisites_).
-If you prefer to execute those tasks manually, you can use it as documentation.
+**NOTE**: If you prefer to perform certain tasks manually, the content of the
+file is probably interesting for you, e.g. if you want to run the server on
+a different port or name the docker container differently.
 
 ## Build
 
-`./go build`
+`make build`
 
 Builds the app for production to the `build` folder.<br />
 It correctly bundles React in production mode and optimizes the build for the best performance.
@@ -41,14 +42,14 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ## Test
 
-`./go test`
+`make test`
 
 Launches the test runner in the interactive watch mode.<br />
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ## Run
 
-`./go run`
+`make run`
 
 **NOTE**: Requires [backend](https://github.com/sign-language-assessment-services/backend) to run locally on port 8000.
 
