@@ -7,35 +7,35 @@ help:	## List targets and description
 
 .PHONY: install
 install:	## installs required dependencies
-	yarn install
+	npm install
 
 .PHONY: build
 build: install	## builds the application for production to the build folder
-	yarn build
+	npm run build
 
 .PHONY: typecheck
 typecheck: install	## check for type errors
-	yarn typecheck
+	npm run typecheck
 
 .PHONY: lint
 lint: install	## statically analyzes code to quickly find problems
-	yarn lint
+	npm run lint
 
 .PHONY: lint-fix
 lint-fix: install	## statically analyzes code and corrects automatically fixable problems
-	yarn lint-fix
+	npm run lint-fix
 
 .PHONY: test-interactive
 test-interactive: install	## launches the test runner in the interactive watch mode
-	yarn test
+	npm run test
 
 .PHONY: test
 test: install	## runs all tests
-	CI=true yarn test
+	CI=true npm run test
 
 .PHONY: run
 run: install	## runs the application in development mode
-	yarn start
+	npm run start
 
 .PHONY: precommit
 precommit: typecheck build lint-fix test	## builds and tests the application
