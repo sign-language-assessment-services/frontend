@@ -1,18 +1,20 @@
-import axios, { AxiosResponse } from 'axios'
-import { Assessment, ScoringResult, Submission } from './models'
+import {Assessment, ScoringResult, Submission} from './models'
 
 export const getAssessmentById = async (id: string): Promise<Assessment> => {
-  const response: AxiosResponse<Assessment> = await axios.get(`/api/assessments/${id}`)
-  return response.data
+    const response = await fetch(`/api/assessments/${id}`);
+    const json = await response.json();
+    return json as Assessment;
 }
 
 export const scoreAssessment = async (
-  assessmentId: string,
-  submission: Submission,
+    assessmentId: string,
+    submission: Submission,
 ): Promise<ScoringResult> => {
-  const response: AxiosResponse<ScoringResult> = await axios.post(
-    `/api/assessments/${assessmentId}/submissions/`,
-    submission,
-  )
-  return response.data
+    const response: Response = await fetch(`/api/assessments/${assessmentId}/submissions/`, {
+        method: 'POST',
+        body: JSON.stringify(submission),
+        headers: {'Content-Type': 'application/json'},
+    });
+    const json = await response.json();
+    return json as ScoringResult;
 }

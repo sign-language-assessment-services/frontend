@@ -1,42 +1,29 @@
 import { getAssessmentById, scoreAssessment } from './assessmentsService'
-import axios from 'axios'
 import { Assessment, Submission } from './models'
-
-jest.mock('axios')
+import fetchMock from "jest-fetch-mock";
 
 beforeEach(() => {
-  jest.mocked(axios.get).mockResolvedValue({
-    data: {},
-  })
+  fetchMock.resetMocks()
 })
 
 describe('assessmentsService', () => {
-  it('calls backend with correct URL', () => {
-    getAssessmentById('1')
-
-    expect(axios.get).toHaveBeenCalledWith('/api/assessments/1')
-  })
-
   it('returns assessment provided by backend', async () => {
     const sampleAssessment: Assessment = {
       name: 'Sample Assessment',
       items: [],
     }
-
-    jest.mocked(axios.get).mockResolvedValue({
-      data: sampleAssessment,
-    })
+    fetchMock.mockResponseOnce(JSON.stringify(sampleAssessment))
 
     const actualAssessment = await getAssessmentById('1')
-    expect(actualAssessment).toBe(sampleAssessment)
+
+    expect(fetch).toHaveBeenCalledWith('/api/assessments/1')
+    expect(actualAssessment).toEqual(sampleAssessment)
   })
 
   it('submits solutions to backend and returns score', async () => {
     const assessmentId = '42'
     const scoringResult = { score: 2 }
-    jest.mocked(axios.post).mockResolvedValue({
-      data: scoringResult,
-    })
+    fetchMock.mockResponseOnce(JSON.stringify(scoringResult))
     const submission: Submission = {
       0: ['1'],
       1: ['0', '2'],
@@ -44,10 +31,14 @@ describe('assessmentsService', () => {
 
     const result = await scoreAssessment(assessmentId, submission)
 
-    expect(axios.post).toHaveBeenCalledWith(
+    expect(fetch).toHaveBeenCalledWith(
       `/api/assessments/${assessmentId}/submissions/`,
-      submission,
+        {
+          method: 'POST',
+          body: JSON.stringify(submission),
+          headers: {'Content-Type': 'application/json'},
+        }
     )
-    expect(result).toBe(scoringResult)
+    expect(result).toEqual(scoringResult)
   })
 })
