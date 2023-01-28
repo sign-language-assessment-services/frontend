@@ -1,83 +1,39 @@
-import React, { ReactElement, useState, useEffect } from 'react'
-import { Formik, Form } from 'formik'
-import { Assessment, Choice, Item, ScoringResult, Submission } from './models'
-import { getAssessmentById, scoreAssessment } from './assessmentsService'
-import MultipleChoiceItem from './MultipleChoiceItem'
+import React, { ReactElement, useState } from 'react'
+import { Assessment, ScoringResult, Submission } from './models'
 import ScoringResultComponent from './ScoringResult'
+import useFetchData from '../useFetch'
+import { useFetchWithAuth } from '../useFetchWithAuth'
+import { AssessmentsForm } from './AssessmentsForm'
+import { ErrorMessage } from './ErrorMessage'
+import { LoadingIndicator } from './LoadingIndicator'
 
+const assessmentId = '1'
 export const AssessmentsPage = (): ReactElement | null => {
-  const [assessment, setAssessment] = useState<Assessment>()
-  const [currentItemIndex, setCurrentItemIndex] = useState<number>(0)
+  const fetch = useFetchWithAuth()
+  const { data: assessment, error } = useFetchData<Assessment>(`/api/assessments/${assessmentId}`)
+
   const [scoringResult, setScoringResult] = useState<ScoringResult>()
-  const fetchAssessment = async () => {
-    const assessment = await getAssessmentById('1')
-    setAssessment(assessment)
+  const sendSubmission = async (submission: Submission) => {
+    const result = await fetch<ScoringResult>(`/api/assessments/${assessmentId}/submissions/`, {
+      method: 'POST',
+      body: JSON.stringify(submission),
+      headers: { 'Content-Type': 'application/json' },
+    })
+    setScoringResult(result)
   }
-  const incrementItemIndex = () => {
-    setCurrentItemIndex(currentItemIndex + 1)
+
+  if (error) {
+    return <ErrorMessage error={error} />
   }
-
-  useEffect(() => {
-    fetchAssessment()
-  }, [])
-
-  if (assessment) {
-    const hasNextItem = currentItemIndex < assessment.items.length - 1
-
-    if (scoringResult)
-      return (
-        <>
-          <h1>{assessment.name}</h1>
-          <ScoringResultComponent scoringResult={scoringResult} />
-        </>
-      )
-
+  if (!assessment) {
+    return <LoadingIndicator />
+  }
+  if (scoringResult)
     return (
       <>
         <h1>{assessment.name}</h1>
-        <Formik
-          initialValues={initialValues(assessment.items)}
-          onSubmit={async (formValues) => {
-            const result = await scoreAssessment('1', toSubmission(formValues))
-            setScoringResult(result)
-          }}
-        >
-          <Form>
-            {assessment.items.map((item, index) => (
-              <MultipleChoiceItem
-                item={item}
-                itemId={index.toString()}
-                visible={index === currentItemIndex}
-                key={index}
-              />
-            ))}
-            <button type="button" onClick={incrementItemIndex} hidden={!hasNextItem}>
-              Next
-            </button>
-
-            <button type="submit" hidden={hasNextItem}>
-              Submit
-            </button>
-          </Form>
-        </Formik>
+        <ScoringResultComponent scoringResult={scoringResult} />
       </>
     )
-  }
-  return null
+  return <AssessmentsForm assessment={assessment} onSubmit={sendSubmission} />
 }
-
-const initialValues = (items: Item[]): Record<string, Record<string, boolean>> =>
-  Object.fromEntries(items.map((item, index) => [index.toString(), setAllToFalse(item.choices)]))
-
-const setAllToFalse = (choices: Choice[]): Record<string, boolean> =>
-  Object.fromEntries(choices.map((_, index) => [index.toString(), false]))
-
-const toSubmission = (formValues: Record<string, Record<string, boolean>>): Submission =>
-  Object.fromEntries(
-    Object.entries(formValues).map(([itemId, choices]) => [itemId, selectedChoiceIds(choices)]),
-  )
-
-const selectedChoiceIds = (choiceIdToSelected: Record<string, boolean>): string[] =>
-  Object.entries(choiceIdToSelected)
-    .filter(([, selected]) => selected)
-    .map(([choiceId]) => choiceId)
