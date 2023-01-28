@@ -4,8 +4,9 @@ import React from 'react'
 import { AssessmentsPage } from './AssessmentsPage'
 import { getAssessmentById, scoreAssessment } from './assessmentsService'
 import { Assessment } from './models'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-jest.mock('./assessmentsService')
+vi.mock('./assessmentsService')
 
 describe('AssessmentsPage', () => {
   beforeEach(() => {
@@ -22,8 +23,12 @@ describe('AssessmentsPage', () => {
         },
       ],
     }
-    jest.mocked(getAssessmentById).mockResolvedValue(sampleAssessment)
-    jest.mocked(scoreAssessment).mockResolvedValue({ score: 0 })
+    vi.mocked(getAssessmentById).mockResolvedValue(sampleAssessment)
+    vi.mocked(scoreAssessment).mockResolvedValue({ score: 0 })
+  })
+
+  afterEach(() => {
+    vi.clearAllMocks()
   })
 
   it('renders only first assessment item initially', async () => {
@@ -46,7 +51,7 @@ describe('AssessmentsPage', () => {
     render(<AssessmentsPage />)
     await waitUntilNextButtonRendered()
 
-    userEvent.click(nextButton())
+    await userEvent.click(nextButton())
     await waitFor(() =>
       expect(
         screen.getByRole('heading', { name: /which buffy character is the best[?]/i }),
@@ -58,7 +63,7 @@ describe('AssessmentsPage', () => {
     render(<AssessmentsPage />)
     await waitUntilNextButtonRendered()
 
-    userEvent.click(nextButton())
+    await userEvent.click(nextButton())
     await waitUntilSubmitButtonRendered()
 
     expect(screen.queryByRole('button', { name: /next/i })).not.toBeInTheDocument()
@@ -68,12 +73,12 @@ describe('AssessmentsPage', () => {
     render(<AssessmentsPage />)
     await waitUntilNextButtonRendered()
 
-    userEvent.click(screen.getByLabelText(/cats/i))
-    userEvent.click(nextButton())
+    await userEvent.click(screen.getByLabelText(/cats/i))
+    await userEvent.click(nextButton())
     await waitUntilSubmitButtonRendered()
 
-    userEvent.click(screen.getByLabelText(/xander/i))
-    userEvent.click(submitButton())
+    await userEvent.click(screen.getByLabelText(/xander/i))
+    await userEvent.click(submitButton())
     await waitFor(() => expect(scoreAssessment).toHaveBeenCalledTimes(1))
     expect(scoreAssessment).toHaveBeenCalledWith('1', {
       '0': ['0'],
@@ -83,14 +88,14 @@ describe('AssessmentsPage', () => {
 
   it('displays score returned from backend after submission', async () => {
     const mockedScore = 12345
-    jest.mocked(scoreAssessment).mockResolvedValue({ score: mockedScore })
+    vi.mocked(scoreAssessment).mockResolvedValue({ score: mockedScore })
     render(<AssessmentsPage />)
     await waitUntilNextButtonRendered()
 
-    userEvent.click(nextButton())
+    await userEvent.click(nextButton())
     await waitUntilSubmitButtonRendered()
 
-    userEvent.click(submitButton())
+    await userEvent.click(submitButton())
     await waitFor(() => expect(scoreAssessment).toHaveBeenCalledTimes(1))
     expect(screen.getByText(new RegExp(mockedScore.toString()))).toBeInTheDocument()
   })
@@ -99,10 +104,10 @@ describe('AssessmentsPage', () => {
     render(<AssessmentsPage />)
     await waitUntilNextButtonRendered()
 
-    userEvent.click(nextButton())
+    await userEvent.click(nextButton())
     await waitUntilSubmitButtonRendered()
 
-    userEvent.click(submitButton())
+    await userEvent.click(submitButton())
     await waitFor(() => expect(scoreAssessment).toHaveBeenCalledTimes(1))
 
     expect(screen.queryByRole('button', { name: /submit/i })).not.toBeInTheDocument()

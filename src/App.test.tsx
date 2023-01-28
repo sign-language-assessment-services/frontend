@@ -2,9 +2,10 @@ import { render, screen } from '@testing-library/react'
 import React, { ReactNode } from 'react'
 import { MemoryRouter } from 'react-router-dom'
 import { App } from './App'
+import { vi, describe, it, expect } from 'vitest'
 
 // Mock sub-components so that we can assert they are rendered without retesting their internals
-jest.mock('./assessments', () => ({
+vi.mock('./assessments', () => ({
   AssessmentsPage: function AssessmentsPage() {
     return <span data-testid="AssessmentsPage" />
   },

@@ -1,6 +1,6 @@
+import { beforeEach, describe, it, expect } from 'vitest'
 import { getAssessmentById, scoreAssessment } from './assessmentsService'
 import { Assessment, Submission } from './models'
-import fetchMock from "jest-fetch-mock";
 
 beforeEach(() => {
   fetchMock.resetMocks()
@@ -31,14 +31,11 @@ describe('assessmentsService', () => {
 
     const result = await scoreAssessment(assessmentId, submission)
 
-    expect(fetch).toHaveBeenCalledWith(
-      `/api/assessments/${assessmentId}/submissions/`,
-        {
-          method: 'POST',
-          body: JSON.stringify(submission),
-          headers: {'Content-Type': 'application/json'},
-        }
-    )
+    expect(fetch).toHaveBeenCalledWith(`/api/assessments/${assessmentId}/submissions/`, {
+      method: 'POST',
+      body: JSON.stringify(submission),
+      headers: { 'Content-Type': 'application/json' },
+    })
     expect(result).toEqual(scoringResult)
   })
 })

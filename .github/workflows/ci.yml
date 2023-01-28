@@ -5,30 +5,30 @@ name: SLAS Frontend
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18
-    - name: Build the application
-      run: make build
-    - name: Lint with ESLint
-      run: make lint
-    - name: Test with Jest
-      run: make test
-    - uses: actions/upload-artifact@master
-      with:
-        name: build-directory
-        path: build
-      
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Build the application
+        run: make build
+      - name: Lint with ESLint
+        run: make lint
+      - name: Test with Jest
+        run: make test
+      - uses: actions/upload-artifact@master
+        with:
+          name: build-directory
+          path: build
+
   publish:
     needs: build
     env:
