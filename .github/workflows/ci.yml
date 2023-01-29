@@ -27,7 +27,7 @@ jobs:
       - uses: actions/upload-artifact@master
         with:
           name: build-directory
-          path: build
+          path: dist
 
   publish:
     needs: build
@@ -41,7 +41,7 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: build-directory
-          path: build
+          path: dist
       - name: Build Docker image
         run: make docker-build-ci
       - name: Log into registry
