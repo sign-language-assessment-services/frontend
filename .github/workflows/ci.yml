@@ -20,9 +20,9 @@ jobs:
           node-version: 18
       - name: Build the application
         run: make build
-      - name: Lint with ESLint
+      - name: Lint
         run: make lint
-      - name: Test with Jest
+      - name: Test
         run: make test
       - uses: actions/upload-artifact@master
         with:
