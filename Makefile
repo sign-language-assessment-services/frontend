@@ -42,11 +42,11 @@ precommit: typecheck build lint-fix test	## builds and tests the application
 
 .PHONY: docker-build
 docker-build:	## builds docker image from source code
-	docker build -f Dockerfile.local -t ${IMAGE_TAG} .
+	docker build -f Dockerfile -t ${IMAGE_TAG} .
 
 .PHONY: docker-build-ci
 docker-build-ci:	## builds docker image from existing build directory
-	docker build -t ${IMAGE_TAG} .
+	docker build -f Dockerfile.ci -t ${IMAGE_TAG} .
 
 .PHONY: run-container
 run-container:	## runs application in a docker container on port 80
