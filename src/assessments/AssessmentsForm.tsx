@@ -1,15 +1,16 @@
-import { Assessment, Submission } from './models'
-import React, { useMemo, useState } from 'react'
+import { Item, Submission } from './models'
+import React, { FormEventHandler, useMemo, useState } from 'react'
+import { ItemComponent } from './ItemComponent'
 
 interface Props {
-  assessment: Assessment
+  items: Item[]
   onSubmit: (_: Submission) => void
 }
 
-export const AssessmentsForm: React.FC<Props> = ({ assessment, onSubmit }) => {
+export const AssessmentsForm: React.FC<Props> = ({ items, onSubmit }) => {
   const initialState = useMemo(
-    () => Object.fromEntries(assessment.items.map((_, index) => [index, []])),
-    [assessment.items.length],
+    () => Object.fromEntries(items.map((_, index) => [index, []])),
+    [items.length],
   )
 
   const [submission, setSubmission] = useState<Submission>(initialState)
@@ -17,8 +18,11 @@ export const AssessmentsForm: React.FC<Props> = ({ assessment, onSubmit }) => {
   const incrementItemIndex = () => {
     setCurrentItemIndex(currentItemIndex + 1)
   }
-  const hasNextItem = currentItemIndex < assessment.items.length - 1
-
+  const hasNextItem = currentItemIndex < items.length - 1
+  const onFormSubmit: FormEventHandler = (e) => {
+    onSubmit(submission)
+    e.preventDefault()
+  }
   const handleChange = (itemIndex: string, choiceIndex: string) => {
     setSubmission({
       ...submission,
@@ -29,32 +33,18 @@ export const AssessmentsForm: React.FC<Props> = ({ assessment, onSubmit }) => {
   }
 
   return (
-    <form
-      onSubmit={(e) => {
-        onSubmit(submission)
-        e.preventDefault()
-      }}
-    >
-      <h2>{assessment.name}</h2>
-      {assessment.items.map((item, itemIndex) => (
-        <div key={itemIndex} hidden={itemIndex !== currentItemIndex}>
-          <h3>{item.description}</h3>
-          {item.choices.map((choice, choiceIndex) => (
-            <div key={choiceIndex}>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={
-                    submission[itemIndex.toString()]?.includes(choiceIndex.toString()) ?? false
-                  }
-                  onChange={() => handleChange(itemIndex.toString(), choiceIndex.toString())}
-                />
-                {choice.label}
-              </label>
-            </div>
-          ))}
-        </div>
-      ))}
+    <form onSubmit={onFormSubmit}>
+      {items.map((item, itemIndex) => {
+        return (
+          <ItemComponent
+            key={itemIndex}
+            hidden={itemIndex !== currentItemIndex}
+            selectedChoices={submission[itemIndex.toString()]}
+            handleChange={(choiceIndex: string) => handleChange(itemIndex.toString(), choiceIndex)}
+            item={item}
+          />
+        )
+      })}
       <button type="button" onClick={incrementItemIndex} hidden={!hasNextItem}>
         Next
       </button>

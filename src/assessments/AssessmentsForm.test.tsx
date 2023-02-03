@@ -3,32 +3,28 @@ import userEvent from '@testing-library/user-event'
 import React from 'react'
 import { AssessmentsForm } from './AssessmentsForm'
 import { describe, expect, it, vi } from 'vitest'
-import { Assessment } from './models'
+import { Item } from './models'
 
 describe('AssessmentsForm', () => {
-  const sampleAssessment: Assessment = {
-    name: 'Animals',
-    items: [
-      {
-        description: 'Who is better?',
-        choices: [{ label: 'Cats' }, { label: 'Dogs' }],
-      },
-      {
-        description: 'Which Buffy character is the best?',
-        choices: [{ label: 'Giles' }, { label: 'Spike' }, { label: 'Xander' }],
-      },
-    ],
-  }
+  const sampleItems: Item[] = [
+    {
+      description: 'Who is better?',
+      choices: [{ label: 'Cats' }, { label: 'Dogs' }],
+    },
+    {
+      description: 'Which Buffy character is the best?',
+      choices: [{ label: 'Giles' }, { label: 'Spike' }, { label: 'Xander' }],
+    },
+  ]
+
   const onSubmit = vi.fn()
 
-  const renderComponent = () =>
-    render(<AssessmentsForm assessment={sampleAssessment} onSubmit={onSubmit} />)
+  const renderComponent = () => render(<AssessmentsForm items={sampleItems} onSubmit={onSubmit} />)
 
   it('renders only first assessment item initially', async () => {
     renderComponent()
 
     await waitUntilNextButtonRendered()
-    expect(screen.getByRole('heading', { name: /animals/i })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: /who is better[?]/i })).toBeInTheDocument()
     expect(screen.getByText(/cats/i)).toBeInTheDocument()
     expect(screen.getByText(/dogs/i)).toBeInTheDocument()
