@@ -1,5 +1,5 @@
 import { useKeycloak } from '@react-keycloak/web'
-import { Button } from './Button'
+import { ManageAccountButton } from './ManageAccountButton'
 import React from 'react'
 
 export const UserInfo = () => {
@@ -16,7 +16,7 @@ export const UserInfo = () => {
       </div>
       <div>Roles: {realmAccess?.roles.join(', ')}</div>
       <div>
-        <Button callback={() => accountManagement()} />
+        <ManageAccountButton callback={() => accountManagement()} />
       </div>
       <pre>{JSON.stringify(tokenParsed, null, 2)}</pre>
     </>

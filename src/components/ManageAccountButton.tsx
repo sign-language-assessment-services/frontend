@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const Button = ({ callback }: { callback: () => void }) => {
+export const ManageAccountButton = ({ callback }: { callback: () => void }) => {
   return (
     <button type="button" onClick={() => callback()}>
       Manage account
