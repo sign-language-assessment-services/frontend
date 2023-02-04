@@ -1,6 +1,7 @@
 import { Item } from './models'
-import { ChoiceComponent } from './ChoiceComponent'
+import { AnswerCard } from './AnswerCard'
 import React from 'react'
+import cx from 'classnames'
 
 interface Props {
   selectedChoices: string[]
@@ -15,10 +16,21 @@ export const ItemComponent: React.FC<Props> = ({ handleChange, selectedChoices, 
         {item.description}
       </h3>
     </div>
-    <div className="flex w-1/2 flex-wrap items-center content-center gap-y-6 gap-x-4 p-8">
+    <div
+      className={cx(
+        'flex',
+        'flex-wrap',
+        'w-1/2',
+        'items-end',
+        'justify-center',
+        'content-center',
+        'gap-6',
+        'p-4',
+      )}
+    >
       {item.choices.map((choice, choiceIndex) => {
         return (
-          <ChoiceComponent
+          <AnswerCard
             key={choiceIndex}
             checked={selectedChoices.includes(choiceIndex.toString()) ?? false}
             onChange={() => handleChange(choiceIndex.toString())}
