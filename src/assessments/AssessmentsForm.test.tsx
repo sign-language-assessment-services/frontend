@@ -3,28 +3,32 @@ import userEvent from '@testing-library/user-event'
 import React from 'react'
 import { AssessmentsForm } from './AssessmentsForm'
 import { describe, expect, it, vi } from 'vitest'
-import { Item } from './models'
+import { Assessment } from './models'
 
 describe('AssessmentsForm', () => {
-  const sampleItems: Item[] = [
-    {
-      description: 'Who is better?',
-      choices: [{ label: 'Cats' }, { label: 'Dogs' }],
-    },
-    {
-      description: 'Which Buffy character is the best?',
-      choices: [{ label: 'Giles' }, { label: 'Spike' }, { label: 'Xander' }],
-    },
-  ]
-
+  const sampleAssessment: Assessment = {
+    name: 'Animals',
+    items: [
+      {
+        description: 'Who is better?',
+        choices: [{ label: 'Cats' }, { label: 'Dogs' }],
+      },
+      {
+        description: 'Which Buffy character is the best?',
+        choices: [{ label: 'Giles' }, { label: 'Spike' }, { label: 'Xander' }],
+      },
+    ],
+  }
   const onSubmit = vi.fn()
 
-  const renderComponent = () => render(<AssessmentsForm items={sampleItems} onSubmit={onSubmit} />)
+  const renderComponent = () =>
+    render(<AssessmentsForm assessment={sampleAssessment} onSubmit={onSubmit} />)
 
   it('renders only first assessment item initially', async () => {
     renderComponent()
 
     await waitUntilNextButtonRendered()
+    expect(screen.getByRole('heading', { name: /animals/i })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: /who is better[?]/i })).toBeInTheDocument()
     expect(screen.getByText(/cats/i)).toBeInTheDocument()
     expect(screen.getByText(/dogs/i)).toBeInTheDocument()
@@ -34,7 +38,7 @@ describe('AssessmentsForm', () => {
     ).not.toBeInTheDocument()
   })
 
-  it('renders next assessment after clicking on Next', async () => {
+  it('renders next assessment item after clicking on Next', async () => {
     renderComponent()
 
     await waitUntilNextButtonRendered()
@@ -46,7 +50,7 @@ describe('AssessmentsForm', () => {
     )
   })
 
-  it('hides Next button on last item', async () => {
+  it('disables Next button on last item', async () => {
     renderComponent()
 
     await waitUntilNextButtonRendered()
@@ -54,7 +58,33 @@ describe('AssessmentsForm', () => {
     await userEvent.click(nextButton())
     await waitUntilSubmitButtonRendered()
 
-    expect(screen.queryByRole('button', { name: /next/i })).not.toBeInTheDocument()
+    expect(nextButton()).toBeDisabled()
+  })
+
+  it('renders previous assessment item after clicking on Back', async () => {
+    renderComponent()
+
+    await waitUntilNextButtonRendered()
+    await userEvent.click(nextButton())
+    await waitFor(() =>
+      expect(
+        screen.getByRole('heading', { name: /which buffy character is the best[?]/i }),
+      ).toBeInTheDocument(),
+    )
+
+    await userEvent.click(backButton())
+
+    expect(screen.getByRole('heading', { name: /who is better[?]/i })).toBeInTheDocument()
+  })
+
+  it('disables Back button on first item', async () => {
+    renderComponent()
+
+    await waitUntilNextButtonRendered()
+
+    await waitUntilSubmitButtonRendered()
+
+    expect(backButton()).toBeDisabled()
   })
 
   it('submits chosen input', async () => {
@@ -82,6 +112,7 @@ const waitUntilNextButtonRendered = async () =>
 const waitUntilSubmitButtonRendered = async () =>
   await waitFor(() => expect(submitButton()).toBeInTheDocument())
 
-const nextButton = () => button(/next/i)
-const submitButton = () => button(/submit/i)
+const nextButton = () => button(/weiter/i)
+const backButton = () => button(/zurück/i)
+const submitButton = () => button(/test absenden/i)
 const button = (name: RegExp) => screen.getByRole('button', { name })

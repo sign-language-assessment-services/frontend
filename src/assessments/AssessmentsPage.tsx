@@ -29,13 +29,14 @@ export const AssessmentsPage = (): ReactElement | null => {
     return <LoadingIndicator />
   }
   return (
-    <>
-      <h2>{assessment.name}</h2>
-      {scoringResult ? (
-        <ScoringResultComponent scoringResult={scoringResult} />
-      ) : (
-        <AssessmentsForm items={assessment.items} onSubmit={sendSubmission} />
-      )}
-    </>
+    <div className="font-sans absolute inset-0 flex flex-col items-stretch">
+      <main className="flex flex-col flex-grow text-2xl">
+        {scoringResult ? (
+          <ScoringResultComponent scoringResult={scoringResult} />
+        ) : (
+          <AssessmentsForm assessment={assessment} onSubmit={sendSubmission} />
+        )}
+      </main>
+    </div>
   )
 }

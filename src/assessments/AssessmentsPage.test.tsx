@@ -50,12 +50,12 @@ describe('AssessmentsPage', () => {
     await waitUntilSubmitButtonRendered()
     expect(screen.getByRole('checkbox', { name: /Cats/i })).toBeInTheDocument()
     await userEvent.click(submitButton())
-    expect(screen.queryByRole('button', { name: /submit/i })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /test absenden/i })).not.toBeInTheDocument()
     expect(screen.queryByRole('checkbox', { name: /Cats/i })).not.toBeInTheDocument()
   })
 })
 
 const waitUntilSubmitButtonRendered = async () =>
   await waitFor(() => expect(submitButton()).toBeInTheDocument())
-const submitButton = () => button(/submit/i)
+const submitButton = () => button(/test absenden/i)
 const button = (name: RegExp) => screen.getByRole('button', { name })

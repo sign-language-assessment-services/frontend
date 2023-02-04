@@ -4,16 +4,16 @@ import { AssessmentsPage } from './assessments'
 import PrivateRoute from './auth/PrivateRoute'
 import { useAuthentication } from './auth/useAuthentication'
 import { LoadingIndicator } from './assessments/LoadingIndicator'
-import { UserPanel } from './components/UserPanel'
+import { LoginButton } from './components/LoginButton'
 
 export const App = (): ReactElement => {
-  const { initialized, authenticationEnabled } = useAuthentication()
+  const { initialized, authenticationEnabled, authenticated } = useAuthentication()
   if (!initialized) {
     return <LoadingIndicator />
   }
   return (
-    <>
-      {authenticationEnabled ? <UserPanel /> : null}
+    <div className="">
+      {authenticationEnabled && !authenticated ? <LoginButton /> : null}
       <PrivateRoute requiredRole="slas-frontend-user">
         <Routes>
           <Route path="/assessments/*" element={<AssessmentsPage />} />
@@ -21,6 +21,6 @@ export const App = (): ReactElement => {
           <Route path="*" element={<div>Not Found</div>} />
         </Routes>
       </PrivateRoute>
-    </>
+    </div>
   )
 }

@@ -1,15 +1,26 @@
 import { useAuthentication } from '../auth/useAuthentication'
-import { LogoutButton } from './LogoutButton'
-import { LoginButton } from './LoginButton'
-import { UserInfo } from './UserInfo'
 import React from 'react'
+import { AvatarIcon } from './AvatarIcon'
 
 export const UserPanel = () => {
-  const { authenticated } = useAuthentication()
+  const { user, authenticationEnabled, logout, accountManagement } = useAuthentication()
+  if (!authenticationEnabled) {
+    return null
+  }
   return (
-    <>
-      {authenticated ? <LogoutButton /> : <LoginButton />}
-      <UserInfo />
-    </>
+    <div className="flex items-center gap-4">
+      <a
+        href="#"
+        title="Profil verwalten"
+        onClick={() => accountManagement()}
+        className="flex items-center gap-2 hover:drop-shadow-lg"
+      >
+        <span className="text-sm">{user?.name}</span>
+        <AvatarIcon />
+      </a>
+      <a className="font-bold text-sm hover:drop-shadow-lg" href="#" onClick={() => logout()}>
+        Abmelden
+      </a>
+    </div>
   )
 }

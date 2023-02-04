@@ -13,7 +13,11 @@ export const useAuthentication = () => {
       logout: () => {
         return
       },
+      accountManagement: () => {
+        return
+      },
       userHasRole: () => true,
+      user: null,
     }
   }
   const { keycloak, initialized } = useKeycloak()
@@ -25,5 +29,10 @@ export const useAuthentication = () => {
     userHasRole: (role: string) => (keycloak.realmAccess?.roles ?? []).indexOf(role) !== -1,
     login: keycloak.login,
     logout: keycloak.logout,
+    accountManagement: keycloak.accountManagement,
+    user: {
+      name: keycloak.idTokenParsed?.name,
+      username: keycloak.idTokenParsed?.preferred_username,
+    },
   }
 }
