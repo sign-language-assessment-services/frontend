@@ -1,7 +1,7 @@
-import { useAuthentication } from './auth/useAuthentication'
+import { useAccessToken } from './auth/useAccessToken'
 
 export const useFetchWithAuth = () => {
-  const { accessToken } = useAuthentication()
+  const accessToken = useAccessToken()
 
   return async <T>(input: RequestInfo | URL, options?: RequestInit) => {
     const response = await fetch(input, {

@@ -4,7 +4,6 @@ import { useCallback } from 'react'
 export const useAuthentication = () => {
   if (import.meta.env.VITE_AUTH_ENABLED !== 'true') {
     return {
-      accessToken: '',
       authenticationEnabled: false,
       authenticated: true,
       initialized: true,
@@ -20,7 +19,6 @@ export const useAuthentication = () => {
   }
   const { keycloak, initialized } = useKeycloak()
   return {
-    accessToken: keycloak.token,
     authenticationEnabled: true,
     authenticated: keycloak.authenticated,
     initialized,

@@ -20,7 +20,7 @@ export const Header: React.FC<PropsWithChildren> = ({ children }) => (
       'dark:border-gray-700',
     )}
   >
-    {children}
+    <h1>{children}</h1>
 
     <div className="shrink-0 ml-5">
       <UserPanel />
