@@ -1,4 +1,5 @@
 import React, { ButtonHTMLAttributes } from 'react'
+import cx from 'classnames'
 
 type IconType = 'prev' | 'next'
 
@@ -13,9 +14,23 @@ export const Button = ({
   type = 'button',
   ...props
 }: Props) => {
-  const className = props.disabled
-    ? 'bg-blue-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed'
-    : 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+  const classes = cx(
+    'bg-blue-500',
+    'flex',
+    'flex-row',
+    'items-center',
+    'justify-between gap-3',
+    'font-bold',
+    'rounded',
+    'text-white',
+    'py-2',
+    'px-4',
+    'dark:text-amber-400',
+    'dark:bg-blue-900',
+    { 'opacity-50': props.disabled, 'cursor-not-allowed': props.disabled },
+    { 'text-white': !props.disabled, 'hover:bg-blue-700': !props.disabled },
+  )
+
   const elements = icon ? (
     iconPosition === 'right' ? (
       <>
@@ -32,11 +47,7 @@ export const Button = ({
   )
   return (
     <div>
-      <button
-        type={type}
-        className={className + ' flex flex-row items-center justify-between gap-3'}
-        {...props}
-      >
+      <button type={type} className={classes} {...props}>
         {elements}
       </button>
     </div>

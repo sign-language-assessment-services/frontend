@@ -36,10 +36,18 @@ function AnswerCardFooter(props: {
 }) {
   return (
     <span
-      className={cx('flex', 'justify-center', 'p-1', 'gap-2', 'border-t-2', {
-        ...props.backgroundEffects,
-        ...props.commonEffects,
-      })}
+      className={cx(
+        'flex',
+        'justify-center',
+        'p-1',
+        'gap-2',
+        'border-t-2',
+        'dark:border-gray-400',
+        {
+          ...props.backgroundEffects,
+          ...props.commonEffects,
+        },
+      )}
     >
       <Checkbox checked={props.checked} onChange={props.onChange} />
       <AnswerIdentifier checked={props.checked} choiceId={props.choiceId} />
@@ -49,17 +57,25 @@ function AnswerCardFooter(props: {
 
 export const AnswerCard = ({ checked, label, onChange, choiceId }: Props) => {
   const commonEffects = {
+    'group-hover:cursor-pointer': true,
     [`border-blue-200`]: checked,
     'group-hover:drop-shadow-lg': true,
-    'group-hover:cursor-pointer': true,
+
+    'dark:group-hover:bg-amber-600': !checked,
+    'dark:group-hover:border-amber-600': !checked,
+
+    'dark:group-hover:bg-blue-500': checked,
+    'dark:group-hover:border-blue-500': checked,
+    'dark:border-blue-600': checked,
   }
 
   const backgroundEffects = {
     [`bg-blue-200`]: checked,
+    [`dark:bg-blue-600`]: checked,
   }
 
   return (
-    <div className={cx('flex-growXXX', 'flex', 'flex-shrink', 'justify-center', 'items-center')}>
+    <div className={cx('flex', 'flex-shrink', 'justify-center', 'items-center')}>
       <div className="group">
         <label
           className={cx(
@@ -69,6 +85,9 @@ export const AnswerCard = ({ checked, label, onChange, choiceId }: Props) => {
             'items-stretch',
             'border-2',
             'bg-white',
+            'dark:border-gray-400',
+            'dark:bg-gray-700',
+            'dark:text-gray-100',
             {
               ...commonEffects,
             },

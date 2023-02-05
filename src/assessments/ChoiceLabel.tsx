@@ -8,8 +8,11 @@ export const ChoiceLabel = (props: { checked: boolean; label: string }) => (
       'justify-center',
       'items-center',
       'aspect-video',
-      'w-[350px]',
+      'w-[400px]',
       'bg-gray-50',
+      'dark:bg-gray-700',
+
+      'dark:text-white',
       { 'font-bold': props.checked },
     )}
   >

@@ -3,6 +3,7 @@ import React, { FormEventHandler, useMemo, useState } from 'react'
 import { ItemComponent } from './ItemComponent'
 import { Button } from '../components/Button'
 import { UserPanel } from '../components/UserPanel'
+import cx from 'classnames'
 
 interface Props {
   assessment: Assessment
@@ -42,7 +43,23 @@ export const AssessmentsForm: React.FC<Props> = ({ assessment: { items, name }, 
 
   return (
     <>
-      <header className="flex h-12 text-center items-center justify-between bg-blue-100 border-b-4 border-blue-200 text-lg p-6">
+      <header
+        className={cx(
+          'flex',
+          'h-12',
+          'text-center',
+          'items-center',
+          'justify-between',
+          'bg-blue-100',
+          'border-b-4',
+          'border-blue-200',
+          'text-lg',
+          'p-6',
+          'dark:bg-gray-900',
+          'dark:text-amber-400',
+          'dark:border-gray-700',
+        )}
+      >
         <h2 className="shrink-0">
           {name} – Aufgabe {currentItemIndex + 1} / {items.length}
         </h2>
@@ -58,7 +75,22 @@ export const AssessmentsForm: React.FC<Props> = ({ assessment: { items, name }, 
           }
           item={items[currentItemIndex]}
         />
-        <footer className="flex justify-center gap-6 items-center h-24 border-t-4 p-4  bg-blue-100 border-blue-200">
+        <footer
+          className={cx(
+            'flex',
+            'justify-center',
+            'gap-6',
+            'items-center',
+            'h-24',
+            'border-t-4',
+            'p-4',
+            'bg-blue-100',
+            'border-blue-200',
+            'dark:bg-gray-900',
+            'dark:text-amber-500',
+            'dark:border-gray-700',
+          )}
+        >
           <Button
             onClick={decrementItemIndex}
             disabled={!hasPreviousItem}
