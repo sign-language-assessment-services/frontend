@@ -1,3 +1,3 @@
 import React from 'react'
 
-export const LoadingIndicator: React.FC = () => <>Loading...</>
+export const LoadingIndicator: React.FC = () => <>Bitte warten...</>
