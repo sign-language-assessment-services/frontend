@@ -1,4 +1,5 @@
 import { useKeycloak } from '@react-keycloak/web'
+import { useCallback } from 'react'
 
 export const useAuthentication = () => {
   if (import.meta.env.VITE_AUTH_ENABLED !== 'true') {
@@ -7,9 +8,6 @@ export const useAuthentication = () => {
       authenticationEnabled: false,
       authenticated: true,
       initialized: true,
-      login: () => {
-        return
-      },
       logout: () => {
         return
       },
@@ -26,10 +24,12 @@ export const useAuthentication = () => {
     authenticationEnabled: true,
     authenticated: keycloak.authenticated,
     initialized,
-    userHasRole: (role: string) => (keycloak.realmAccess?.roles ?? []).indexOf(role) !== -1,
-    login: keycloak.login,
-    logout: keycloak.logout,
-    accountManagement: keycloak.accountManagement,
+    userHasRole: useCallback(
+      (role: string) => keycloak.hasRealmRole(role),
+      [keycloak.realmAccess?.roles],
+    ),
+    logout: useCallback(() => keycloak.logout(), [keycloak]),
+    accountManagement: useCallback(() => keycloak.accountManagement(), [keycloak]),
     user: {
       name: keycloak.idTokenParsed?.name,
       username: keycloak.idTokenParsed?.preferred_username,

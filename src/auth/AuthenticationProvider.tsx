@@ -13,5 +13,9 @@ export const AuthenticationProvider = ({ children }: React.PropsWithChildren) =>
     clientId: import.meta.env.VITE_KEYCLOAK_CLIENT_ID,
   })
 
-  return <ReactKeycloakProvider authClient={keycloak}>{children}</ReactKeycloakProvider>
+  return (
+    <ReactKeycloakProvider authClient={keycloak} initOptions={{ onLoad: 'login-required' }}>
+      {children}
+    </ReactKeycloakProvider>
+  )
 }

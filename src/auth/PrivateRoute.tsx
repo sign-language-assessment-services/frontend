@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useState } from 'react'
+import React, { PropsWithChildren } from 'react'
 import { useAuthentication } from './useAuthentication'
 import { ErrorModal } from '../components/ErrorModal'
 
@@ -7,19 +7,11 @@ interface Props extends PropsWithChildren {
 }
 
 const PrivateRoute: React.FC<Props> = ({ requiredRole, children }) => {
-  const { authenticated, userHasRole, login, logout, initialized } = useAuthentication()
-  const [redirecting, setRedirecting] = useState(false)
+  const { userHasRole, logout, initialized } = useAuthentication()
   if (!initialized) {
     return null
   }
-  if (!authenticated) {
-    setRedirecting(true)
-    login()
-  }
 
-  if (redirecting) {
-    return null
-  }
   if (!userHasRole(requiredRole)) {
     return (
       <ErrorModal
