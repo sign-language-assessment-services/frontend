@@ -5,8 +5,6 @@ import useFetchData from '../useFetch'
 import { useFetchWithAuth } from '../useFetchWithAuth'
 import { AssessmentsForm } from './AssessmentsForm'
 import { ErrorMessage } from './ErrorMessage'
-import { LoadingIndicator } from './LoadingIndicator'
-import cx from 'classnames'
 
 const assessmentId = '1'
 export const AssessmentsPage = (): ReactElement | null => {
@@ -27,27 +25,10 @@ export const AssessmentsPage = (): ReactElement | null => {
     return <ErrorMessage error={error} />
   }
   if (!assessment) {
-    return <LoadingIndicator />
+    return null
   }
-  return (
-    <div
-      className={cx(
-        'font-sans',
-        'absolute',
-        'inset-0',
-        'flex',
-        'flex-col',
-        'items-stretch',
-        'dark:bg-gray-800',
-      )}
-    >
-      <main className={cx('flex', 'flex-col', 'flex-grow', 'text-2xl')}>
-        {scoringResult ? (
-          <ScoringResultComponent scoringResult={scoringResult} />
-        ) : (
-          <AssessmentsForm assessment={assessment} onSubmit={sendSubmission} />
-        )}
-      </main>
-    </div>
-  )
+  if (scoringResult) {
+    return <ScoringResultComponent assessment={assessment} scoringResult={scoringResult} />
+  }
+  return <AssessmentsForm assessment={assessment} onSubmit={sendSubmission} />
 }

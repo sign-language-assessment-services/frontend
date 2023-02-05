@@ -2,8 +2,10 @@ import { Assessment, Submission } from './models'
 import React, { FormEventHandler, useMemo, useState } from 'react'
 import { ItemComponent } from './ItemComponent'
 import { Button } from '../components/Button'
-import { UserPanel } from '../components/UserPanel'
-import cx from 'classnames'
+import { Header } from '../components/layout/Header'
+import { Footer } from '../components/layout/Footer'
+import { PageContainer } from '../components/layout/PageContainer'
+import { Main } from '../components/layout/Main'
 
 interface Props {
   assessment: Assessment
@@ -42,76 +44,43 @@ export const AssessmentsForm: React.FC<Props> = ({ assessment: { items, name }, 
   }
 
   return (
-    <>
-      <header
-        className={cx(
-          'flex',
-          'h-12',
-          'text-center',
-          'items-center',
-          'justify-between',
-          'bg-blue-100',
-          'border-b-4',
-          'border-blue-200',
-          'text-lg',
-          'p-6',
-          'dark:bg-gray-900',
-          'dark:text-amber-400',
-          'dark:border-gray-700',
-        )}
-      >
-        <h2 className="shrink-0">
-          {name} – Aufgabe {currentItemIndex + 1} / {items.length}
-        </h2>
-        <h2 className="shrink-0">
-          <UserPanel />
-        </h2>
-      </header>
-      <form onSubmit={onFormSubmit} className="flex flex-col flex-grow">
-        <ItemComponent
-          selectedChoices={submission[currentItemIndex.toString()]}
-          handleChange={(choiceIndex: string) =>
-            handleChange(currentItemIndex.toString(), choiceIndex)
-          }
-          item={items[currentItemIndex]}
-        />
-        <footer
-          className={cx(
-            'flex',
-            'justify-center',
-            'gap-6',
-            'items-center',
-            'h-32',
-            'border-t-4',
-            'p-4',
-            'bg-blue-100',
-            'border-blue-200',
-            'dark:bg-gray-900',
-            'dark:text-amber-500',
-            'dark:border-gray-700',
-          )}
+    <PageContainer>
+      <Header>
+        {name} – Aufgabe {currentItemIndex + 1} / {items.length}
+      </Header>
+
+      <Main>
+        <form id="assessmentForm" onSubmit={onFormSubmit}>
+          <ItemComponent
+            selectedChoices={submission[currentItemIndex.toString()]}
+            handleChange={(choiceIndex: string) =>
+              handleChange(currentItemIndex.toString(), choiceIndex)
+            }
+            item={items[currentItemIndex]}
+          />
+        </form>
+      </Main>
+      <Footer>
+        <Button
+          onClick={decrementItemIndex}
+          disabled={!hasPreviousItem}
+          icon="prev"
+          iconPosition="left"
         >
-          <Button
-            onClick={decrementItemIndex}
-            disabled={!hasPreviousItem}
-            icon="prev"
-            iconPosition="left"
-          >
-            Zurück
-          </Button>
-          <Button
-            onClick={incrementItemIndex}
-            disabled={!hasNextItem}
-            icon="next"
-            iconPosition="right"
-          >
-            Weiter
-          </Button>
-          <Button type="submit" disabled={hasNextItem}>
-            Test absenden
-          </Button>
-        </footer>
-      </form>
-    </>
+          Zurück
+        </Button>
+        <Button
+          onClick={incrementItemIndex}
+          disabled={!hasNextItem}
+          icon="next"
+          iconPosition="right"
+        >
+          Weiter
+        </Button>
+        <Button type="submit" form="assessmentForm" disabled={hasNextItem}>
+          Test absenden
+        </Button>
+      </Footer>
+    </PageContainer>
   )
 }
