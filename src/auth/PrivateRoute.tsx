@@ -1,19 +1,34 @@
-import React from 'react'
+import React, { PropsWithChildren, useState } from 'react'
 import { useAuthentication } from './useAuthentication'
+import { ErrorModal } from '../components/ErrorModal'
 
-interface Props {
+interface Props extends PropsWithChildren {
   requiredRole: string
 }
 
-const PrivateRoute = ({ requiredRole, children }: React.PropsWithChildren<Props>) => {
-  const { authenticated, userHasRole } = useAuthentication()
-
+const PrivateRoute: React.FC<Props> = ({ requiredRole, children }) => {
+  const { authenticated, userHasRole, login, logout, initialized } = useAuthentication()
+  const [redirecting, setRedirecting] = useState(false)
+  if (!initialized) {
+    return null
+  }
   if (!authenticated) {
-    return <>Not authenticated</>
+    setRedirecting(true)
+    login()
   }
 
+  if (redirecting) {
+    return null
+  }
   if (!userHasRole(requiredRole)) {
-    return <>Not authorized</>
+    return (
+      <ErrorModal
+        title="Keine Berechtigung"
+        message="Sie sind nicht berechtigt, diese Anwendung zu nutzen."
+        closeLabel="Abmelden"
+        onClose={() => logout()}
+      />
+    )
   }
 
   return <>{children}</>

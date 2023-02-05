@@ -15,7 +15,6 @@ export const Button = ({
   ...props
 }: Props) => {
   const classes = cx(
-    'bg-blue-500',
     'flex',
     'flex-row',
     'items-center',
@@ -23,12 +22,19 @@ export const Button = ({
     'font-bold',
     'rounded',
     'text-white',
-    'py-2',
+    'py-6',
     'px-4',
     'dark:text-amber-400',
     'dark:bg-blue-900',
-    { 'opacity-50': props.disabled, 'cursor-not-allowed': props.disabled },
-    { 'text-white': !props.disabled, 'hover:bg-blue-700': !props.disabled },
+    {
+      'bg-blue-500': type !== 'submit',
+      'bg-green-500': type === 'submit',
+      'opacity-50': props.disabled,
+      'cursor-not-allowed': props.disabled,
+      'text-white': !props.disabled,
+      'hover:bg-blue-700': !props.disabled,
+      'hover:bg-green-700': !props.disabled && type === 'submit',
+    },
   )
 
   const elements = icon ? (
@@ -59,7 +65,7 @@ const Icon = ({ type }: { type: IconType }) => {
     prev: 'M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z',
     next: 'M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z',
   }[type]
-  const className = 'fill-current w-4 h-4 mr-2'
+  const className = 'fill-current w-8 h-8'
   return (
     <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
       <path d={pathData} />
