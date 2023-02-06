@@ -87,7 +87,6 @@ export const AnswerCard = ({ checked, label, onChange, choiceId }: Props) => {
             'bg-white',
             'dark:border-gray-400',
             'dark:bg-gray-700',
-            'dark:text-gray-100',
             {
               ...commonEffects,
             },

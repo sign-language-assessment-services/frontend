@@ -6,11 +6,11 @@ export const Footer: React.FC<PropsWithChildren> = ({ children }) => (
     className={cx(
       'flex',
       'justify-center',
-      'gap-6',
       'items-center',
+      'gap-6',
       'h-32',
-      'border-t-4',
       'p-4',
+      'border-t-4',
       'bg-blue-100',
       'border-blue-200',
       'dark:bg-gray-900',

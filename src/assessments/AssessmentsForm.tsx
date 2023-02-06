@@ -21,15 +21,6 @@ export const AssessmentsForm: React.FC<Props> = ({ assessment: { items, name }, 
   const [submission, setSubmission] = useState<Submission>(initialState)
   const [currentItemIndex, setCurrentItemIndex] = useState<number>(0)
 
-  const decrementItemIndex = () => {
-    setCurrentItemIndex(currentItemIndex - 1)
-  }
-
-  const incrementItemIndex = () => {
-    setCurrentItemIndex(currentItemIndex + 1)
-  }
-  const hasPreviousItem = currentItemIndex > 0
-  const hasNextItem = currentItemIndex < items.length - 1
   const onFormSubmit: FormEventHandler = (e) => {
     onSubmit(submission)
     e.preventDefault()
@@ -62,22 +53,22 @@ export const AssessmentsForm: React.FC<Props> = ({ assessment: { items, name }, 
       </Main>
       <Footer>
         <Button
-          onClick={decrementItemIndex}
-          disabled={!hasPreviousItem}
+          onClick={() => setCurrentItemIndex(currentItemIndex - 1)}
+          disabled={currentItemIndex === 0}
           icon="prev"
           iconPosition="left"
         >
           Zurück
         </Button>
         <Button
-          onClick={incrementItemIndex}
-          disabled={!hasNextItem}
+          onClick={() => setCurrentItemIndex(currentItemIndex + 1)}
+          disabled={currentItemIndex === items.length - 1}
           icon="next"
           iconPosition="right"
         >
           Weiter
         </Button>
-        <Button type="submit" form="assessmentForm" disabled={hasNextItem}>
+        <Button type="submit" form="assessmentForm" disabled={currentItemIndex < items.length - 1}>
           Test absenden
         </Button>
       </Footer>

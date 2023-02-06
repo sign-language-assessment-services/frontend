@@ -1,7 +1,12 @@
 import cx from 'classnames'
 import React from 'react'
 
-export const ChoiceLabel = (props: { checked: boolean; label: string }) => (
+interface Props {
+  checked: boolean
+  label: string
+}
+
+export const ChoiceLabel = ({ checked, label }: Props) => (
   <span
     className={cx(
       'flex',
@@ -12,10 +17,9 @@ export const ChoiceLabel = (props: { checked: boolean; label: string }) => (
       'bg-gray-50',
       'dark:bg-gray-700',
 
-      'dark:text-white',
-      { 'font-bold': props.checked },
+      { 'font-bold': checked },
     )}
   >
-    {props.label}
+    {label}
   </span>
 )

@@ -19,7 +19,8 @@ export const Button = ({
     'flex',
     'flex-row',
     'items-center',
-    'justify-between gap-3',
+    'justify-between',
+    'gap-3',
     'font-bold',
     'rounded',
     'text-white',
@@ -35,6 +36,11 @@ export const Button = ({
       'text-white': !props.disabled,
       'hover:bg-blue-700': !props.disabled,
       'hover:bg-green-700': !props.disabled && type === 'submit',
+
+      'dark:bg-blue-800': type !== 'submit',
+      'dark:bg-green-800': type === 'submit',
+      'dark:hover:bg-blue-900': !props.disabled && type !== 'submit',
+      'dark:hover:bg-green-900': !props.disabled && type === 'submit',
     },
   )
 
