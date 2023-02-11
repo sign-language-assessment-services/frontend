@@ -1,5 +1,7 @@
 FROM node:18 as build-deps
 ARG ENVIRONMENT=production
+ARG AUTH_ENABLED
+ENV VITE_AUTH_ENABLED=$AUTH_ENABLED
 WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
 RUN npm install
