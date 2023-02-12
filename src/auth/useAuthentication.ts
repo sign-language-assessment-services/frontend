@@ -1,8 +1,10 @@
 import { useKeycloak } from '@react-keycloak/web'
 import { useCallback } from 'react'
+import { useSettings } from '../settings/useSettings'
 
 export const useAuthentication = () => {
-  if (import.meta.env.VITE_AUTH_ENABLED !== 'true') {
+  const { authEnabled } = useSettings()
+  if (!authEnabled) {
     return {
       authenticationEnabled: false,
       authenticated: true,

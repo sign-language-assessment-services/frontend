@@ -12,7 +12,6 @@ export default defineConfig({
   build: {
     minify: true,
   },
-  envDir: './env',
   server: {
     proxy: {
       '/api': {
@@ -26,5 +25,6 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./setupVitest.ts'],
     css: false,
+    mockReset: true,
   },
 })

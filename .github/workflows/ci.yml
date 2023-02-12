@@ -43,7 +43,7 @@ jobs:
           name: build-directory
           path: dist
       - name: Build Docker image
-        run: make docker-build-ci
+        run: make docker-build
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
       - name: Push image

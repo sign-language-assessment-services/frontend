@@ -3,7 +3,8 @@ import userEvent from '@testing-library/user-event'
 import React from 'react'
 import { AssessmentsPage } from './AssessmentsPage'
 import { Assessment } from './models'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { fallbackSettings } from '../settings/Settings'
 
 describe('AssessmentsPage', () => {
   const sampleAssessment: Assessment = {
@@ -19,6 +20,9 @@ describe('AssessmentsPage', () => {
     fetchMock.resetMocks()
     fetchMock.mockOnceIf('/api/assessments/1', JSON.stringify(sampleAssessment))
     fetchMock.mockOnceIf('/api/assessments/1/submissions/', JSON.stringify({ score: 1337010 }))
+    vi.mock('../settings/useSettings', () => ({
+      useSettings: () => fallbackSettings,
+    }))
   })
 
   it('submits chosen input', async () => {

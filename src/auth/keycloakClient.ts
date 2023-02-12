@@ -1,7 +1,19 @@
 import Keycloak from 'keycloak-js'
+import { useEffect, useState } from 'react'
+import { useSettings } from '../settings/useSettings'
 
-export const keycloakClient = new Keycloak({
-  url: import.meta.env.VITE_KEYCLOAK_URL,
-  realm: import.meta.env.VITE_KEYCLOAK_REALM,
-  clientId: import.meta.env.VITE_KEYCLOAK_CLIENT_ID,
-})
+export const useKeycloakClient = () => {
+  const [keycloakClient, setKeycloakClient] = useState<Keycloak>()
+  const { keyCloakUrl, keycloakClientId, keycloakRealm } = useSettings()
+  useEffect(() => {
+    setKeycloakClient(
+      new Keycloak({
+        url: keyCloakUrl,
+        realm: keycloakRealm,
+        clientId: keycloakClientId,
+      }),
+    )
+  }, [keyCloakUrl, keycloakRealm, keycloakClientId])
+
+  return keycloakClient
+}

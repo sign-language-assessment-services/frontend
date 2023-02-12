@@ -44,10 +44,6 @@ precommit: typecheck build lint-fix test	## builds and tests the application
 docker-build:	## builds docker image from source code
 	docker build -f Dockerfile -t ${IMAGE_TAG} .
 
-.PHONY: docker-build-ci
-docker-build-ci:	## builds docker image from existing build directory
-	docker build -f Dockerfile.ci -t ${IMAGE_TAG} .
-
 .PHONY: run-container
 run-container:	## runs application in a docker container on port 80
 	docker run --rm -p 80:80 ${IMAGE_TAG}

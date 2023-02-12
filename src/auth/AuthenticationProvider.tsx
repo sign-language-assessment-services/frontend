@@ -1,13 +1,21 @@
 import { ReactKeycloakProvider } from '@react-keycloak/web'
 import React, { useState } from 'react'
-import { keycloakClient } from './keycloakClient'
 import { AccessTokenContext } from './AccessTokenContext'
+import { useSettings } from '../settings/useSettings'
+import { useKeycloakClient } from './keycloakClient'
 
 export const AuthenticationProvider = ({ children }: React.PropsWithChildren) => {
-  if (import.meta.env.VITE_AUTH_ENABLED !== 'true') {
+  const [accessToken, setAccessToken] = useState<string | undefined>(undefined)
+  const { authEnabled } = useSettings()
+  const keycloakClient = useKeycloakClient()
+
+  if (!authEnabled) {
     return <>{children}</>
   }
-  const [accessToken, setAccessToken] = useState<string | undefined>(undefined)
+
+  if (!keycloakClient) {
+    return null
+  }
 
   return (
     <ReactKeycloakProvider
