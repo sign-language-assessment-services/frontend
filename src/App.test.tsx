@@ -17,9 +17,15 @@ describe('Routes', () => {
       useSettings: () => fallbackSettings,
     }))
   })
+
   it('renders Assessments if route matches', () => {
     renderWithRouter(<App />, '/assessments')
     expect(screen.getByTestId('AssessmentsPage')).toBeInTheDocument()
+  })
+
+  it('renders Not Found page if route is unknown', () => {
+    renderWithRouter(<App />, '/does-not-exist')
+    expect(screen.getByRole('heading', { name: /seite nicht gefunden/i })).toBeInTheDocument()
   })
 })
 

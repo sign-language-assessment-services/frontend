@@ -7,7 +7,7 @@ export const SettingsProvider = ({ children }: React.PropsWithChildren) => {
 
   useEffect(() => {
     const fetchSettings = async () => {
-      const response = await (await fetch('./settings.json')).json()
+      const response = await (await fetch('/settings.json')).json()
       const settings = response
         ? {
             authEnabled: response['AUTH_ENABLED'] === 'true',
