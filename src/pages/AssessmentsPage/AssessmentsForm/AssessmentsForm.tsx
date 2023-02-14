@@ -1,11 +1,11 @@
-import { Assessment, Submission } from './models'
+import { Assessment, Submission } from '../models'
 import React, { FormEventHandler, useMemo, useState } from 'react'
-import { ItemComponent } from './ItemComponent'
-import { Button } from '../components/Button'
-import { Header } from '../components/layout/Header'
-import { Footer } from '../components/layout/Footer'
-import { PageContainer } from '../components/layout/PageContainer'
-import { Main } from '../components/layout/Main'
+import { ItemComponent } from './ItemComponent/ItemComponent'
+import { Button } from '../../../components/Button'
+import { Header } from '../../../components/layout/Header'
+import { Footer } from '../../../components/layout/Footer'
+import { PageContainer } from '../../../components/layout/PageContainer'
+import { Main } from '../../../components/layout/Main'
 
 interface Props {
   assessment: Assessment

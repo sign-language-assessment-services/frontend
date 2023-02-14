@@ -8,7 +8,7 @@ import { fallbackSettings } from './settings/Settings'
 describe('Routes', () => {
   beforeEach(() => {
     // Mock sub-components so that we can assert they are rendered without retesting their internals
-    vi.mock('./assessments', () => ({
+    vi.mock('./pages/AssessmentsPage', () => ({
       AssessmentsPage: function AssessmentsPage() {
         return <span data-testid="AssessmentsPage" />
       },

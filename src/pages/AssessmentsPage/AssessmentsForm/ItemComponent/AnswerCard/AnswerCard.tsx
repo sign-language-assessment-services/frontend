@@ -1,6 +1,6 @@
 import React from 'react'
 import cx from 'classnames'
-import { ChoiceLabel } from './ChoiceLabel'
+import { ChoiceLabel } from './ChoiceLabel/ChoiceLabel'
 
 interface Props {
   checked: boolean

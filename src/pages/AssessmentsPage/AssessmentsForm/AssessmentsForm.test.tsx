@@ -3,8 +3,8 @@ import userEvent from '@testing-library/user-event'
 import React from 'react'
 import { AssessmentsForm } from './AssessmentsForm'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { Assessment } from './models'
-import { fallbackSettings } from '../settings/Settings'
+import { Assessment } from '../models'
+import { fallbackSettings } from '../../../settings/Settings'
 
 describe('AssessmentsForm', () => {
   beforeEach(() => {

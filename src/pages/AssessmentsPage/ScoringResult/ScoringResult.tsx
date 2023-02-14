@@ -1,11 +1,11 @@
-import { Assessment, ScoringResult as ScoringResultModel } from './models'
+import { Assessment, ScoringResult as ScoringResultModel } from '../models'
 
 import React, { ReactElement } from 'react'
-import { Header } from '../components/layout/Header'
-import { Footer } from '../components/layout/Footer'
-import { PageContainer } from '../components/layout/PageContainer'
-import { Main } from '../components/layout/Main'
-import { Button } from '../components/Button'
+import { Header } from '../../../components/layout/Header'
+import { Footer } from '../../../components/layout/Footer'
+import { PageContainer } from '../../../components/layout/PageContainer'
+import { Main } from '../../../components/layout/Main'
+import { Button } from '../../../components/Button'
 
 interface Props {
   assessment: Assessment

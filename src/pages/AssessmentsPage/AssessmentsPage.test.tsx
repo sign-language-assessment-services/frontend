@@ -4,7 +4,7 @@ import React from 'react'
 import { AssessmentsPage } from './AssessmentsPage'
 import { Assessment } from './models'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { fallbackSettings } from '../settings/Settings'
+import { fallbackSettings } from '../../settings/Settings'
 
 describe('AssessmentsPage', () => {
   const sampleAssessment: Assessment = {

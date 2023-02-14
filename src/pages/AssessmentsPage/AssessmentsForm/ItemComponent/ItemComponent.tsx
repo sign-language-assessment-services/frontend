@@ -1,5 +1,5 @@
-import { Item } from './models'
-import { AnswerCard } from './AnswerCard'
+import { Item } from '../../models'
+import { AnswerCard } from './AnswerCard/AnswerCard'
 import React from 'react'
 import cx from 'classnames'
 

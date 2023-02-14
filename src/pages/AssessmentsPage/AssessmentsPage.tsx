@@ -1,10 +1,10 @@
 import React, { ReactElement, useState } from 'react'
 import { Assessment, ScoringResult, Submission } from './models'
-import ScoringResultComponent from './ScoringResult'
-import useFetchData from '../useFetch'
-import { useFetchWithAuth } from '../useFetchWithAuth'
-import { AssessmentsForm } from './AssessmentsForm'
-import { ErrorMessage } from './ErrorMessage'
+import ScoringResultComponent from './ScoringResult/ScoringResult'
+import useFetchData from '../../useFetch'
+import { useFetchWithAuth } from '../../useFetchWithAuth'
+import { AssessmentsForm } from './AssessmentsForm/AssessmentsForm'
+import { ErrorMessage } from '../../components/ErrorMessage'
 
 const assessmentId = '1'
 export const AssessmentsPage = (): ReactElement | null => {

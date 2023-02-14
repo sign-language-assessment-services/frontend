@@ -4,7 +4,7 @@ import { App } from './App'
 
 import { createRoot } from 'react-dom/client'
 import { AuthenticationProvider } from './auth/AuthenticationProvider'
-import { LoadingIndicator } from './assessments/LoadingIndicator'
+import { LoadingIndicator } from './components/LoadingIndicator'
 import { SettingsProvider } from './settings/SettingsProvider'
 
 const container = document.getElementById('root') as HTMLElement
