@@ -10,39 +10,17 @@ interface Props {
 }
 
 export const ItemComponent: React.FC<Props> = ({ handleChange, selectedChoices, item }) => (
-  <div
-    className={cx('flex', 'flex-grow', 'justify-center', 'items-stretch', 'p-4' /*,'flex-wrap''*/)}
-  >
-    <div className={cx('flex', 'text-4xl', 'items-center', 'justify-between', 'p-6')}>
-      <h3
-        className={cx(
-          'flex',
-          'justify-center',
-          'items-center',
-          'w-[600px]',
-          'aspect-video',
-          'p-6',
-          'border-2',
-          'bg-gray-50',
-          'dark:bg-gray-700',
-          'dark:border-gray-400',
-          'shrink-1',
-        )}
-      >
-        {item.description}
-      </h3>
-    </div>
+  <div className={cx('flex', 'flex-grow', 'justify-center', 'items-stretch', 'p-4')}>
+    <ItemDescription description={item.description} />
     <div
       className={cx(
         'flex',
         'flex-wrap',
         'shrink-2',
-        // 'w-1/2',
         'items-end',
         'justify-center',
         'content-center',
         'gap-6',
-        // 'p-4',
       )}
     >
       {item.choices.map((choice, choiceIndex) => {
@@ -57,5 +35,26 @@ export const ItemComponent: React.FC<Props> = ({ handleChange, selectedChoices, 
         )
       })}
     </div>
+  </div>
+)
+
+const ItemDescription = (props: { description: string }) => (
+  <div className={cx('flex', 'text-4xl', 'items-center', 'justify-between', 'p-6')}>
+    <h3
+      className={cx(
+        'flex',
+        'justify-center',
+        'items-center',
+        'w-[600px]',
+        'aspect-video',
+        'border-2',
+        'bg-gray-50',
+        'dark:bg-gray-700',
+        'dark:border-gray-400',
+        'shrink-1',
+      )}
+    >
+      {props.description}
+    </h3>
   </div>
 )

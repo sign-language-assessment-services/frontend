@@ -1,58 +1,13 @@
 import React from 'react'
 import cx from 'classnames'
 import { ChoiceLabel } from './ChoiceLabel/ChoiceLabel'
+import { AnswerCardFooter } from './AnswerCardFooter/AnswerCardFooter'
 
 interface Props {
   checked: boolean
   choiceId: string
   onChange: () => void
   label: string
-}
-
-function AnswerIdentifier(props: { checked: boolean; choiceId: string }) {
-  return (
-    <span className={cx('text-base', { 'font-bold': props.checked })}>
-      Antwort {props.choiceId}
-    </span>
-  )
-}
-
-function Checkbox(props: { checked: boolean; onChange: () => void }) {
-  return (
-    <input className="peer" type="checkbox" checked={props.checked} onChange={props.onChange} />
-  )
-}
-
-function AnswerCardFooter(props: {
-  backgroundEffects: { 'bg-blue-200': boolean }
-  commonEffects: {
-    'group-hover:cursor-pointer': boolean
-    'group-hover:drop-shadow-lg': boolean
-    'border-blue-200': boolean
-  }
-  checked: boolean
-  onChange: () => void
-  choiceId: string
-}) {
-  return (
-    <span
-      className={cx(
-        'flex',
-        'justify-center',
-        'p-1',
-        'gap-2',
-        'border-t-2',
-        'dark:border-gray-400',
-        {
-          ...props.backgroundEffects,
-          ...props.commonEffects,
-        },
-      )}
-    >
-      <Checkbox checked={props.checked} onChange={props.onChange} />
-      <AnswerIdentifier checked={props.checked} choiceId={props.choiceId} />
-    </span>
-  )
 }
 
 export const AnswerCard = ({ checked, label, onChange, choiceId }: Props) => {

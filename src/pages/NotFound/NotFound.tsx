@@ -1,5 +1,5 @@
 import React from 'react'
-import { ErrorModal } from '../components/ErrorModal'
+import { ErrorModal } from '../../components/ErrorModal'
 import { useNavigate } from 'react-router'
 
 export const NotFound: React.FC = () => {

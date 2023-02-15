@@ -2,7 +2,7 @@ import React from 'react'
 import { RouteObject, useRoutes } from 'react-router-dom'
 import { AssessmentsPage } from './pages/AssessmentsPage'
 import PrivateRoute from './auth/PrivateRoute'
-import { NotFound } from './pages/NotFound'
+import { NotFound } from './pages/NotFound/NotFound'
 
 export const App: React.FC = () => {
   const routes: RouteObject[] = [
