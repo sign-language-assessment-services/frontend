@@ -1,11 +1,12 @@
-import { render, screen } from '@testing-library/react'
-import React, { ReactNode } from 'react'
-import { MemoryRouter } from 'react-router-dom'
+import { screen } from '@testing-library/react'
+import React from 'react'
 import { App } from './App'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { fallbackSettings } from './settings/Settings'
+import userEvent from '@testing-library/user-event'
+import { renderWithRouter } from './testutils/renderWithRouter'
 
-describe('Routes', () => {
+describe('App', () => {
   beforeEach(() => {
     // Mock sub-components so that we can assert they are rendered without retesting their internals
     vi.mock('./pages/AssessmentsPage', () => ({
@@ -18,16 +19,35 @@ describe('Routes', () => {
     }))
   })
 
-  it('renders Assessments if route matches', () => {
-    renderWithRouter(<App />, '/assessments')
-    expect(screen.getByTestId('AssessmentsPage')).toBeInTheDocument()
+  describe('Home page', () => {
+    it.each(['/', '/assessments', '/assessments/1'])(
+      'renders Assessments for route: %s',
+      (route: string) => {
+        renderApp(route)
+        expect(screen.getByTestId('AssessmentsPage')).toBeInTheDocument()
+      },
+    )
   })
 
-  it('renders Not Found page if route is unknown', () => {
-    renderWithRouter(<App />, '/does-not-exist')
-    expect(screen.getByRole('heading', { name: /seite nicht gefunden/i })).toBeInTheDocument()
+  describe('"Not Found" page', () => {
+    beforeEach(() => {
+      renderApp('/unknown-route')
+    })
+
+    it('renders Not Found page if route is unknown', () => {
+      expect(screen.getByRole('heading', { name: /seite nicht gefunden/i })).toBeInTheDocument()
+      expect(screen.queryByTestId('AssessmentsPage')).not.toBeInTheDocument()
+    })
+
+    it('redirects to assessment page when clicking "back to home page" button', async () => {
+      await userEvent.click(screen.getByRole('button', { name: /zur startseite/i }))
+
+      expect(screen.getByTestId('AssessmentsPage')).toBeInTheDocument()
+      expect(
+        screen.queryByRole('heading', { name: /seite nicht gefunden/i }),
+      ).not.toBeInTheDocument()
+    })
   })
 })
 
-const renderWithRouter = (children: ReactNode, route = '/') =>
-  render(<MemoryRouter initialEntries={[route]}>{children}</MemoryRouter>)
+const renderApp = (route = '/') => renderWithRouter(<App />, route)
