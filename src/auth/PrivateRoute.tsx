@@ -16,7 +16,7 @@ const PrivateRoute: React.FC<Props> = ({ requiredRole, children }) => {
     return (
       <ErrorModal
         title="Keine Berechtigung"
-        message="Sie sind nicht berechtigt, diese Anwendung zu nutzen."
+        message="Sie sind derzeit nicht berechtigt, diese Anwendung zu nutzen. Bitte warten Sie auf die Freischaltung."
         closeLabel="Abmelden"
         onClose={() => logout()}
       />
