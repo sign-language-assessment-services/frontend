@@ -8,8 +8,16 @@ export interface Item {
   choices: Choice[]
 }
 
-export interface Choice {
+export type Choice = TextChoice | VideoChoice
+
+export interface TextChoice {
+  type: 'text'
   label: string
+}
+
+export interface VideoChoice {
+  type: 'video'
+  url: string
 }
 
 export type Submission = Record<string, string[]>

@@ -18,11 +18,26 @@ describe('AssessmentsForm', () => {
     items: [
       {
         description: 'Who is better?',
-        choices: [{ label: 'Cats' }, { label: 'Dogs' }],
+        choices: [
+          { type: 'text', label: 'Cats' },
+          { type: 'text', label: 'Dogs' },
+        ],
       },
       {
         description: 'Which Buffy character is the best?',
-        choices: [{ label: 'Giles' }, { label: 'Spike' }, { label: 'Xander' }],
+        choices: [
+          { type: 'text', label: 'Giles' },
+          { type: 'text', label: 'Spike' },
+          { type: 'text', label: 'Xander' },
+        ],
+      },
+      {
+        description: 'Which video is the best?',
+        choices: [
+          { type: 'video', url: 'https://video1.example.com' },
+          { type: 'video', url: 'https://video2.example.com' },
+          { type: 'video', url: 'https://video3.example.com' },
+        ],
       },
     ],
   }
@@ -63,6 +78,7 @@ describe('AssessmentsForm', () => {
     await waitUntilNextButtonRendered()
 
     await userEvent.click(nextButton())
+    await userEvent.click(nextButton())
     await waitUntilSubmitButtonRendered()
 
     expect(nextButton()).toBeDisabled()
@@ -101,15 +117,34 @@ describe('AssessmentsForm', () => {
 
     await userEvent.click(screen.getByLabelText(/cats/i))
     await userEvent.click(nextButton())
-    await waitUntilSubmitButtonRendered()
 
     await userEvent.click(screen.getByLabelText(/xander/i))
+    await userEvent.click(nextButton())
+
+    await userEvent.click(screen.getByLabelText('Antwort 2'))
+
+    await waitUntilSubmitButtonRendered()
     await userEvent.click(submitButton())
     await waitFor(() => expect(onSubmit).toHaveBeenCalledTimes(1))
     expect(onSubmit).toHaveBeenCalledWith({
       '0': ['0'],
       '1': ['2'],
+      '2': ['1'],
     })
+  })
+
+  it('renders video choices', async () => {
+    const { container } = renderComponent()
+
+    await waitUntilNextButtonRendered()
+    await userEvent.click(nextButton())
+    await userEvent.click(nextButton())
+
+    const videos = container.querySelectorAll('video')
+    expect(videos).toHaveLength(3)
+    expect(videos[0].getAttribute('src')).toEqual('https://video1.example.com')
+    expect(videos[1].getAttribute('src')).toEqual('https://video2.example.com')
+    expect(videos[2].getAttribute('src')).toEqual('https://video3.example.com')
   })
 })
 

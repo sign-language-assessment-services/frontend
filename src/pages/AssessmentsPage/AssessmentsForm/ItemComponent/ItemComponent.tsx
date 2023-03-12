@@ -29,7 +29,7 @@ export const ItemComponent: React.FC<Props> = ({ handleChange, selectedChoices, 
             key={choiceIndex}
             checked={selectedChoices.includes(choiceIndex.toString()) ?? false}
             onChange={() => handleChange(choiceIndex.toString())}
-            label={choice.label}
+            choice={choice}
             choiceId={(choiceIndex + 1).toString()}
           />
         )

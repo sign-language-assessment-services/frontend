@@ -1,16 +1,17 @@
 import React from 'react'
 import cx from 'classnames'
-import { ChoiceLabel } from './ChoiceLabel/ChoiceLabel'
+import { ChoiceContentContainer } from './ChoiceLabel/ChoiceContentContainer'
 import { AnswerCardFooter } from './AnswerCardFooter/AnswerCardFooter'
+import { Choice } from '../../../models'
 
 interface Props {
   checked: boolean
   choiceId: string
   onChange: () => void
-  label: string
+  choice: Choice
 }
 
-export const AnswerCard = ({ checked, label, onChange, choiceId }: Props) => {
+export const AnswerCard = ({ checked, choice, onChange, choiceId }: Props) => {
   const commonEffects = {
     'group-hover:cursor-pointer': true,
     [`border-blue-200`]: checked,
@@ -47,7 +48,7 @@ export const AnswerCard = ({ checked, label, onChange, choiceId }: Props) => {
             },
           )}
         >
-          <ChoiceLabel checked={checked} label={label} />
+          <ChoiceContentContainer checked={checked} choice={choice} />
           <AnswerCardFooter
             checked={checked}
             onChange={onChange}
