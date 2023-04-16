@@ -1,1 +1,6 @@
-null
+{
+  "AUTH_ENABLED": "true",
+  "KEYCLOAK_URL": "http://localhost:9020/auth",
+  "KEYCLOAK_REALM": "slas",
+  "KEYCLOAK_CLIENT_ID": "frontend"
+}
