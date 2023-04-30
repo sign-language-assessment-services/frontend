@@ -23,7 +23,7 @@ export const ChoiceContentContainer = ({ checked, choice }: Props) => {
   return (
     <span className={className}>
       {choice.type === 'video' && <video src={choice.url} controls muted />}
-      {choice.type === 'text' && choice.label}
+      {choice.type === 'text' && choice.text}
     </span>
   )
 }

@@ -4,7 +4,7 @@ export interface Assessment {
 }
 
 export interface Item {
-  description: string
+  question: Question
   choices: Choice[]
 }
 
@@ -12,10 +12,22 @@ export type Choice = TextChoice | VideoChoice
 
 export interface TextChoice {
   type: 'text'
-  label: string
+  text: string
 }
 
 export interface VideoChoice {
+  type: 'video'
+  url: string
+}
+
+export type Question = TextQuestion | VideoQuestion
+
+export interface TextQuestion {
+  type: 'text'
+  text: string
+}
+
+export interface VideoQuestion {
   type: 'video'
   url: string
 }

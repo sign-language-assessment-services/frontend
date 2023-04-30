@@ -17,26 +17,26 @@ describe('AssessmentsForm', () => {
     name: 'Animals',
     items: [
       {
-        description: 'Who is better?',
+        question: { text: 'Who is better?', type: 'text' },
         choices: [
-          { type: 'text', label: 'Cats' },
-          { type: 'text', label: 'Dogs' },
+          { type: 'text', text: 'Cats' },
+          { type: 'text', text: 'Dogs' },
         ],
       },
       {
-        description: 'Which Buffy character is the best?',
+        question: { text: 'Which Buffy character is the best?', type: 'text' },
         choices: [
-          { type: 'text', label: 'Giles' },
-          { type: 'text', label: 'Spike' },
-          { type: 'text', label: 'Xander' },
+          { type: 'text', text: 'Giles' },
+          { type: 'text', text: 'Spike' },
+          { type: 'text', text: 'Xander' },
         ],
       },
       {
-        description: 'Which video is the best?',
+        question: { url: 'https://question.video.example.com', type: 'video' },
         choices: [
-          { type: 'video', url: 'https://video1.example.com' },
-          { type: 'video', url: 'https://video2.example.com' },
-          { type: 'video', url: 'https://video3.example.com' },
+          { type: 'video', url: 'https://choice1.video.example.com' },
+          { type: 'video', url: 'https://choice2.video.example.com' },
+          { type: 'video', url: 'https://choice3.video.example.com' },
         ],
       },
     ],
@@ -133,7 +133,7 @@ describe('AssessmentsForm', () => {
     })
   })
 
-  it('renders video choices', async () => {
+  it('renders video question and choices', async () => {
     const { container } = renderComponent()
 
     await waitUntilNextButtonRendered()
@@ -141,10 +141,11 @@ describe('AssessmentsForm', () => {
     await userEvent.click(nextButton())
 
     const videos = container.querySelectorAll('video')
-    expect(videos).toHaveLength(3)
-    expect(videos[0].getAttribute('src')).toEqual('https://video1.example.com')
-    expect(videos[1].getAttribute('src')).toEqual('https://video2.example.com')
-    expect(videos[2].getAttribute('src')).toEqual('https://video3.example.com')
+    expect(videos).toHaveLength(4)
+    expect(videos[0].getAttribute('src')).toEqual('https://question.video.example.com')
+    expect(videos[1].getAttribute('src')).toEqual('https://choice1.video.example.com')
+    expect(videos[2].getAttribute('src')).toEqual('https://choice2.video.example.com')
+    expect(videos[3].getAttribute('src')).toEqual('https://choice3.video.example.com')
   })
 })
 
