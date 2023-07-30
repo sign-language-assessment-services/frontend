@@ -14,19 +14,28 @@ describe('App', () => {
         return <span data-testid="AssessmentsPage" />
       },
     }))
+    vi.mock('./pages/AssessmentsListPage', () => ({
+      AssessmentsListPage: function AssessmentsListPage() {
+        return <span data-testid="AssessmentsListPage" />
+      },
+    }))
     vi.mock('./settings/useSettings', () => ({
       useSettings: () => fallbackSettings,
     }))
   })
 
-  describe('Home page', () => {
-    it.each(['/', '/assessments', '/assessments/1'])(
-      'renders Assessments for route: %s',
-      (route: string) => {
-        renderApp(route)
-        expect(screen.getByTestId('AssessmentsPage')).toBeInTheDocument()
-      },
-    )
+  describe('Assessments page', () => {
+    it('renders Assessments for route /assessments/1', () => {
+      renderApp('/assessments/1')
+      expect(screen.getByTestId('AssessmentsPage')).toBeInTheDocument()
+    })
+  })
+
+  describe('Assessments list page', () => {
+    it.each(['/', '/assessments'])('renders for route: %s', (route: string) => {
+      renderApp(route)
+      expect(screen.getByTestId('AssessmentsListPage')).toBeInTheDocument()
+    })
   })
 
   describe('"Not Found" page', () => {
@@ -39,10 +48,10 @@ describe('App', () => {
       expect(screen.queryByTestId('AssessmentsPage')).not.toBeInTheDocument()
     })
 
-    it('redirects to assessment page when clicking "back to home page" button', async () => {
+    it('redirects to assessments list page when clicking "back to home page" button', async () => {
       await userEvent.click(screen.getByRole('button', { name: /zur startseite/i }))
 
-      expect(screen.getByTestId('AssessmentsPage')).toBeInTheDocument()
+      expect(screen.getByTestId('AssessmentsListPage')).toBeInTheDocument()
       expect(
         screen.queryByRole('heading', { name: /seite nicht gefunden/i }),
       ).not.toBeInTheDocument()

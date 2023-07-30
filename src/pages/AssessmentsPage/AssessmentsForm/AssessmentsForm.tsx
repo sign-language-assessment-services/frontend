@@ -6,6 +6,7 @@ import { Header } from '../../../components/layout/Header'
 import { Footer } from '../../../components/layout/Footer'
 import { PageContainer } from '../../../components/layout/PageContainer'
 import { Main } from '../../../components/layout/Main'
+import { useNavigate } from 'react-router'
 
 interface Props {
   assessment: Assessment
@@ -17,6 +18,7 @@ export const AssessmentsForm: React.FC<Props> = ({ assessment: { items, name }, 
     () => Object.fromEntries(items.map((_, index) => [index, []])),
     [items.length],
   )
+  const navigate = useNavigate()
 
   const [submission, setSubmission] = useState<Submission>(initialState)
   const [currentItemIndex, setCurrentItemIndex] = useState<number>(0)
@@ -40,7 +42,7 @@ export const AssessmentsForm: React.FC<Props> = ({ assessment: { items, name }, 
         {name} – Aufgabe {currentItemIndex + 1} / {items.length}
       </Header>
 
-      <Main>
+      <Main center>
         <form id="assessmentForm" onSubmit={onFormSubmit}>
           <ItemComponent
             selectedChoices={submission[currentItemIndex.toString()]}
@@ -70,6 +72,9 @@ export const AssessmentsForm: React.FC<Props> = ({ assessment: { items, name }, 
         </Button>
         <Button type="submit" form="assessmentForm" disabled={currentItemIndex < items.length - 1}>
           Test absenden
+        </Button>
+        <Button onClick={() => navigate('/')} form="assessmentForm" style="WARNING">
+          Abbrechen
         </Button>
       </Footer>
     </PageContainer>

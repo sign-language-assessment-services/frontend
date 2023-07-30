@@ -3,14 +3,15 @@ import { RouteObject, useRoutes } from 'react-router-dom'
 import { AssessmentsPage } from './pages/AssessmentsPage'
 import PrivateRoute from './auth/PrivateRoute'
 import { NotFound } from './pages/NotFound/NotFound'
+import { AssessmentsListPage } from './pages/AssessmentsListPage'
 
 export const App: React.FC = () => {
   const routes: RouteObject[] = [
     {
       children: [
-        { index: true, element: <AssessmentsPage /> },
-        { path: 'assessments', element: <AssessmentsPage /> },
-        { path: 'assessments/1', element: <AssessmentsPage /> },
+        { index: true, element: <AssessmentsListPage /> },
+        { path: 'assessments', element: <AssessmentsListPage /> },
+        { path: 'assessments/:id', element: <AssessmentsPage /> },
         { path: '*', element: <NotFound /> },
       ],
     },

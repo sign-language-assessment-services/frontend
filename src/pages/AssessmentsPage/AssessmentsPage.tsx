@@ -5,10 +5,11 @@ import useFetchData from '../../useFetch'
 import { useFetchWithAuth } from '../../useFetchWithAuth'
 import { AssessmentsForm } from './AssessmentsForm/AssessmentsForm'
 import { ErrorMessage } from '../../components/ErrorMessage'
+import { useParams } from 'react-router'
 
-const assessmentId = '1'
 export const AssessmentsPage = (): ReactElement | null => {
   const fetch = useFetchWithAuth()
+  const { id: assessmentId } = useParams()
   const { data: assessment, error } = useFetchData<Assessment>(`/api/assessments/${assessmentId}`)
 
   const [scoringResult, setScoringResult] = useState<ScoringResult>()

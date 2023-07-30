@@ -1,10 +1,11 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import React from 'react'
 import { AssessmentsForm } from './AssessmentsForm'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { Assessment } from '../models'
 import { fallbackSettings } from '../../../settings/Settings'
+import { renderWithRouter } from '../../../testutils/renderWithRouter'
 
 describe('AssessmentsForm', () => {
   beforeEach(() => {
@@ -44,7 +45,7 @@ describe('AssessmentsForm', () => {
   const onSubmit = vi.fn()
 
   const renderComponent = () =>
-    render(<AssessmentsForm assessment={sampleAssessment} onSubmit={onSubmit} />)
+    renderWithRouter(<AssessmentsForm assessment={sampleAssessment} onSubmit={onSubmit} />)
 
   it('renders only first assessment item initially', async () => {
     renderComponent()

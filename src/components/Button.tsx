@@ -1,11 +1,17 @@
-import React, { ButtonHTMLAttributes } from 'react'
+import React, { ReactNode } from 'react'
 import cx from 'classnames'
 
 type IconType = 'prev' | 'next' | 'reload'
 
-interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface Props {
   icon?: IconType
   iconPosition?: 'left' | 'right'
+  type?: 'submit' | 'button'
+  children: ReactNode
+  disabled?: boolean
+  onClick?: () => void
+  form?: string
+  style?: 'WARNING' | 'SUCCESS'
 }
 
 export const Button = ({
@@ -13,6 +19,7 @@ export const Button = ({
   icon,
   iconPosition = 'right',
   type = 'button',
+  style,
   ...props
 }: Props) => {
   const classes = cx(
@@ -29,18 +36,22 @@ export const Button = ({
     'dark:text-amber-400',
     'dark:bg-blue-900',
     {
-      'bg-blue-500': type !== 'submit',
+      'bg-blue-500': type === 'button' && !style,
+      'bg-red-500': type === 'button' && style === 'WARNING',
       'bg-green-500': type === 'submit',
       'opacity-50': props.disabled,
       'cursor-not-allowed': props.disabled,
       'text-white': !props.disabled,
       'hover:bg-blue-700': !props.disabled,
       'hover:bg-green-700': !props.disabled && type === 'submit',
+      'hover:bg-red-700': !props.disabled && style === 'WARNING',
 
       'dark:bg-blue-800': type !== 'submit',
       'dark:bg-green-800': type === 'submit',
+      'dark:bg-red-800': style === 'WARNING',
       'dark:hover:bg-blue-900': !props.disabled && type !== 'submit',
       'dark:hover:bg-green-900': !props.disabled && type === 'submit',
+      'dark:hover:bg-red-900': !props.disabled && style === 'WARNING',
     },
   )
 
