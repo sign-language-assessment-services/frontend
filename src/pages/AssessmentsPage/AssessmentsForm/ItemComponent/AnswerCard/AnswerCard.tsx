@@ -2,14 +2,13 @@ import React from 'react'
 import cx from 'classnames'
 import { ChoiceContentContainer } from './ChoiceLabel/ChoiceContentContainer'
 import { AnswerCardFooter } from './AnswerCardFooter/AnswerCardFooter'
-
-import { Choice } from '../../../models/choice'
+import { Multimedia } from '../../../models/multimedia'
 
 interface Props {
   checked: boolean
   choiceId: string
   onChange: () => void
-  choice: Choice
+  choice: Multimedia
 }
 
 export const AnswerCard = ({ checked, choice, onChange, choiceId }: Props) => {

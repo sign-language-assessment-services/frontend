@@ -1,5 +1,5 @@
-import { Video } from './video'
+import { Multimedia } from './multimedia'
 
 export interface StaticItem {
-  content: Video
+  content: Multimedia
 }

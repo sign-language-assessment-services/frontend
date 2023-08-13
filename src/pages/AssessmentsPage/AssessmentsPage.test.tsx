@@ -13,10 +13,11 @@ describe('AssessmentsPage', () => {
     items: [
       {
         position: 0,
-        question: { text: 'Who is better?', type: 'text' },
+        question: { url: 'https://question.video.example.com', type: 'video' },
         choices: [
-          { type: 'text', text: 'Cats' },
-          { type: 'text', text: 'Dogs' },
+          { type: 'video', url: 'https://choice1.video.example.com' },
+          { type: 'video', url: 'https://choice2.video.example.com' },
+          { type: 'video', url: 'https://choice3.video.example.com' },
         ],
       },
     ],
@@ -35,7 +36,7 @@ describe('AssessmentsPage', () => {
     expect(fetch).toHaveBeenCalledWith('/api/assessments/2', expect.anything())
 
     await waitUntilSubmitButtonRendered()
-    await userEvent.click(screen.getByLabelText(/cats/i))
+    await userEvent.click(screen.getByLabelText(/antwort 1/i))
 
     await userEvent.click(submitButton())
     await waitFor(() =>
@@ -57,10 +58,10 @@ describe('AssessmentsPage', () => {
   it('hides Submit button and Form after getting scoring results', async () => {
     renderWithRouter(<App />, '/assessments/2')
     await waitUntilSubmitButtonRendered()
-    expect(screen.getByRole('checkbox', { name: /Cats/i })).toBeInTheDocument()
+    expect(screen.getByRole('checkbox', { name: /antwort 1/i })).toBeInTheDocument()
     await userEvent.click(submitButton())
     expect(screen.queryByRole('button', { name: /test absenden/i })).not.toBeInTheDocument()
-    expect(screen.queryByRole('checkbox', { name: /Cats/i })).not.toBeInTheDocument()
+    expect(screen.queryByRole('checkbox', { name: /antwort 1/i })).not.toBeInTheDocument()
   })
 
   it('navigates to assessments list when cancel button was clicked', async () => {

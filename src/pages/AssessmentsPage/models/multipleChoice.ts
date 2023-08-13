@@ -1,8 +1,7 @@
-import { Choice } from './choice'
-import { Question } from './question'
+import { Multimedia } from './multimedia'
 
 export interface MultipleChoice {
   position: number
-  question: Question
-  choices: Choice[]
+  question: Multimedia
+  choices: Multimedia[]
 }

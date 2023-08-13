@@ -1,5 +1,6 @@
 import React from 'react'
 import { StaticItem } from '../../models/staticItem'
+import { MultimediaComponent } from '../../../../components/MultimediaComponent'
 import cx from 'classnames'
 
 interface Props {
@@ -7,5 +8,7 @@ interface Props {
 }
 
 export const StaticItemComponent: React.FC<Props> = ({ item: { content } }) => (
-  <video className={cx('max-h-[70vh]')} src={content.url} controls muted />
+  <div className={cx('max-h-[70vh]')}>
+    <MultimediaComponent multimedia={content} />
+  </div>
 )

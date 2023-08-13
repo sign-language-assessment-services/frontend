@@ -1,8 +1,9 @@
 import cx from 'classnames'
 import React from 'react'
-import { Question } from '../../../models/question'
+import { Multimedia } from '../../../models/multimedia'
+import { MultimediaComponent } from '../../../../../components/MultimediaComponent'
 
-const QuestionCard = ({ question }: { question: Question }) => (
+const QuestionCard = ({ question }: { question: Multimedia }) => (
   <div className={cx('flex', 'text-4xl', 'items-center', 'justify-between', 'p-6')}>
     <h3
       className={cx(
@@ -19,8 +20,7 @@ const QuestionCard = ({ question }: { question: Question }) => (
       )}
     >
       <span>
-        {question.type === 'video' && <video src={question.url} controls muted />}
-        {question.type === 'text' && question.text}
+        <MultimediaComponent multimedia={question} />
       </span>
     </h3>
   </div>
