@@ -18,6 +18,7 @@ describe('AssessmentsForm', () => {
     name: 'Animals',
     items: [
       {
+        position: 0,
         question: { text: 'Who is better?', type: 'text' },
         choices: [
           { type: 'text', text: 'Cats' },
@@ -25,6 +26,7 @@ describe('AssessmentsForm', () => {
         ],
       },
       {
+        position: 1,
         question: { text: 'Which Buffy character is the best?', type: 'text' },
         choices: [
           { type: 'text', text: 'Giles' },
@@ -33,6 +35,7 @@ describe('AssessmentsForm', () => {
         ],
       },
       {
+        position: 2,
         question: { url: 'https://question.video.example.com', type: 'video' },
         choices: [
           { type: 'video', url: 'https://choice1.video.example.com' },

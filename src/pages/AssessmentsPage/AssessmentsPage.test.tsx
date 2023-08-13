@@ -12,6 +12,7 @@ describe('AssessmentsPage', () => {
     name: 'Animals',
     items: [
       {
+        position: 0,
         question: { text: 'Who is better?', type: 'text' },
         choices: [
           { type: 'text', text: 'Cats' },

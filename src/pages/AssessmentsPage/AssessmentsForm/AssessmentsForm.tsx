@@ -16,7 +16,7 @@ interface Props {
 
 export const AssessmentsForm: React.FC<Props> = ({ assessment: { items, name }, onSubmit }) => {
   const initialState = useMemo(
-    () => Object.fromEntries(items.map((_, index) => [index, []])),
+    () => Object.fromEntries(items.map((item) => [item.position, []])),
     [items.length],
   )
   const navigate = useNavigate()
