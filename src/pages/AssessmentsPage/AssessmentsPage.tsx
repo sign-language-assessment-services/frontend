@@ -1,11 +1,13 @@
 import React, { ReactElement, useState } from 'react'
-import { Assessment, ScoringResult, Submission } from './models'
 import ScoringResultComponent from './ScoringResult/ScoringResult'
 import useFetchData from '../../useFetch'
 import { useFetchWithAuth } from '../../useFetchWithAuth'
 import { AssessmentsForm } from './AssessmentsForm/AssessmentsForm'
 import { ErrorMessage } from '../../components/ErrorMessage'
 import { useParams } from 'react-router'
+import { Assessment } from './models/assessment'
+import { Submission } from './models/submission'
+import { ScoringResult } from './models/scoringResult'
 
 export const AssessmentsPage = (): ReactElement | null => {
   const fetch = useFetchWithAuth()

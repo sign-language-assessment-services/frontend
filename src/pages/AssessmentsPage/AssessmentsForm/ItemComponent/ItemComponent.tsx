@@ -1,8 +1,8 @@
-import { Item } from '../../models'
 import { AnswerCard } from './AnswerCard/AnswerCard'
 import React from 'react'
 import cx from 'classnames'
 import QuestionCard from './QuestionCard/QuestionCard'
+import { Item } from '../../models/item'
 
 interface Props {
   selectedChoices: string[]

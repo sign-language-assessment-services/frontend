@@ -1,6 +1,6 @@
-import { Question } from '../../../models'
 import cx from 'classnames'
 import React from 'react'
+import { Question } from '../../../models/question'
 
 const QuestionCard = ({ question }: { question: Question }) => (
   <div className={cx('flex', 'text-4xl', 'items-center', 'justify-between', 'p-6')}>

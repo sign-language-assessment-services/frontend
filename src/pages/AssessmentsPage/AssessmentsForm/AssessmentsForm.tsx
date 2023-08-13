@@ -1,4 +1,3 @@
-import { Assessment, Submission } from '../models'
 import React, { FormEventHandler, useMemo, useState } from 'react'
 import { ItemComponent } from './ItemComponent/ItemComponent'
 import { Button } from '../../../components/Button'
@@ -7,6 +6,8 @@ import { Footer } from '../../../components/layout/Footer'
 import { PageContainer } from '../../../components/layout/PageContainer'
 import { Main } from '../../../components/layout/Main'
 import { useNavigate } from 'react-router'
+import { Assessment } from '../models/assessment'
+import { Submission } from '../models/submission'
 
 interface Props {
   assessment: Assessment

@@ -1,11 +1,11 @@
 import { screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import React from 'react'
-import { Assessment } from './models'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { fallbackSettings } from '../../settings/Settings'
 import { renderWithRouter } from '../../testutils/renderWithRouter'
 import { App } from '../../App'
+import { Assessment } from './models/assessment'
 
 describe('AssessmentsPage', () => {
   const sampleAssessment: Assessment = {

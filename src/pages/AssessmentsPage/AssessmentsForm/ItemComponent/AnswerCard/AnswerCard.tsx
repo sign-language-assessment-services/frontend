@@ -2,7 +2,8 @@ import React from 'react'
 import cx from 'classnames'
 import { ChoiceContentContainer } from './ChoiceLabel/ChoiceContentContainer'
 import { AnswerCardFooter } from './AnswerCardFooter/AnswerCardFooter'
-import { Choice } from '../../../models'
+
+import { Choice } from '../../../models/choice'
 
 interface Props {
   checked: boolean

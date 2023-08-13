@@ -1,6 +1,7 @@
 import cx from 'classnames'
 import React from 'react'
-import { Choice } from '../../../../models'
+
+import { Choice } from '../../../../models/choice'
 
 interface Props {
   checked: boolean
