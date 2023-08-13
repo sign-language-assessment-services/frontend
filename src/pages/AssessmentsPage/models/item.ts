@@ -1,8 +1,4 @@
-import { Choice } from './choice'
-import { Question } from './question'
+import { MultipleChoice } from './multipleChoice'
+import { StaticItem } from './staticItem'
 
-export interface Item {
-  position: number
-  question: Question
-  choices: Choice[]
-}
+export type Item = StaticItem | MultipleChoice

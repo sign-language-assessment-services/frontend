@@ -1,40 +1,24 @@
-import { AnswerCard } from './AnswerCard/AnswerCard'
-import React from 'react'
-import cx from 'classnames'
-import QuestionCard from './QuestionCard/QuestionCard'
 import { Item } from '../../models/item'
+import { MultipleChoiceComponent } from './MultipleChoiceComponent'
+import React from 'react'
+import { isMultipleChoice } from './typeGuards'
+import { StaticItemComponent } from './StaticItemComponent'
 
 interface Props {
+  item: Item
   selectedChoices: string[]
   handleChange: (choiceIndex: string) => void
-  item: Item
 }
 
-export const ItemComponent: React.FC<Props> = ({ handleChange, selectedChoices, item }) => (
-  <div className={cx('flex', 'flex-grow', 'justify-center', 'items-stretch', 'p-4')}>
-    <QuestionCard question={item.question} />
-    <div
-      className={cx(
-        'flex',
-        'flex-wrap',
-        'shrink-2',
-        'items-end',
-        'justify-center',
-        'content-center',
-        'gap-6',
-      )}
-    >
-      {item.choices.map((choice, choiceIndex) => {
-        return (
-          <AnswerCard
-            key={choiceIndex}
-            checked={selectedChoices.includes(choiceIndex.toString()) ?? false}
-            onChange={() => handleChange(choiceIndex.toString())}
-            choice={choice}
-            choiceId={(choiceIndex + 1).toString()}
-          />
-        )
-      })}
-    </div>
-  </div>
-)
+export const ItemComponent: React.FC<Props> = ({ item, selectedChoices, handleChange }) => {
+  if (isMultipleChoice(item)) {
+    return (
+      <MultipleChoiceComponent
+        selectedChoices={selectedChoices}
+        handleChange={handleChange}
+        item={item}
+      />
+    )
+  }
+  return <StaticItemComponent item={item} />
+}

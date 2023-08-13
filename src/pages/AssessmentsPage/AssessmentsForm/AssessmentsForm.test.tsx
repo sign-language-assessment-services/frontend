@@ -19,23 +19,10 @@ describe('AssessmentsForm', () => {
     items: [
       {
         position: 0,
-        question: { text: 'Who is better?', type: 'text' },
-        choices: [
-          { type: 'text', text: 'Cats' },
-          { type: 'text', text: 'Dogs' },
-        ],
+        content: { url: 'https://introduction.video.example.com', type: 'video' },
       },
       {
         position: 1,
-        question: { text: 'Which Buffy character is the best?', type: 'text' },
-        choices: [
-          { type: 'text', text: 'Giles' },
-          { type: 'text', text: 'Spike' },
-          { type: 'text', text: 'Xander' },
-        ],
-      },
-      {
-        position: 2,
         question: { url: 'https://question.video.example.com', type: 'video' },
         choices: [
           { type: 'video', url: 'https://choice1.video.example.com' },
@@ -50,30 +37,27 @@ describe('AssessmentsForm', () => {
   const renderComponent = () =>
     renderWithRouter(<AssessmentsForm assessment={sampleAssessment} onSubmit={onSubmit} />)
 
-  it('renders only first assessment item initially', async () => {
-    renderComponent()
+  it('renders static video item initially', async () => {
+    const { container } = renderComponent()
+    const videos = container.querySelectorAll('video')
+    expect(videos).toHaveLength(1)
+    expect(videos[0].getAttribute('src')).toEqual('https://introduction.video.example.com')
 
     await waitUntilNextButtonRendered()
-    expect(screen.getByRole('heading', { name: /animals/i })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: /who is better[?]/i })).toBeInTheDocument()
-    expect(screen.getByText(/cats/i)).toBeInTheDocument()
-    expect(screen.getByText(/dogs/i)).toBeInTheDocument()
-
-    expect(
-      screen.queryByRole('heading', { name: /which buffy character is the best[?]/i }),
-    ).not.toBeInTheDocument()
   })
 
-  it('renders next assessment item after clicking on Next', async () => {
-    renderComponent()
+  it('renders video question and choices', async () => {
+    const { container } = renderComponent()
 
     await waitUntilNextButtonRendered()
     await userEvent.click(nextButton())
-    await waitFor(() =>
-      expect(
-        screen.getByRole('heading', { name: /which buffy character is the best[?]/i }),
-      ).toBeInTheDocument(),
-    )
+
+    const videos = container.querySelectorAll('video')
+    expect(videos).toHaveLength(4)
+    expect(videos[0].getAttribute('src')).toEqual('https://question.video.example.com')
+    expect(videos[1].getAttribute('src')).toEqual('https://choice1.video.example.com')
+    expect(videos[2].getAttribute('src')).toEqual('https://choice2.video.example.com')
+    expect(videos[3].getAttribute('src')).toEqual('https://choice3.video.example.com')
   })
 
   it('disables Next button on last item', async () => {
@@ -81,7 +65,6 @@ describe('AssessmentsForm', () => {
 
     await waitUntilNextButtonRendered()
 
-    await userEvent.click(nextButton())
     await userEvent.click(nextButton())
     await waitUntilSubmitButtonRendered()
 
@@ -94,14 +77,12 @@ describe('AssessmentsForm', () => {
     await waitUntilNextButtonRendered()
     await userEvent.click(nextButton())
     await waitFor(() =>
-      expect(
-        screen.getByRole('heading', { name: /which buffy character is the best[?]/i }),
-      ).toBeInTheDocument(),
+      expect(screen.getByRole('heading', { name: /seite 2/i })).toBeInTheDocument(),
     )
 
     await userEvent.click(backButton())
 
-    expect(screen.getByRole('heading', { name: /who is better[?]/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /seite 1/i })).toBeInTheDocument()
   })
 
   it('disables Back button on first item', async () => {
@@ -119,37 +100,16 @@ describe('AssessmentsForm', () => {
 
     await waitUntilNextButtonRendered()
 
-    await userEvent.click(screen.getByLabelText(/cats/i))
     await userEvent.click(nextButton())
-
-    await userEvent.click(screen.getByLabelText(/xander/i))
-    await userEvent.click(nextButton())
+    await waitUntilSubmitButtonRendered()
 
     await userEvent.click(screen.getByLabelText('Antwort 2'))
 
-    await waitUntilSubmitButtonRendered()
     await userEvent.click(submitButton())
     await waitFor(() => expect(onSubmit).toHaveBeenCalledTimes(1))
     expect(onSubmit).toHaveBeenCalledWith({
-      '0': ['0'],
-      '1': ['2'],
-      '2': ['1'],
+      '1': ['1'],
     })
-  })
-
-  it('renders video question and choices', async () => {
-    const { container } = renderComponent()
-
-    await waitUntilNextButtonRendered()
-    await userEvent.click(nextButton())
-    await userEvent.click(nextButton())
-
-    const videos = container.querySelectorAll('video')
-    expect(videos).toHaveLength(4)
-    expect(videos[0].getAttribute('src')).toEqual('https://question.video.example.com')
-    expect(videos[1].getAttribute('src')).toEqual('https://choice1.video.example.com')
-    expect(videos[2].getAttribute('src')).toEqual('https://choice2.video.example.com')
-    expect(videos[3].getAttribute('src')).toEqual('https://choice3.video.example.com')
   })
 })
 

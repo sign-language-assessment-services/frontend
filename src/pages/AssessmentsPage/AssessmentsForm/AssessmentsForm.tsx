@@ -1,5 +1,4 @@
 import React, { FormEventHandler, useMemo, useState } from 'react'
-import { ItemComponent } from './ItemComponent/ItemComponent'
 import { Button } from '../../../components/Button'
 import { Header } from '../../../components/layout/Header'
 import { Footer } from '../../../components/layout/Footer'
@@ -8,6 +7,8 @@ import { Main } from '../../../components/layout/Main'
 import { useNavigate } from 'react-router'
 import { Assessment } from '../models/assessment'
 import { Submission } from '../models/submission'
+import { isMultipleChoice } from './ItemComponent/typeGuards'
+import { ItemComponent } from './ItemComponent/ItemComponent'
 
 interface Props {
   assessment: Assessment
@@ -15,9 +16,10 @@ interface Props {
 }
 
 export const AssessmentsForm: React.FC<Props> = ({ assessment: { items, name }, onSubmit }) => {
+  const multipleChoiceItems = items.filter(isMultipleChoice)
   const initialState = useMemo(
-    () => Object.fromEntries(items.map((item) => [item.position, []])),
-    [items.length],
+    () => Object.fromEntries(multipleChoiceItems.map((item) => [item.position, []])),
+    [multipleChoiceItems],
   )
   const navigate = useNavigate()
 
@@ -40,17 +42,17 @@ export const AssessmentsForm: React.FC<Props> = ({ assessment: { items, name }, 
   return (
     <PageContainer>
       <Header>
-        {name} – Aufgabe {currentItemIndex + 1} / {items.length}
+        {name} – Seite {currentItemIndex + 1} / {items.length}
       </Header>
 
       <Main center>
         <form id="assessmentForm" onSubmit={onFormSubmit}>
           <ItemComponent
+            item={items[currentItemIndex]}
             selectedChoices={submission[currentItemIndex.toString()]}
             handleChange={(choiceIndex: string) =>
               handleChange(currentItemIndex.toString(), choiceIndex)
             }
-            item={items[currentItemIndex]}
           />
         </form>
       </Main>
