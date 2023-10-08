@@ -14,11 +14,19 @@ describe('App', () => {
         return <span data-testid="AssessmentsPage" />
       },
     }))
+
     vi.mock('./pages/AssessmentsListPage', () => ({
       AssessmentsListPage: function AssessmentsListPage() {
         return <span data-testid="AssessmentsListPage" />
       },
     }))
+
+    vi.mock('./pages/SubmissionsListPage', () => ({
+      SubmissionsListPage: function SubmissionsListPage() {
+        return <span data-testid="SubmissionsListPage" />
+      },
+    }))
+
     vi.mock('./settings/useSettings', () => ({
       useSettings: () => fallbackSettings,
     }))
@@ -35,6 +43,13 @@ describe('App', () => {
     it.each(['/', '/assessments'])('renders for route: %s', (route: string) => {
       renderApp(route)
       expect(screen.getByTestId('AssessmentsListPage')).toBeInTheDocument()
+    })
+  })
+
+  describe('Submissions list page', () => {
+    it('renders for route /submissions', () => {
+      renderApp('/submissions')
+      expect(screen.getByTestId('SubmissionsListPage')).toBeInTheDocument()
     })
   })
 

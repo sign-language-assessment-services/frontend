@@ -32,7 +32,7 @@ export const useAuthentication = () => {
     accountManagement: useCallback(() => keycloak.accountManagement(), [keycloak]),
     user: {
       name: keycloak.idTokenParsed?.name,
-      username: keycloak.idTokenParsed?.preferred_username,
+      id: keycloak.idTokenParsed?.sub,
     },
   }
 }
