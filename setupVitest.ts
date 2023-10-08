@@ -1,6 +1,6 @@
 import createFetchMock from 'vitest-fetch-mock'
 import { afterEach, expect, vi } from 'vitest'
-import matchers from '@testing-library/jest-dom/matchers'
+import * as matchers from '@testing-library/jest-dom/matchers'
 import { cleanup } from '@testing-library/react'
 
 const fetchMock = createFetchMock(vi)
