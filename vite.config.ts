@@ -7,8 +7,8 @@ import svgrPlugin from 'vite-plugin-svgr'
 import eslint from 'vite-plugin-eslint'
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react(), viteTsconfigPaths(), svgrPlugin(), eslint()],
+export default defineConfig((env) => ({
+  plugins: [react(), viteTsconfigPaths(), svgrPlugin(), env.mode !== 'test' && eslint()],
   build: {
     minify: true,
   },
@@ -27,4 +27,4 @@ export default defineConfig({
     css: false,
     mockReset: true,
   },
-})
+}))
