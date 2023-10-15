@@ -39,15 +39,12 @@ describe('SubmissionsListPage', () => {
 
   it('displays submissions', async () => {
     renderWithRouter(<SubmissionsListPage />, '/submissions/')
-    await waitFor(() => expect(screen.getByText(CURRENT_USER_ID)).toBeInTheDocument())
     await waitUntilDataWasFetched(CURRENT_USER_ID)
-    expect(screen.getAllByRole('heading', { name: /Ergebnisse/i }).length).toBeGreaterThan(0)
+    expect(screen.getAllByRole('heading', { name: /Meine Ergebnisse/i }).length).toBeGreaterThan(0)
 
-    expect(screen.getByRole('columnheader', { name: 'User' })).toBeInTheDocument()
     expect(screen.getByRole('columnheader', { name: 'Test' })).toBeInTheDocument()
     expect(screen.getByRole('columnheader', { name: 'Punkte' })).toBeInTheDocument()
 
-    expect(screen.getByRole('cell', { name: CURRENT_USER_ID })).toBeInTheDocument()
     expect(screen.getByRole('cell', { name: 'assessment-1' })).toBeInTheDocument()
     expect(screen.getByRole('cell', { name: '42001' })).toBeInTheDocument()
   })

@@ -16,17 +16,16 @@ export const SubmissionsListPage = (): ReactElement | null => {
 
   return (
     <PageContainer>
-      <Header>Ergebnisse</Header>
+      <Header>Meine Ergebnisse</Header>
 
       <Main>
         <section className={cx('flex', 'flex-col', 'gap-10')}>
-          <h1 className={cx('font-bold', 'text-4xl', 'text-center')}>Ergebnisse</h1>
+          <h1 className={cx('font-bold', 'text-4xl', 'text-center')}>Meine Ergebnisse</h1>
           <table
             className={cx('border', 'border-spacing-1', 'border-separate', 'border-slate-500')}
           >
             <thead>
               <tr>
-                <th className={cx('border', 'p-2', 'text-left')}>User</th>
                 <th className={cx('border', 'p-2', 'text-left')}>Test</th>
                 <th className={cx('border', 'p-2', 'text-left')}>Punkte</th>
               </tr>
@@ -34,7 +33,6 @@ export const SubmissionsListPage = (): ReactElement | null => {
             <tbody>
               {submissions.map((submission) => (
                 <tr key={submission.id}>
-                  <td className={cx('border', 'p-2')}>{submission.user_id}</td>
                   <td className={cx('border', 'p-2')}>{submission.assessment_id}</td>
                   <td className={cx('border', 'p-2')}>{submission.score}</td>
                 </tr>
