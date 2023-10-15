@@ -21,20 +21,22 @@ export const SubmissionsListPage = (): ReactElement | null => {
       <Main>
         <section className={cx('flex', 'flex-col', 'gap-10')}>
           <h1 className={cx('font-bold', 'text-4xl', 'text-center')}>Ergebnisse</h1>
-          <table className={cx('w-[600px]')}>
+          <table
+            className={cx('border', 'border-spacing-1', 'border-separate', 'border-slate-500')}
+          >
             <thead>
               <tr>
-                <th>User</th>
-                <th>Test</th>
-                <th>Punkte</th>
+                <th className={cx('border', 'p-2', 'text-left')}>User</th>
+                <th className={cx('border', 'p-2', 'text-left')}>Test</th>
+                <th className={cx('border', 'p-2', 'text-left')}>Punkte</th>
               </tr>
             </thead>
             <tbody>
               {submissions.map((submission) => (
                 <tr key={submission.id}>
-                  <td>{submission.user_id}</td>
-                  <td>{submission.assessment_id}</td>
-                  <td>{submission.score}</td>
+                  <td className={cx('border', 'p-2')}>{submission.user_id}</td>
+                  <td className={cx('border', 'p-2')}>{submission.assessment_id}</td>
+                  <td className={cx('border', 'p-2')}>{submission.score}</td>
                 </tr>
               ))}
             </tbody>
