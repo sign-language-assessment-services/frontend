@@ -13,7 +13,10 @@ interface Props {
   scoringResult: ScoringResultModel
 }
 
-const ScoringResult = ({ assessment, scoringResult: { score } }: Props): ReactElement => {
+const ScoringResult = ({
+  assessment,
+  scoringResult: { points, maximum_points, percentage },
+}: Props): ReactElement => {
   const navigate = useNavigate()
   return (
     <PageContainer>
@@ -21,7 +24,12 @@ const ScoringResult = ({ assessment, scoringResult: { score } }: Props): ReactEl
       <Main center>
         <div className="flex flex-col gap-6 items-center">
           <span>Sie haben</span>
-          <span className="text-6xl font-bold">{score} Punkt(e)</span>
+          <span className="text-6xl font-bold">
+            {points}
+            {' '}/{' '}
+            {maximum_points} Punkte ({percentage * 100}
+            {' '}%)
+          </span>
           <span>erreicht</span>
         </div>
       </Main>

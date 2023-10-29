@@ -6,6 +6,7 @@ import { fallbackSettings } from '../../settings/Settings'
 import { renderWithRouter } from '../../testutils/renderWithRouter'
 import { App } from '../../App'
 import { Assessment } from './models/assessment'
+import { ScoringResult } from './models/scoringResult'
 
 describe('AssessmentsPage', () => {
   const sampleAssessment: Assessment = {
@@ -22,10 +23,16 @@ describe('AssessmentsPage', () => {
       },
     ],
   }
+  const sampleScoringResult: ScoringResult = {
+    points: 1337,
+    maximum_points: 1500,
+    percentage: 0.891,
+  }
+
   beforeEach(() => {
     fetchMock.resetMocks()
     fetchMock.mockOnceIf('/api/assessments/2', JSON.stringify(sampleAssessment))
-    fetchMock.mockOnceIf('/api/assessments/2/submissions/', JSON.stringify({ score: 1337010 }))
+    fetchMock.mockOnceIf('/api/assessments/2/submissions/', JSON.stringify(sampleScoringResult))
     vi.mock('../settings/useSettings', () => ({
       useSettings: () => fallbackSettings,
     }))
@@ -52,7 +59,8 @@ describe('AssessmentsPage', () => {
     renderWithRouter(<App />, '/assessments/2')
     await waitUntilSubmitButtonRendered()
     await userEvent.click(submitButton())
-    await waitFor(() => expect(screen.getByText(/1337010/)).toBeInTheDocument())
+    await waitFor(() => expect(screen.getByText(/1337\s*\/\s*1500/)).toBeInTheDocument())
+    expect(screen.getByText(/\(89\.1\s*%\)/)).toBeInTheDocument()
   })
 
   it('hides Submit button and Form after getting scoring results', async () => {

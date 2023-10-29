@@ -11,13 +11,16 @@ describe('SubmissionsListPage', () => {
   const sampleSubmissions: Submission[] = [
     {
       id: 'submission-1',
+      created_at: '2023-10-29T12:00:00Z',
       user_id: CURRENT_USER_ID,
       assessment_id: 'assessment-1',
       answers: {
         '1': [],
         '2': [0, 1],
       },
-      score: 42001,
+      points: 40,
+      maximum_points: 50,
+      percentage: 0.8,
     },
   ]
 
@@ -44,9 +47,11 @@ describe('SubmissionsListPage', () => {
 
     expect(screen.getByRole('columnheader', { name: 'Test' })).toBeInTheDocument()
     expect(screen.getByRole('columnheader', { name: 'Punkte' })).toBeInTheDocument()
+    expect(screen.getByRole('columnheader', { name: 'Datum' })).toBeInTheDocument()
 
     expect(screen.getByRole('cell', { name: 'assessment-1' })).toBeInTheDocument()
-    expect(screen.getByRole('cell', { name: '42001' })).toBeInTheDocument()
+    expect(screen.getByRole('cell', { name: /40\s*\/\s*50\s+\(80\s*%\)/ })).toBeInTheDocument()
+    expect(screen.getByRole('cell', { name: '2023-10-29T12:00:00Z' })).toBeInTheDocument()
   })
 })
 const waitUntilDataWasFetched = async (userId: string) =>

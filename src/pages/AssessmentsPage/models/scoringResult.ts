@@ -1,3 +1,5 @@
 export interface ScoringResult {
-  score: number
+  points: number
+  maximum_points: number
+  percentage: number
 }

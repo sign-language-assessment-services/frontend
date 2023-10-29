@@ -28,13 +28,20 @@ export const SubmissionsListPage = (): ReactElement | null => {
               <tr>
                 <th className={cx('border', 'p-2', 'text-left')}>Test</th>
                 <th className={cx('border', 'p-2', 'text-left')}>Punkte</th>
+                <th className={cx('border', 'p-2', 'text-left')}>Datum</th>
               </tr>
             </thead>
             <tbody>
               {submissions.map((submission) => (
                 <tr key={submission.id}>
                   <td className={cx('border', 'p-2')}>{submission.assessment_id}</td>
-                  <td className={cx('border', 'p-2')}>{submission.score}</td>
+                  <td className={cx('border', 'p-2')}>
+                    {submission.points}
+                    {' '}/{' '}
+                    {submission.maximum_points} ({submission.percentage * 100}
+                    {' '}%)
+                  </td>
+                  <td className={cx('border', 'p-2')}>{submission.created_at}</td>
                 </tr>
               ))}
             </tbody>
