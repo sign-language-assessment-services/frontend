@@ -51,9 +51,10 @@ describe('SubmissionsListPage', () => {
 
     expect(screen.getByRole('cell', { name: 'assessment-1' })).toBeInTheDocument()
     expect(screen.getByRole('cell', { name: /40\s*\/\s*50\s+\(80\s*%\)/ })).toBeInTheDocument()
-    expect(screen.getByRole('cell', { name: '2023-10-29T12:00:00Z' })).toBeInTheDocument()
+    expect(screen.getByRole('cell', { name: '29.10.23, 12:00' })).toBeInTheDocument()
   })
 })
+
 const waitUntilDataWasFetched = async (userId: string) =>
   await waitFor(() =>
     expect(fetch).toHaveBeenCalledWith(`/api/submissions/?user_id=${userId}`, {
