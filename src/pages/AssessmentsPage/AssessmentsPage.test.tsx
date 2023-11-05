@@ -60,7 +60,7 @@ describe('AssessmentsPage', () => {
     await waitUntilSubmitButtonRendered()
     await userEvent.click(submitButton())
     await waitFor(() => expect(screen.getByText(/1337\s*\/\s*1500/)).toBeInTheDocument())
-    expect(screen.getByText(/\(89\.1\s*%\)/)).toBeInTheDocument()
+    expect(screen.getByText(/\(89\s*%\)/)).toBeInTheDocument()
   })
 
   it('hides Submit button and Form after getting scoring results', async () => {

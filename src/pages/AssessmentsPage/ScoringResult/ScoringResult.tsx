@@ -7,6 +7,7 @@ import { Button } from '../../../components/Button'
 import { useNavigate } from 'react-router'
 import { Assessment } from '../models/assessment'
 import { ScoringResult as ScoringResultModel } from '../models/scoringResult'
+import { FormattedPercentage } from '../../../components/FormattedPercentage'
 
 interface Props {
   assessment: Assessment
@@ -27,8 +28,7 @@ const ScoringResult = ({
           <span className="text-6xl font-bold">
             {points}
             {' '}/{' '}
-            {maximum_points} Punkte ({percentage * 100}
-            {' '}%)
+            {maximum_points} Punkte (<FormattedPercentage value={percentage} />)
           </span>
           <span>erreicht</span>
         </div>
