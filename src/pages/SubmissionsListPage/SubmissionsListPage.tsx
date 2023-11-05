@@ -7,6 +7,7 @@ import useFetchData from '../../useFetch'
 import cx from 'classnames'
 import { useAuthentication } from '../../auth/useAuthentication'
 import { FormattedDateTime } from '../../components/FormattedDateTime'
+import { FormattedPercentage } from '../../components/FormattedPercentage'
 
 export const SubmissionsListPage = (): ReactElement | null => {
   const { user } = useAuthentication()
@@ -39,8 +40,8 @@ export const SubmissionsListPage = (): ReactElement | null => {
                   <td className={cx('border', 'p-2')}>
                     {submission.points}
                     {' '}/{' '}
-                    {submission.maximum_points} ({submission.percentage * 100}
-                    {' '}%)
+                    {submission.maximum_points} (
+                    <FormattedPercentage value={submission.percentage} />)
                   </td>
                   <td className={cx('border', 'p-2')}>
                     <FormattedDateTime value={submission.created_at} />
