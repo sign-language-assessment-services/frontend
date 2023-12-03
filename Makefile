@@ -33,6 +33,10 @@ test-interactive: install	## launches the test runner in the interactive watch m
 test: install	## runs all tests
 	CI=true npm run test
 
+.PHONY: coverage
+coverage:	## determines test coverage
+	npm run coverage
+
 .PHONY: run
 run: install	## runs the application in development mode
 	npm run start
