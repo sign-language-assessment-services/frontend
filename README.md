@@ -3,6 +3,8 @@
 This app is written in [TypeScript](https://www.typescriptlang.org/) and uses the [React](https://reactjs.org/) framework.
 It serves as a frontend for [sign-language-assessment-services/backend](https://github.com/sign-language-assessment-services/backend).
 
+This project is tested with [BrowserStack](https://www.browserstack.com/).
+
 ## Prerequisites
 
 The following software is required to use this app:
