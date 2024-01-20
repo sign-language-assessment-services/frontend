@@ -14,7 +14,6 @@ export const ChoiceContentContainer = ({ checked, choice }: Props) => {
     'justify-center',
     'items-center',
     'aspect-video',
-    'lg:w-[400px]',
     'bg-gray-50',
     'dark:bg-gray-700',
 
