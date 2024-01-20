@@ -28,6 +28,7 @@ export const MultipleChoiceComponent: React.FC<Props> = ({
         'md:justify-center',
         'gap-2',
         'min-[1600px]:gap-6',
+        'basis-1/2',
       )}
     >
       {item.choices.map((choice, choiceIndex) => {
