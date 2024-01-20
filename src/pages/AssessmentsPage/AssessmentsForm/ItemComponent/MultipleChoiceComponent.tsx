@@ -22,13 +22,13 @@ export const MultipleChoiceComponent: React.FC<Props> = ({
         'flex',
         'flex-col',
         'content-center',
-        'md:flex-wrap',
-        'md:flex-row',
         'items-stretch',
-        'md:justify-center',
         'gap-2',
-        'min-[1600px]:gap-6',
         'basis-1/2',
+        'sm:flex-wrap',
+        'sm:flex-row',
+        'sm:justify-center',
+        'min-[1700px]:gap-6',
       )}
     >
       {item.choices.map((choice, choiceIndex) => {
