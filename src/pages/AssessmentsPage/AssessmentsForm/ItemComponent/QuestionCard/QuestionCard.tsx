@@ -10,7 +10,7 @@ const QuestionCard = ({ question }: { question: Multimedia }) => (
         'flex',
         'justify-center',
         'items-center',
-        'max-[1600px]:max-w-2xl',
+        'max-[1700px]:max-w-2xl',
         'aspect-video',
         'border-2',
         'bg-gray-50',

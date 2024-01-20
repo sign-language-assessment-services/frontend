@@ -13,7 +13,7 @@ export const Main: React.FC<Props> = ({ children, center }) => (
       'dark:text-gray-100',
       'justify-center',
       'py-2',
-      'min-[1600px]:p-10',
+      'min-[1700px]:p-10',
       {
         'items-center': center,
       },
