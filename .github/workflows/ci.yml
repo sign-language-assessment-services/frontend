@@ -24,10 +24,6 @@ jobs:
         run: make lint
       - name: Test
         run: make test
-      - uses: actions/upload-artifact@master
-        with:
-          name: build-directory
-          path: dist
 
   publish:
     needs: build
@@ -38,10 +34,6 @@ jobs:
     if: github.event_name == 'push'
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/download-artifact@v4
-        with:
-          name: build-directory
-          path: dist
       - name: Build Docker image
         run: make docker-build
       - name: Log into registry
