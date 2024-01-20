@@ -10,6 +10,6 @@ export const MultimediaComponent: React.FC<Props> = ({ multimedia }: Props) => {
     case 'video':
       return <video src={multimedia.url} style={{ maxHeight: 'inherit' }} controls muted />
     case 'image':
-      return <img src={multimedia.url} />
+      return <img draggable={false} src={multimedia.url} />
   }
 }
