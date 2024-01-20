@@ -15,7 +15,7 @@ export const MultipleChoiceComponent: React.FC<Props> = ({
   selectedChoices,
   item,
 }) => (
-  <div className={cx('flex', 'flex-col', 'min-[1700px]:flex-row', 'gap-2', 'items-stretch')}>
+  <div className={cx('flex', 'flex-col', 'min-[1700px]:flex-row', 'gap-6', 'items-stretch')}>
     <QuestionCard question={item.question} />
     <div
       className={cx(
