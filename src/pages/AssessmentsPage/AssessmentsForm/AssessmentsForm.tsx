@@ -42,7 +42,7 @@ export const AssessmentsForm: React.FC<Props> = ({ assessment: { items, name }, 
   return (
     <PageContainer>
       <Header>
-        {name} – Seite {currentItemIndex + 1} / {items.length}
+        {name} – <span className="lg:inline">Seite</span> {currentItemIndex + 1} / {items.length}
       </Header>
 
       <Main center>

@@ -15,10 +15,14 @@ export const UserPanel = () => {
         onClick={() => accountManagement()}
         className="flex items-center gap-2 hover:drop-shadow-lg"
       >
-        <span className="text-sm">{user?.name}</span>
+        <span className="text-xs md:text-sm">{user?.name}</span>
         <AvatarIcon />
       </a>
-      <a className="font-bold text-sm hover:drop-shadow-lg" href="#" onClick={() => logout()}>
+      <a
+        className="font-bold text-xs md:text-sm hover:drop-shadow-lg"
+        href="#"
+        onClick={() => logout()}
+      >
         Abmelden
       </a>
     </div>

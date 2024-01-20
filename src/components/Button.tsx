@@ -31,8 +31,14 @@ export const Button = ({
     'font-bold',
     'rounded',
     'text-white',
-    'py-6',
-    'px-4',
+    'text-sm',
+    'md:text-xl',
+    'py-3',
+    'px-2',
+    'h-16',
+    'lg:h-20',
+    'lg:py-6',
+    'lg:px-4',
     'dark:text-amber-400',
     'dark:bg-blue-900',
     {
@@ -58,12 +64,12 @@ export const Button = ({
   const elements = icon ? (
     iconPosition === 'right' ? (
       <>
-        <span>{children}</span> <Icon type={icon} />
+        <span className="hidden lg:block">{children}</span> <Icon type={icon} />
       </>
     ) : (
       <>
         <Icon type={icon} />
-        <span>{children}</span>
+        <span className="hidden lg:block">{children}</span>
       </>
     )
   ) : (

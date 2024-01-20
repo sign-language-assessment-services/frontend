@@ -4,19 +4,18 @@ import { Multimedia } from '../../../models/multimedia'
 import { MultimediaComponent } from '../../../../../components/MultimediaComponent'
 
 const QuestionCard = ({ question }: { question: Multimedia }) => (
-  <div className={cx('flex', 'text-4xl', 'items-center', 'justify-between', 'p-6')}>
+  <div className={cx('flex', 'text-4xl', 'items-center', 'justify-between')}>
     <h3
       className={cx(
         'flex',
         'justify-center',
         'items-center',
-        'w-[600px]',
+        'max-[1600px]:max-w-2xl',
         'aspect-video',
         'border-2',
         'bg-gray-50',
         'dark:bg-gray-700',
         'dark:border-gray-400',
-        'shrink-1',
       )}
     >
       <span>

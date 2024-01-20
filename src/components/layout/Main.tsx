@@ -7,9 +7,17 @@ interface Props extends PropsWithChildren {
 
 export const Main: React.FC<Props> = ({ children, center }) => (
   <main
-    className={cx('flex-grow', 'flex', 'dark:text-gray-100', 'justify-center', 'p-10', {
-      'items-center': center,
-    })}
+    className={cx(
+      'flex-grow',
+      'flex',
+      'dark:text-gray-100',
+      'justify-center',
+      'py-2',
+      'min-[1600px]:p-10',
+      {
+        'items-center': center,
+      },
+    )}
   >
     {children}
   </main>

@@ -23,9 +23,9 @@ const ScoringResult = ({
     <PageContainer>
       <Header>{assessment.name}</Header>
       <Main center>
-        <div className="flex flex-col gap-6 items-center">
+        <div className="flex flex-col lg:gap-6 items-center">
           <span>Sie haben</span>
-          <span className="text-6xl font-bold">
+          <span className="lg:text-6xl font-bold">
             {points}
             {' '}/{' '}
             {maximum_points} Punkte (<FormattedPercentage value={percentage} />)
