@@ -12,8 +12,10 @@ export const Main: React.FC<Props> = ({ children, center }) => (
       'flex',
       'dark:text-gray-100',
       'justify-center',
-      'py-2',
-      'min-[1700px]:p-10',
+      'bg-gradient-to-r',
+      'from-gray-200',
+      'via-gray-50',
+      'to-gray-200',
       {
         'items-center': center,
       },

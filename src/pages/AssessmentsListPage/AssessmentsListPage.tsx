@@ -21,7 +21,7 @@ export const AssessmentsListPage = (): ReactElement | null => {
       <Header>Tests</Header>
 
       <Main>
-        <section className={cx('flex', 'flex-col', 'gap-10')}>
+        <section className={cx('flex', 'flex-col', 'gap-10', 'p-4')}>
           <h1 className={cx('font-bold', 'text-4xl', 'text-center')}>Tests</h1>
           <table className={cx('w-[600px]')}>
             <tbody>{assessmentSummaryComponents}</tbody>

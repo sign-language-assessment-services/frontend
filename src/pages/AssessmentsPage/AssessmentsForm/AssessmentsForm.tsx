@@ -46,7 +46,7 @@ export const AssessmentsForm: React.FC<Props> = ({ assessment: { items, name }, 
       </Header>
 
       <Main center>
-        <form id="assessmentForm" onSubmit={onFormSubmit}>
+        <form id="assessmentForm" className="h-full w-full" onSubmit={onFormSubmit}>
           <ItemComponent
             item={items[currentItemIndex]}
             selectedChoices={submission[currentItemIndex.toString()]}

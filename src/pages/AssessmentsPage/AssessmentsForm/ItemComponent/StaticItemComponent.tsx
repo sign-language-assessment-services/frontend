@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const StaticItemComponent: React.FC<Props> = ({ item: { content } }) => (
-  <div className={cx('max-h-[70vh]')}>
+  <div className={cx('flex', 'h-full', 'justify-center', 'items-center')}>
     <MultimediaComponent multimedia={content} />
   </div>
 )

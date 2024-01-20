@@ -38,7 +38,6 @@ export const AnswerCard = ({ checked, choice, onChange, choiceId }: Props) => {
             'flex',
             'flex-col',
             'justify-around',
-            'items-stretch',
             'border-2',
             'bg-white',
             'dark:border-gray-400',
