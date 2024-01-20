@@ -15,16 +15,17 @@ export const MultipleChoiceComponent: React.FC<Props> = ({
   selectedChoices,
   item,
 }) => (
-  <div className={cx('flex', 'flex-col', 'min-[1600px]:flex-row', 'gap-2', 'items-center')}>
+  <div className={cx('flex', 'flex-col', 'min-[1600px]:flex-row', 'gap-2', 'items-stretch')}>
     <QuestionCard question={item.question} />
     <div
       className={cx(
         'flex',
-        'flex-wrap',
-        // 'shrink-2',
-        'items-end',
-        'justify-center',
+        'flex-col',
         'content-center',
+        'md:flex-wrap',
+        'md:flex-row',
+        'items-stretch',
+        'md:justify-center',
         'gap-2',
         'min-[1600px]:gap-6',
       )}

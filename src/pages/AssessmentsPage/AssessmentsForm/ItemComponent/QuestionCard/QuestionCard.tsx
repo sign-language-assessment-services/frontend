@@ -4,8 +4,8 @@ import { Multimedia } from '../../../models/multimedia'
 import { MultimediaComponent } from '../../../../../components/MultimediaComponent'
 
 const QuestionCard = ({ question }: { question: Multimedia }) => (
-  <div className={cx('flex', 'text-4xl', 'items-center', 'justify-between')}>
-    <h3
+  <div className={cx('flex', 'justify-center', 'items-center')}>
+    <div
       className={cx(
         'flex',
         'justify-center',
@@ -21,7 +21,7 @@ const QuestionCard = ({ question }: { question: Multimedia }) => (
       <span>
         <MultimediaComponent multimedia={question} />
       </span>
-    </h3>
+    </div>
   </div>
 )
 

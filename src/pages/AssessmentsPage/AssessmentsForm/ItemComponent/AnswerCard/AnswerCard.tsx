@@ -32,7 +32,7 @@ export const AnswerCard = ({ checked, choice, onChange, choiceId }: Props) => {
 
   return (
     <div className={cx('flex', 'flex-shrink', 'justify-center', 'items-center')}>
-      <div className="group">
+      <div className="group w-full">
         <label
           className={cx(
             'flex',
