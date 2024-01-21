@@ -31,7 +31,16 @@ export const AnswerCard = ({ checked, choice, onChange, choiceId }: Props) => {
   }
 
   return (
-    <div className={cx('flex', 'flex-shrink', 'justify-center', 'items-center')}>
+    <div
+      className={cx(
+        'flex',
+        'flex-shrink',
+        'justify-center',
+        'items-center',
+        'min-[1700px]:max-w-[48%]',
+        'max-[1700px]:max-w-xl',
+      )}
+    >
       <div className="group w-full">
         <label
           className={cx(
