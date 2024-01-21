@@ -15,7 +15,7 @@ export const MultipleChoiceComponent: React.FC<Props> = ({
   selectedChoices,
   item,
 }) => (
-  <div className={cx('flex', 'flex-col', 'min-[1700px]:flex-row', 'gap-6', 'h-full', 'w-full')}>
+  <div className={cx('flex', 'flex-col', 'min-[1700px]:flex-row', 'h-full', 'w-full')}>
     <QuestionCard question={item.question} />
     <div
       className={cx(
@@ -28,6 +28,8 @@ export const MultipleChoiceComponent: React.FC<Props> = ({
         'sm:flex-row',
         'sm:justify-center',
         'min-[1700px]:gap-6',
+        'p-2',
+        'md:p-8',
       )}
     >
       {item.choices.map((choice, choiceIndex) => {
