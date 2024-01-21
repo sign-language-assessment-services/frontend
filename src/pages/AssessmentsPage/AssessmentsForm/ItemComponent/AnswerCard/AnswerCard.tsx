@@ -37,8 +37,8 @@ export const AnswerCard = ({ checked, choice, onChange, choiceId }: Props) => {
         'flex-shrink',
         'justify-center',
         'items-center',
-        'min-[1700px]:max-w-[48%]',
-        'max-[1700px]:max-w-xl',
+        '2xl:max-w-[48%]',
+        'max-w-xl',
       )}
     >
       <div className="group w-full">

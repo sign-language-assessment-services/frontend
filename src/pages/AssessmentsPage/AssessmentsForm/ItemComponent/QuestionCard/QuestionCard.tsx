@@ -13,8 +13,8 @@ const QuestionCard = ({ question }: { question: Multimedia }) => (
       'p-1',
       'md:p-8',
       'bg-blue-50',
-      'min-[1700px]:border-r-2',
-      'max-[1700px]:border-b-2',
+      '2xl:border-r-2',
+      'max-2xl:border-b-2',
       'border-blue-100',
     )}
   >
@@ -23,7 +23,7 @@ const QuestionCard = ({ question }: { question: Multimedia }) => (
         'flex',
         'justify-center',
         'items-center',
-        'max-[1700px]:max-w-2xl',
+        'max-2xl:max-w-2xl',
         'aspect-video',
         'border-2',
         'bg-gray-50',
