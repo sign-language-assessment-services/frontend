@@ -39,6 +39,9 @@ export const AssessmentsForm: React.FC<Props> = ({ assessment: { items, name }, 
     })
   }
 
+  const isLastPage = currentItemIndex === items.length - 1
+  const isFirstPage = currentItemIndex === 0
+
   return (
     <PageContainer>
       <Header>
@@ -59,7 +62,7 @@ export const AssessmentsForm: React.FC<Props> = ({ assessment: { items, name }, 
       <Footer>
         <Button
           onClick={() => setCurrentItemIndex(currentItemIndex - 1)}
-          disabled={currentItemIndex === 0}
+          disabled={isFirstPage}
           icon="prev"
           iconPosition="left"
         >
@@ -73,9 +76,11 @@ export const AssessmentsForm: React.FC<Props> = ({ assessment: { items, name }, 
         >
           Weiter
         </Button>
-        <Button type="submit" form="assessmentForm" disabled={currentItemIndex < items.length - 1}>
-          Test absenden
-        </Button>
+        {isLastPage ? (
+          <Button type="submit" form="assessmentForm">
+            Test absenden
+          </Button>
+        ) : null}
         <Button onClick={() => navigate('/')} form="assessmentForm" style="WARNING">
           Abbrechen
         </Button>

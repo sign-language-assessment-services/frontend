@@ -71,6 +71,16 @@ describe('AssessmentsForm', () => {
     expect(nextButton()).toBeDisabled()
   })
 
+  it('shows Submit button only on last item', async () => {
+    renderComponent()
+
+    await waitUntilNextButtonRendered()
+
+    expect(screen.queryByText(/test absenden/i)).not.toBeInTheDocument()
+    await userEvent.click(nextButton())
+    await waitUntilSubmitButtonRendered()
+  })
+
   it('renders previous assessment item after clicking on Back', async () => {
     renderComponent()
 
@@ -89,8 +99,6 @@ describe('AssessmentsForm', () => {
     renderComponent()
 
     await waitUntilNextButtonRendered()
-
-    await waitUntilSubmitButtonRendered()
 
     expect(backButton()).toBeDisabled()
   })
