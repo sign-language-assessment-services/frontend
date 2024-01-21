@@ -68,14 +68,16 @@ export const AssessmentsForm: React.FC<Props> = ({ assessment: { items, name }, 
         >
           Zurück
         </Button>
-        <Button
-          onClick={() => setCurrentItemIndex(currentItemIndex + 1)}
-          disabled={currentItemIndex === items.length - 1}
-          icon="next"
-          iconPosition="right"
-        >
-          Weiter
-        </Button>
+        {isLastPage ? null : (
+          <Button
+            onClick={() => setCurrentItemIndex(currentItemIndex + 1)}
+            disabled={currentItemIndex === items.length - 1}
+            icon="next"
+            iconPosition="right"
+          >
+            Weiter
+          </Button>
+        )}
         {isLastPage ? (
           <Button type="submit" form="assessmentForm">
             Test absenden

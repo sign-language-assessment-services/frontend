@@ -60,7 +60,7 @@ describe('AssessmentsForm', () => {
     expect(videos[3].getAttribute('src')).toEqual('https://choice3.video.example.com')
   })
 
-  it('disables Next button on last item', async () => {
+  it('hides Next button on last item', async () => {
     renderComponent()
 
     await waitUntilNextButtonRendered()
@@ -68,7 +68,7 @@ describe('AssessmentsForm', () => {
     await userEvent.click(nextButton())
     await waitUntilSubmitButtonRendered()
 
-    expect(nextButton()).toBeDisabled()
+    expect(screen.queryByText(/weiter/i)).not.toBeInTheDocument()
   })
 
   it('shows Submit button only on last item', async () => {
