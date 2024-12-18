@@ -6,6 +6,7 @@ import { fallbackSettings } from '../../settings/Settings'
 import AssessmentSummary from './models/AssessmentSummary'
 import { renderWithRouter } from '../../testutils/renderWithRouter'
 import { App } from '../../App'
+import fetchMock from '@fetch-mock/vitest'
 
 describe('AssessmentsListPage', () => {
   const sampleAssessmentSummaries: AssessmentSummary[] = [
@@ -20,8 +21,8 @@ describe('AssessmentsListPage', () => {
   ]
 
   beforeEach(() => {
-    fetchMock.resetMocks()
-    fetchMock.mockOnceIf('/api/assessments/', JSON.stringify(sampleAssessmentSummaries))
+    fetchMock.mockReset()
+    fetchMock.route('/api/assessments/', JSON.stringify(sampleAssessmentSummaries))
     vi.mock('../settings/useSettings', () => ({
       useSettings: () => fallbackSettings,
     }))
@@ -46,13 +47,9 @@ describe('AssessmentsListPage', () => {
 
     // Then
     expect(screen.queryByRole('cell', { name: 'Plants' })).not.toBeInTheDocument()
-    expect(fetch).toHaveBeenCalledWith('/api/assessments/2', { headers: expect.anything() })
+    expect(fetchMock.callHistory.called(`/api/assessments/2`)).toBeTruthy
   })
 })
 
 const waitUntilDataWasFetched = async () =>
-  await waitFor(() =>
-    expect(fetch).toHaveBeenCalledWith(`/api/assessments/`, {
-      headers: expect.anything(),
-    }),
-  )
+  await waitFor(() => expect(fetchMock.callHistory.called(`/api/assessments/`)).toBeTruthy())

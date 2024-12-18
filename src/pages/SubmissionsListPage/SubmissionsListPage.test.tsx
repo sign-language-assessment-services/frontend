@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { renderWithRouter } from '../../testutils/renderWithRouter'
 import { Submission } from './models/submission'
 import { SubmissionsListPage } from './SubmissionsListPage'
+import fetchMock from '@fetch-mock/vitest'
 
 const CURRENT_USER_ID = 'test-taker-1'
 
@@ -25,11 +26,8 @@ describe('SubmissionsListPage', () => {
   ]
 
   beforeEach(() => {
-    fetchMock.resetMocks()
-    fetchMock.mockOnceIf(
-      `/api/submissions/?user_id=${CURRENT_USER_ID}`,
-      JSON.stringify(sampleSubmissions),
-    )
+    fetchMock.mockReset()
+    fetchMock.get(`/api/submissions/?user_id=${CURRENT_USER_ID}`, JSON.stringify(sampleSubmissions))
 
     vi.mock('../../auth/useAuthentication', () => {
       return {
@@ -57,7 +55,5 @@ describe('SubmissionsListPage', () => {
 
 const waitUntilDataWasFetched = async (userId: string) =>
   await waitFor(() =>
-    expect(fetch).toHaveBeenCalledWith(`/api/submissions/?user_id=${userId}`, {
-      headers: expect.anything(),
-    }),
+    expect(fetchMock.callHistory.called(`/api/submissions/?user_id=${userId}`)).toBeTruthy(),
   )

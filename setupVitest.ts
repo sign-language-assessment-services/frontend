@@ -1,15 +1,11 @@
-import createFetchMock from 'vitest-fetch-mock'
-import { afterEach, expect, vi } from 'vitest'
-import * as matchers from '@testing-library/jest-dom/matchers'
+import { afterEach, expect } from 'vitest'
 import { cleanup } from '@testing-library/react'
 
-const fetchMock = createFetchMock(vi)
+import fetchMock from '@fetch-mock/vitest'
 
-// sets globalThis.fetch and globalThis.fetchMock to our mocked version
-fetchMock.enableMocks()
+import * as matchers from '@testing-library/jest-dom/matchers'
 
-// changes default behavior of fetchMock to use the real 'fetch' implementation and not mock responses
-fetchMock.dontMock()
+fetchMock.mockGlobal()
 
 // extends Vitest's expect method with methods from react-testing-library
 expect.extend(matchers)

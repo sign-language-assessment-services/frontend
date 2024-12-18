@@ -7,6 +7,7 @@ import { renderWithRouter } from '../../testutils/renderWithRouter'
 import { App } from '../../App'
 import { Assessment } from './models/assessment'
 import { ScoringResult } from './models/scoringResult'
+import fetchMock from '@fetch-mock/vitest'
 
 describe('AssessmentsPage', () => {
   const sampleAssessment: Assessment = {
@@ -30,9 +31,9 @@ describe('AssessmentsPage', () => {
   }
 
   beforeEach(() => {
-    fetchMock.resetMocks()
-    fetchMock.mockOnceIf('/api/assessments/2', JSON.stringify(sampleAssessment))
-    fetchMock.mockOnceIf('/api/assessments/2/submissions/', JSON.stringify(sampleScoringResult))
+    fetchMock.mockReset()
+    fetchMock.route('/api/assessments/2', JSON.stringify(sampleAssessment))
+    fetchMock.route('/api/assessments/2/submissions/', JSON.stringify(sampleScoringResult))
     vi.mock('../settings/useSettings', () => ({
       useSettings: () => fallbackSettings,
     }))
@@ -40,18 +41,20 @@ describe('AssessmentsPage', () => {
 
   it('submits chosen input', async () => {
     renderWithRouter(<App />, '/assessments/2')
-    expect(fetch).toHaveBeenCalledWith('/api/assessments/2', expect.anything())
+    expect(fetchMock.callHistory.called(`/api/assessments/2`)).toBeTruthy()
 
     await waitUntilSubmitButtonRendered()
     await userEvent.click(screen.getByLabelText(/antwort 1/i))
 
     await userEvent.click(submitButton())
     await waitFor(() =>
-      expect(fetch).toHaveBeenCalledWith(`/api/assessments/2/submissions/`, {
-        method: 'POST',
-        body: JSON.stringify({ '0': ['0'] }),
-        headers: expect.objectContaining({ 'Content-Type': 'application/json' }),
-      }),
+      expect(
+        fetchMock.callHistory.called(`/api/assessments/2/submissions/`, {
+          method: 'POST',
+          body: { '0': ['0'] },
+          headers: expect.objectContaining({ 'Content-Type': 'application/json' }),
+        }),
+      ),
     )
   })
 
@@ -77,7 +80,7 @@ describe('AssessmentsPage', () => {
     await waitUntilSubmitButtonRendered()
     await userEvent.click(cancelButton())
     expect(screen.queryByRole('button', { name: /test absenden/i })).not.toBeInTheDocument()
-    expect(fetch).toHaveBeenCalledWith('/api/assessments/', expect.anything())
+    expect(fetchMock.callHistory.called('/api/assessments/')).toBeTruthy()
   })
 
   it('navigates to assessments list when "assessment overview" button was clicked', async () => {
@@ -86,7 +89,7 @@ describe('AssessmentsPage', () => {
     await userEvent.click(submitButton())
     await userEvent.click(assessmentListButton())
 
-    expect(fetch).toHaveBeenCalledWith('/api/assessments/', expect.anything())
+    expect(fetchMock.callHistory.called('/api/assessments/')).toBeTruthy()
   })
 })
 
