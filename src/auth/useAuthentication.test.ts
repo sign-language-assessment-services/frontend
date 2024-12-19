@@ -9,6 +9,8 @@ vi.mock('../settings/useSettings')
 vi.mock('@react-keycloak/web')
 
 describe('useAuthentication', () => {
+  const keycloak = new Keycloak({ clientId: 'client', realm: 'slas', url: 'http://keycloak' })
+
   describe('authentication disabled', () => {
     beforeEach(() => {
       vi.mocked(useSettings).mockReturnValue({
@@ -21,7 +23,7 @@ describe('useAuthentication', () => {
 
     it('should provide dummy authentication object', () => {
       vi.mocked(useKeycloak).mockReturnValue({
-        keycloak: new Keycloak(),
+        keycloak: keycloak,
         initialized: true,
       })
 
@@ -48,7 +50,7 @@ describe('useAuthentication', () => {
 
     it('should return correct properties from keycloak', () => {
       // Given
-      const keycloak = new Keycloak()
+      const keycloak = new Keycloak({ clientId: 'client', realm: 'slas', url: 'http://keycloak' })
       keycloak.authenticated = true
       keycloak.idTokenParsed = {
         name: 'name',
@@ -72,7 +74,7 @@ describe('useAuthentication', () => {
 
     it('should check if user has role', () => {
       // Given
-      const keycloak = new Keycloak()
+      const keycloak = new Keycloak({ clientId: 'client', realm: 'slas', url: 'http://keycloak' })
       keycloak.hasRealmRole = vi.fn(() => true)
 
       vi.mocked(useKeycloak).mockReturnValue({
@@ -92,7 +94,7 @@ describe('useAuthentication', () => {
 
     it('should delegate logout call to keycloak', () => {
       // Given
-      const keycloak = new Keycloak()
+      const keycloak = new Keycloak({ clientId: 'client', realm: 'slas', url: 'http://keycloak' })
       keycloak.logout = vi.fn()
 
       vi.mocked(useKeycloak).mockReturnValue({
@@ -110,7 +112,7 @@ describe('useAuthentication', () => {
 
     it('should delegate account management call to keycloak', () => {
       // Given
-      const keycloak = new Keycloak()
+      const keycloak = new Keycloak({ clientId: 'client', realm: 'slas', url: 'http://keycloak' })
       keycloak.accountManagement = vi.fn()
 
       vi.mocked(useKeycloak).mockReturnValue({
