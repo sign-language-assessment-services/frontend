@@ -1,0 +1,25 @@
+{
+  "Assessment": {
+    "page": "Seite {current} / {total}",
+    "answer": "Antwort {number}"
+  },
+  "Assessments": {
+    "title": "Tests"
+  },
+  "UserPanel": {
+    "signOut": "Abmelden",
+    "manageProfile": "Profil verwalten"
+  },
+  "Buttons": {
+    "next": "Weiter",
+    "back": "Zurück",
+    "submit": "Test absenden",
+    "cancel": "Abbrechen"
+  },
+  "Submissions": {
+    "title": "Testergebnisse",
+    "assessment": "Test",
+    "score": "Punkte",
+    "date": "Datum"
+  }
+}

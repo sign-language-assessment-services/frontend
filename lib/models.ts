@@ -1,0 +1,51 @@
+export interface Assessment {
+  name: string
+  tasks: { id: string; task_type: 'exercise' | 'primer' }[]
+}
+
+export interface Task {
+  id: string
+}
+
+export interface Exercise extends Task {
+  question: Multimedia
+  choices: Multimedia[]
+}
+
+export interface Primer extends Task, Multimedia {}
+
+export interface Multimedia {
+  media_type: 'VIDEO' | 'IMAGE'
+  multimedia_file_id: string
+}
+
+export default interface AssessmentSummary {
+  id: number
+  name: string
+}
+
+export interface Submission {
+  id: string
+  created_at: string
+  user_id: string
+  assessment_id: string
+  answers: Record<string, number[]>
+  points: number
+  maximum_points: number
+  percentage: number
+}
+
+// Legacy
+
+export interface Item {
+  position: number
+}
+
+export interface MultipleChoice extends Item {
+  question: Multimedia
+  choices: Multimedia[]
+}
+
+export interface StaticItem extends Item {
+  content: Multimedia
+}

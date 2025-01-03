@@ -1,9 +1,9 @@
 # Sign Language Assessment Services - Frontend
 
-This app is written in [TypeScript](https://www.typescriptlang.org/) and uses the [React](https://reactjs.org/) framework.
-It serves as a frontend for [sign-language-assessment-services/backend](https://github.com/sign-language-assessment-services/backend).
-
-This project is tested with [BrowserStack](https://www.browserstack.com/).
+This app is written in [TypeScript](https://www.typescriptlang.org/) and uses the [Next.js](https://nextjs.org)
+framework.
+It serves as a frontend
+for [sign-language-assessment-services/backend](https://github.com/sign-language-assessment-services/backend).
 
 ## Prerequisites
 
@@ -45,7 +45,8 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 `make test`
 
 Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more
+information.
 
 ## Run
 
@@ -61,7 +62,8 @@ You will also see any lint errors in the console.
 
 ## Learn More
 
-- You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- You can learn more in
+  the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 - To learn React, check out the [React documentation](https://reactjs.org/).
 

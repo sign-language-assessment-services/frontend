@@ -8,17 +8,26 @@
 # testing
 /coverage
 
+# next.js
+/.next/
+/out/
+
 # production
-/dist
+/build
 
 # misc
 .DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+*.pem
 
+# debug
 npm-debug.log*
 
-# IDEs
-/.idea
+# env files (can opt-in for committing if needed)
+.env*
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# JetBrains IDEA
+.idea

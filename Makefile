@@ -13,10 +13,6 @@ install:	## installs required dependencies
 build: install	## builds the application for production to the build folder
 	npm run build
 
-.PHONY: typecheck
-typecheck: install	## check for type errors
-	npm run typecheck
-
 .PHONY: lint
 lint: install	## statically analyzes code to quickly find problems
 	npm run lint
@@ -39,7 +35,7 @@ coverage:	## determines test coverage
 
 .PHONY: run
 run: install	## runs the application in development mode
-	npm run start
+	npm run dev
 
 .PHONY: precommit
 precommit: typecheck build lint-fix test	## builds and tests the application
