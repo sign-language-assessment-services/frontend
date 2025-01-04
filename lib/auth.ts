@@ -13,7 +13,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       issuer: process.env.AUTH_KEYCLOAK_ISSUER_EXTERNAL,
     }),
   ],
-  debug: true,
   callbacks: {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
