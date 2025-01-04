@@ -1,91 +1,65 @@
-import { Account, AuthOptions, getServerSession, Session } from 'next-auth'
-import { JWT } from 'next-auth/jwt'
-import KeycloakProvider from 'next-auth/providers/keycloak'
+import NextAuth, { Account } from 'next-auth'
+import Keycloak from 'next-auth/providers/keycloak'
+import { TokenEndpointResponse } from 'oauth4webapi'
+import { JWT } from '@auth/core/jwt'
 
-export const oAuthConfig = KeycloakProvider({
-  clientId: process.env.CLIENT_ID!,
-  clientSecret: process.env.CLIENT_SECRET!,
-  issuer: process.env.ISSUER_URL!,
-})
-
-export const authOptions: AuthOptions = {
-  providers: [oAuthConfig],
+export const { auth, handlers, signIn, signOut } = NextAuth({
+  providers: [
+    Keycloak({
+      token: `${process.env.AUTH_KEYCLOAK_ISSUER_INTERNAL}/protocol/openid-connect/token`,
+      authorization: `${process.env.AUTH_KEYCLOAK_ISSUER_EXTERNAL}/protocol/openid-connect/auth`,
+      issuer: process.env.AUTH_KEYCLOAK_ISSUER_EXTERNAL,
+    }),
+  ],
+  debug: true,
   callbacks: {
-    async jwt({ token, account }: { token: JWT; account: Account | null }): Promise<JWT> {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    async jwt({ token, account }: { token: JWT; account: Account | null }) {
       if (account) {
-        // First-time login, save the `access_token`, its expiry and the `refresh_token`
+        // First-time login
         return {
           ...token,
-          access_token: account.access_token!,
-          id_token: account.id_token!,
-          expires_at: account.expires_at!,
-          refresh_token: account.refresh_token!,
+          access_token: account.access_token,
+          expires_at: account.expires_at,
+          refresh_token: account.refresh_token,
+          id_token: account.id_token,
         }
-      } else if (Date.now() < token.expires_at * 1000) {
-        // Subsequent logins, but the `access_token` is still valid
+      } else if (Date.now() + 1000 < token.expires_at * 1000) {
+        // Access token still valid
         return token
       } else {
-        // Subsequent logins, but the `access_token` has expired, try to refresh it
-        if (!token.refresh_token) throw new TypeError('Missing refresh_token')
-
-        try {
-          const response = await fetch(oAuthConfig.accessTokenUrl!, {
-            method: 'POST',
-            body: new URLSearchParams({
-              client_id: 'frontend-next',
-              client_secret: 'frontend',
-              grant_type: 'refresh_token',
-              refresh_token: token.refresh_token!,
-            }),
-          })
-
-          const tokensOrError = await response.json()
-
-          if (!response.ok) throw tokensOrError
-
-          const newTokens = tokensOrError as {
-            access_token: string
-            id_token: string
-            expires_in: number
-            refresh_token?: string
-          }
-          return {
-            ...token,
-            access_token: newTokens.access_token,
-            id_token: newTokens.id_token,
-            expires_at: Math.floor(Date.now() / 1000 + newTokens.expires_in),
-            // Some providers only issue refresh tokens once, so preserve if we did not get a new one
-            refresh_token: newTokens.refresh_token ? newTokens.refresh_token : token.refresh_token,
-          }
-        } catch (error) {
-          console.error('Error refreshing access_token', error)
-          // If we fail to refresh the token, return an error so we can handle it on the page
-          token.error = 'RefreshTokenError'
-          return token
+        // Access token expired
+        const newTokens = await refreshAccessToken(token.refresh_token as string)
+        return {
+          ...token,
+          access_token: newTokens.access_token,
+          expires_at: Math.floor(Date.now() / 1000 + newTokens.expires_in!),
         }
       }
     },
 
-    session: async ({ session, token }: { session: Session; token: JWT }) => {
-      if (token) {
-        session.access_token = token.access_token
-        session.error = token.error
-        session.user = {
-          name: token.name,
-          sub: token.sub!,
-          id: token.sub!,
-        }
+    async session({ session, token }) {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          sub: token.sub,
+        },
+        access_token: token.access_token,
+        error: token.error,
       }
-      return session
     },
   },
 
   events: {
-    signOut: async ({ token }: { token: JWT }) => await doFinalSignoutHandshake(token),
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    signOut: async ({ token }: { token: JWT }) => {
+      await doFinalSignoutHandshake(token)
+    },
   },
-}
-
-export const getSession = () => getServerSession(authOptions)
+})
 
 async function doFinalSignoutHandshake(jwt: JWT) {
   const { id_token } = jwt
@@ -95,7 +69,7 @@ async function doFinalSignoutHandshake(jwt: JWT) {
     const params = new URLSearchParams()
     params.append('id_token_hint', id_token)
     const { status, statusText } = await fetch(
-      `${process.env.ISSUER_URL}/protocol/openid-connect/logout?${params}`,
+      `${process.env.AUTH_KEYCLOAK_ISSUER_INTERNAL}/protocol/openid-connect/logout?${params}`,
     )
 
     // The response body should contain a confirmation that the user has been logged out
@@ -103,4 +77,21 @@ async function doFinalSignoutHandshake(jwt: JWT) {
   } catch (e) {
     console.error('Unable to perform post-logout handshake', e)
   }
+}
+
+async function refreshAccessToken(refreshToken: string): Promise<TokenEndpointResponse> {
+  const response = await fetch(
+    `${process.env.AUTH_KEYCLOAK_ISSUER_INTERNAL}/protocol/openid-connect/token`,
+    {
+      method: 'POST',
+      body: new URLSearchParams({
+        client_id: process.env.AUTH_KEYCLOAK_ID!,
+        client_secret: process.env.AUTH_KEYCLOAK_SECRET!,
+        grant_type: 'refresh_token',
+        refresh_token: refreshToken,
+      }),
+    },
+  )
+
+  return await response.json()
 }

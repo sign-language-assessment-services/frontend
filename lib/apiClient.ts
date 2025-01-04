@@ -1,5 +1,5 @@
 import AssessmentSummary, { Assessment, Submission, Task } from '@/lib/models'
-import { getSession } from '@/lib/auth'
+import { auth } from '@/lib/auth'
 
 const BASE_URL = process.env.BACKEND_URL
 
@@ -97,6 +97,6 @@ export async function getMultimediaFileUrl(multimediaFileId: string): Promise<st
 }
 
 async function getAccessToken() {
-  const session = await getSession()
+  const session = await auth()
   return session!.access_token
 }

@@ -1,4 +1,4 @@
-import { getSession } from '@/lib/auth'
+import { auth } from '@/lib/auth'
 import { getSubmissions } from '@/lib/apiClient'
 import { PageContainer } from '@/components/layout/PageContainer'
 import { Header } from '@/components/layout/header/Header'
@@ -10,7 +10,7 @@ import React from 'react'
 import { getTranslations } from 'next-intl/server'
 
 export default async function Submissions() {
-  const session = await getSession()
+  const session = await auth()
   if (!session?.user?.sub) {
     throw new Error('No user ID found in session')
   }
