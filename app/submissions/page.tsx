@@ -1,11 +1,11 @@
 import { auth } from '@/lib/auth'
 import { getSubmissions } from '@/lib/apiClient'
-import { PageContainer } from '@/components/layout/PageContainer'
-import { Header } from '@/components/layout/header/Header'
-import { Main } from '@/components/layout/Main'
+import { AppShell } from '@/components/appshell/AppShell'
+import { Header } from '@/components/appshell/header/Header'
+import { Main } from '@/components/appshell/main/Main'
 import cx from 'classnames'
-import FormattedPercentage from '@/components/FormattedPercentage'
-import FormattedDateTime from '@/components/FormattedDateTime'
+import FormattedPercentage from '@/components/formatting/FormattedPercentage'
+import FormattedDateTime from '@/components/formatting/FormattedDateTime'
 import React from 'react'
 import { getTranslations } from 'next-intl/server'
 
@@ -17,7 +17,7 @@ export default async function Submissions() {
   const submissions = await getSubmissions(session?.user?.sub)
   const t = await getTranslations('Submissions')
   return (
-    <PageContainer>
+    <AppShell>
       <Header>{t('title')}</Header>
 
       <Main>
@@ -52,6 +52,6 @@ export default async function Submissions() {
           </table>
         </section>
       </Main>
-    </PageContainer>
+    </AppShell>
   )
 }

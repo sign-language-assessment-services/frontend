@@ -1,4 +1,4 @@
-import { AvatarIcon } from '@/components/layout/header/userPanel/AvatarIcon'
+import { AvatarIcon } from '@/components/appshell/header/userPanel/AvatarIcon'
 import { auth, accountManagementUrl } from '@/lib/auth'
 import { getTranslations } from 'next-intl/server'
 

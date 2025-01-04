@@ -2,7 +2,7 @@ import React from 'react'
 import { Multimedia } from '@/lib/models'
 import { getMultimediaFileUrl } from '@/lib/apiClient'
 import Image from 'next/image'
-import Video from '@/components/multimedia/Video'
+import Video from '@/app/assessments/[assessmentId]/[taskId]/_components/multimedia/Video'
 
 interface Props {
   multimedia: Multimedia

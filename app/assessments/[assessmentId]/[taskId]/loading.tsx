@@ -1,17 +1,17 @@
-import { Header } from '@/components/layout/header/Header'
-import { Main } from '@/components/layout/Main'
-import { Footer } from '@/components/layout/Footer'
-import BackButton from '@/app/assessments/[assessmentId]/[taskId]/BackButton'
-import NextButton from '@/app/assessments/[assessmentId]/[taskId]/NextButton'
-import CancelButton from '@/app/assessments/[assessmentId]/[taskId]/CancelButton'
-import { LoadingIndicator } from '@/components/LoadingIndicator'
+import { Header } from '@/components/appshell/header/Header'
+import { Main } from '@/components/appshell/main/Main'
+import { Footer } from '@/components/appshell/footer/Footer'
+import BackButton from '@/app/assessments/[assessmentId]/[taskId]/_components/buttons/BackButton'
+import NextButton from '@/app/assessments/[assessmentId]/[taskId]/_components/buttons/NextButton'
+import CancelButton from '@/app/assessments/[assessmentId]/[taskId]/_components/buttons/CancelButton'
+import Spinner from '@/components/spinner/Spinner'
 
 export default async function Loading() {
   return (
     <>
       <Header />
       <Main>
-        <LoadingIndicator />
+        <Spinner />
       </Main>
       <Footer>
         <BackButton previousPageUrl={undefined} disabled />

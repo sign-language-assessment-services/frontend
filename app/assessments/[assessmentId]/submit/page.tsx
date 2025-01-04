@@ -1,10 +1,10 @@
 import { getAssessmentById } from '@/lib/apiClient'
-import { Main } from '@/components/layout/Main'
-import { Header } from '@/components/layout/header/Header'
-import { Footer } from '@/components/layout/Footer'
-import SubmitButton from '@/app/assessments/[assessmentId]/submit/SubmitButton'
-import BackButton from '@/app/assessments/[assessmentId]/[taskId]/BackButton'
-import CancelButton from '@/app/assessments/[assessmentId]/[taskId]/CancelButton'
+import { Main } from '@/components/appshell/main/Main'
+import { Header } from '@/components/appshell/header/Header'
+import { Footer } from '@/components/appshell/footer/Footer'
+import SubmitButton from '@/app/assessments/[assessmentId]/submit/_components/SubmitButton'
+import BackButton from '@/app/assessments/[assessmentId]/[taskId]/_components/buttons/BackButton'
+import CancelButton from '@/app/assessments/[assessmentId]/[taskId]/_components/buttons/CancelButton'
 
 export default async function Task({
   params,

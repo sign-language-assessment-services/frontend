@@ -1,7 +1,7 @@
 import './globals.css'
 import { auth } from '@/lib/auth'
 import Providers from '@/app/providers'
-import { PageContainer } from '@/components/layout/PageContainer'
+import { AppShell } from '@/components/appshell/AppShell'
 import { getLocale, getMessages } from 'next-intl/server'
 
 export default async function RootLayout({
@@ -16,7 +16,7 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <Providers session={session} messages={messages} locale={locale}>
-          <PageContainer>{children}</PageContainer>
+          <AppShell>{children}</AppShell>
         </Providers>
       </body>
     </html>

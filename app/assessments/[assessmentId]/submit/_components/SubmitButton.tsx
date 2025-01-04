@@ -1,4 +1,4 @@
-import { Button } from '@/components/Button'
+import { Button } from '@/components/button/Button'
 import { getTranslations } from 'next-intl/server'
 
 interface Props {

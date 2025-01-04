@@ -1,5 +1,5 @@
-import SignOutLink from '@/components/layout/header/userPanel/SignOutLink'
-import AccountManagementLink from '@/components/layout/header/userPanel/AccountManagementLink'
+import SignOutLink from '@/components/appshell/header/userPanel/SignOutLink'
+import AccountManagementLink from '@/components/appshell/header/userPanel/AccountManagementLink'
 import { auth } from '@/lib/auth'
 
 export default async function UserPanel() {
