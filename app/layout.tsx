@@ -14,7 +14,7 @@ export default async function RootLayout({
   const locale = await getLocale()
   const timeZone = await getTimeZone()
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body>
         <Providers session={session} messages={messages} locale={locale} timeZone={timeZone}>
           <AppShell>{children}</AppShell>
