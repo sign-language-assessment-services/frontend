@@ -38,18 +38,3 @@ export interface Submission {
   maximum_points: number
   percentage: number
 }
-
-// Legacy
-
-export interface Item {
-  position: number
-}
-
-export interface MultipleChoice extends Item {
-  question: Multimedia
-  choices: Multimedia[]
-}
-
-export interface StaticItem extends Item {
-  content: Multimedia
-}
