@@ -2,7 +2,7 @@ import './globals.css'
 import { auth } from '@/lib/auth'
 import Providers from '@/app/providers'
 import { AppShell } from '@/components/appshell/AppShell'
-import { getLocale, getMessages } from 'next-intl/server'
+import { getLocale, getMessages, getTimeZone } from 'next-intl/server'
 
 export default async function RootLayout({
   children,
@@ -12,10 +12,11 @@ export default async function RootLayout({
   const session = await auth()
   const messages = await getMessages()
   const locale = await getLocale()
+  const timeZone = await getTimeZone()
   return (
     <html lang="en">
       <body>
-        <Providers session={session} messages={messages} locale={locale}>
+        <Providers session={session} messages={messages} locale={locale} timeZone={timeZone}>
           <AppShell>{children}</AppShell>
         </Providers>
       </body>

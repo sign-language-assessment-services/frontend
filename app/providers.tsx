@@ -9,12 +9,13 @@ interface Props {
   children: React.ReactNode
   messages: AbstractIntlMessages
   locale: string
+  timeZone: string
 }
 
-export default function Providers({ session, children, messages, locale }: Props) {
+export default function Providers({ session, children, messages, locale, timeZone }: Props) {
   return (
     <SessionProvider session={session}>
-      <NextIntlClientProvider locale={locale} messages={messages}>
+      <NextIntlClientProvider locale={locale} timeZone={timeZone} messages={messages}>
         {children}
       </NextIntlClientProvider>
     </SessionProvider>
