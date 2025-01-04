@@ -1,5 +1,5 @@
 import SignOutLink from '@/components/layout/header/userPanel/SignOutLink'
-import UserProfileLink from '@/components/layout/header/userPanel/UserProfileLink'
+import AccountManagementLink from '@/components/layout/header/userPanel/AccountManagementLink'
 import { auth } from '@/lib/auth'
 
 export default async function UserPanel() {
@@ -9,7 +9,7 @@ export default async function UserPanel() {
   }
   return (
     <div className="flex items-center gap-4">
-      <UserProfileLink />
+      <AccountManagementLink />
       <SignOutLink />
     </div>
   )

@@ -1,15 +1,15 @@
 import { AvatarIcon } from '@/components/layout/header/userPanel/AvatarIcon'
-import { auth } from '@/lib/auth'
+import { auth, accountManagementUrl } from '@/lib/auth'
 import { getTranslations } from 'next-intl/server'
 
-export default async function UserProfileLink() {
+export default async function AccountManagementLink() {
   const session = await auth()
   const userName = session!.user!.name
   const t = await getTranslations('UserPanel')
 
   return (
     <a
-      href={`${process.env.AUTH_KEYCLOAK_ISSUER_EXTERNAL}/account?referrer=${process.env.AUTH_KEYCLOAK_ID}`}
+      href={accountManagementUrl}
       title={t('manageProfile')}
       className="flex items-center gap-2 hover:drop-shadow-lg"
     >

@@ -3,6 +3,8 @@ import Keycloak from 'next-auth/providers/keycloak'
 import { TokenEndpointResponse } from 'oauth4webapi'
 import { JWT } from '@auth/core/jwt'
 
+export const accountManagementUrl = `${process.env.AUTH_KEYCLOAK_ISSUER_EXTERNAL}/account?referrer=${process.env.AUTH_KEYCLOAK_ID}`
+
 export const { auth, handlers, signIn, signOut } = NextAuth({
   providers: [
     Keycloak({
