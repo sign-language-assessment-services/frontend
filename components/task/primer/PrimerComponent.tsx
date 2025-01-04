@@ -7,9 +7,9 @@ interface Props {
   primer: Primer
 }
 
-export default async function StaticItemComponent({ primer }: Props) {
+export default async function PrimerComponent({ primer }: Props) {
   return (
-    <div className={cx('flex', 'h-full', 'justify-center', 'items-center')}>
+    <div className={cx('flex', 'flex-1', 'h-full', 'justify-center', 'items-center', 'bg-blue-50')}>
       <MultimediaComponent multimedia={primer} />
     </div>
   )

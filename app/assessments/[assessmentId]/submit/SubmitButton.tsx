@@ -2,14 +2,15 @@ import { Button } from '@/components/Button'
 import { getTranslations } from 'next-intl/server'
 
 interface Props {
+  formId: string
   disabled?: boolean
 }
 
-export default async function NextButton({ disabled }: Props) {
+export default async function SubmitButton({ formId, disabled }: Props) {
   const t = await getTranslations('Buttons')
   return (
-    <Button type="submit" form="task-form" icon="next" iconPosition="right" disabled={disabled}>
-      {t('next')}
+    <Button type="submit" form={formId} style="SUCCESS" disabled={disabled}>
+      {t('submit')}
     </Button>
   )
 }

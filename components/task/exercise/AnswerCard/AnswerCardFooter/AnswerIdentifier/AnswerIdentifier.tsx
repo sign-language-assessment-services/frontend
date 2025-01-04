@@ -3,15 +3,14 @@ import React from 'react'
 import { getTranslations } from 'next-intl/server'
 
 interface Props {
-  checked: boolean
-  choiceId: string
+  choiceId: number
 }
 
-export default async function AnswerIdentifier(props: Props) {
+export default async function AnswerIdentifier({ choiceId }: Props) {
   const t = await getTranslations('Assessment')
   return (
-    <span className={cx('text-base', 'text-sm', 'lg:text-xl', { 'font-bold': props.checked })}>
-      {t('answer', { number: props.choiceId })}
+    <span className={cx('text-base', 'text-sm', 'lg:text-xl', 'peer-checked:font-bold')}>
+      {t('answer', { number: choiceId })}
     </span>
   )
 }

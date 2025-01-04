@@ -4,19 +4,17 @@ import { Multimedia } from '@/lib/models'
 import MultimediaComponent from '@/components/multimedia/MultimediaComponent'
 
 interface Props {
-  checked: boolean
   choice: Multimedia
 }
 
-export const ChoiceContentContainer = async ({ checked, choice }: Props) => {
+export const ChoiceContentContainer = async ({ choice }: Props) => {
   const className = cx(
     'flex',
     'justify-center',
     'items-center',
     'aspect-video',
     'bg-gray-50',
-
-    { 'font-bold': checked },
+    'peer-checked:font-bold',
   )
 
   return (

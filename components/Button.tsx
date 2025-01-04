@@ -40,14 +40,14 @@ export const Button = ({
     'lg:py-6',
     'lg:px-4',
     {
-      'bg-blue-500': type === 'button' && !style,
-      'bg-red-500': type === 'button' && style === 'WARNING',
-      'bg-green-500': type === 'submit',
+      'bg-blue-500': !style,
+      'bg-red-500': style === 'WARNING',
+      'bg-green-500': style === 'SUCCESS',
       'opacity-50': props.disabled,
       'cursor-not-allowed': props.disabled,
       'text-white': !props.disabled,
       'hover:bg-blue-700': !props.disabled,
-      'hover:bg-green-700': !props.disabled && type === 'submit',
+      'hover:bg-green-700': !props.disabled && style === 'SUCCESS',
       'hover:bg-red-700': !props.disabled && style === 'WARNING',
     },
   )

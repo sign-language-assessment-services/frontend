@@ -1,13 +1,18 @@
 'use client'
 
 import { Button } from '@/components/Button'
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 
-export default function CancelButton() {
+interface Props {
+  disabled?: boolean
+}
+
+export default function CancelButton({ disabled }: Props) {
   const t = useTranslations('Buttons')
+  const router = useRouter()
   return (
-    <Button onClick={() => redirect(`/assessments`)} style="WARNING">
+    <Button onClick={() => router.push(`/assessments`)} style="WARNING" disabled={disabled}>
       {t('cancel')}
     </Button>
   )

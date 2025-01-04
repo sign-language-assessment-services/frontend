@@ -6,10 +6,12 @@ import { Exercise } from '@/lib/models'
 
 interface Props {
   exercise: Exercise
-  selectedChoices: string[]
 }
 
-export default async function MultipleChoiceComponent({ selectedChoices, exercise }: Props) {
+export default async function ExerciseComponent({ exercise }: Props) {
+  // TODO: Fetch selected choices from the server
+  const selectedChoiceIds: string[] = []
+
   return (
     <div className={cx('flex', 'flex-col', '2xl:flex-row', 'h-full', 'w-full')}>
       <QuestionCard question={exercise.question} />
@@ -28,16 +30,14 @@ export default async function MultipleChoiceComponent({ selectedChoices, exercis
           'md:p-8',
         )}
       >
-        {exercise.choices.map((choice, choiceIndex) => {
-          return (
-            <AnswerCard
-              key={choiceIndex}
-              checked={selectedChoices.includes((choiceIndex + 1).toString()) ?? false}
-              choice={choice}
-              choiceId={(choiceIndex + 1).toString()}
-            />
-          )
-        })}
+        {exercise.choices.map((choice, index) => (
+          <AnswerCard
+            key={index}
+            checked={selectedChoiceIds.includes(choice.id)}
+            choice={choice}
+            choicePosition={index + 1}
+          />
+        ))}
       </div>
     </div>
   )

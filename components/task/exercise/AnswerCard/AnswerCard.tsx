@@ -2,25 +2,15 @@ import React from 'react'
 import cx from 'classnames'
 import { ChoiceContentContainer } from './ChoiceLabel/ChoiceContentContainer'
 import { AnswerCardFooter } from './AnswerCardFooter/AnswerCardFooter'
-import { Multimedia } from '@/lib/models'
+import { Choice } from '@/lib/models'
 
 interface Props {
   checked: boolean
-  choiceId: string
-  choice: Multimedia
+  choice: Choice
+  choicePosition: number
 }
 
-export const AnswerCard = async ({ checked, choice, choiceId }: Props) => {
-  const commonEffects = {
-    'group-hover:cursor-pointer': true,
-    [`border-blue-200`]: checked,
-    'group-hover:drop-shadow-lg': true,
-  }
-
-  const backgroundEffects = {
-    [`bg-blue-200`]: checked,
-  }
-
+export const AnswerCard = async ({ checked, choice, choicePosition }: Props) => {
   return (
     <div
       className={cx(
@@ -30,20 +20,28 @@ export const AnswerCard = async ({ checked, choice, choiceId }: Props) => {
         'items-center',
         '2xl:max-w-[48%]',
         'max-w-xl',
+        'group',
       )}
     >
       <div className="group w-full">
         <label
-          className={cx('flex', 'flex-col', 'justify-around', 'border-2', 'bg-white', {
-            ...commonEffects,
-          })}
+          className={cx(
+            'flex',
+            'flex-col',
+            'justify-around',
+            'border-2',
+            'bg-white',
+            'has-[:checked]:border-blue-200',
+            'has-[:checked]:bg-blue-200',
+            'group-hover:cursor-pointer',
+            'group-hover:drop-shadow-lg',
+          )}
         >
-          <ChoiceContentContainer checked={checked} choice={choice} />
+          <ChoiceContentContainer choice={choice} />
           <AnswerCardFooter
             checked={checked}
-            choiceId={choiceId}
-            backgroundEffects={backgroundEffects}
-            commonEffects={commonEffects}
+            choiceId={choice.id}
+            choicePosition={choicePosition}
           />
         </label>
       </div>

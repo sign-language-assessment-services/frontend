@@ -3,23 +3,26 @@ import { Checkbox } from './Checkbox/Checkbox'
 import AnswerIdentifier from './AnswerIdentifier/AnswerIdentifier'
 import React from 'react'
 
-export const AnswerCardFooter = (props: {
-  backgroundEffects: { 'bg-blue-200': boolean }
-  commonEffects: {
-    'group-hover:cursor-pointer': boolean
-    'group-hover:drop-shadow-lg': boolean
-    'border-blue-200': boolean
-  }
+interface Props {
   checked: boolean
   choiceId: string
-}) => (
+  choicePosition: number
+}
+
+export const AnswerCardFooter = ({ checked, choiceId, choicePosition }: Props) => (
   <span
-    className={cx('flex', 'justify-center', 'p-1', 'gap-2', 'border-t-2', {
-      ...props.backgroundEffects,
-      ...props.commonEffects,
-    })}
+    className={cx(
+      'flex',
+      'justify-center',
+      'p-1',
+      'gap-2',
+      'border-t-2',
+      'has-[:checked]:bg-blue-200',
+      'has-[:checked]:border-blue-200',
+      'group-hover:cursor-pointer',
+    )}
   >
-    <Checkbox checked={props.checked} id={props.choiceId} />
-    <AnswerIdentifier checked={props.checked} choiceId={props.choiceId} />
+    <Checkbox checked={checked} id={choiceId} />
+    <AnswerIdentifier choiceId={choicePosition} />
   </span>
 )

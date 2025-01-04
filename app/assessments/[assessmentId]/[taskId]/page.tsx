@@ -1,10 +1,13 @@
 import { getAssessmentById, getExerciseById, getPrimerById } from '@/lib/apiClient'
-import ItemComponentWrapper from '@/app/assessments/[assessmentId]/[taskId]/ItemComponentWrapper'
 import { Main } from '@/components/layout/Main'
 import { Header } from '@/components/layout/header/Header'
 import { Footer } from '@/components/layout/Footer'
 import Buttons from './Buttons'
 import { getTranslations } from 'next-intl/server'
+import PrimerComponent from '@/components/task/primer/PrimerComponent'
+import ExerciseComponent from '@/components/task/exercise/ExerciseComponent'
+import { Exercise, Primer } from '@/lib/models'
+import { redirect } from 'next/navigation'
 
 export default async function Task({
   params,
@@ -25,8 +28,14 @@ export default async function Task({
     ? undefined
     : `/assessments/${assessmentId}/${assessment.tasks[index - 1].id}`
   const nextPageUrl = isLastPage
-    ? undefined
+    ? `/assessments/${assessmentId}/submit`
     : `/assessments/${assessmentId}/${assessment.tasks[index + 1].id}`
+
+  async function submitTask(formData: FormData) {
+    'use server'
+    console.log(formData)
+    redirect(nextPageUrl!)
+  }
 
   return (
     <>
@@ -34,10 +43,16 @@ export default async function Task({
         {assessment.name} – {t('page', { current: index + 1, total: assessment.tasks.length })}
       </Header>
       <Main>
-        <ItemComponentWrapper assessmentId={assessmentId} choices={[]} task={item} />
+        <form id="task-form" action={submitTask} className="w-full">
+          {taskType === 'primer' ? (
+            <PrimerComponent primer={item as Primer} />
+          ) : (
+            <ExerciseComponent exercise={item as Exercise} />
+          )}
+        </form>
       </Main>
       <Footer>
-        <Buttons previousPageUrl={previousPageUrl} nextPageUrl={nextPageUrl} />
+        <Buttons previousPageUrl={previousPageUrl} />
       </Footer>
     </>
   )

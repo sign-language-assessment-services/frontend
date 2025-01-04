@@ -1,19 +1,21 @@
 'use client'
 
 import { Button } from '@/components/Button'
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 
 interface Props {
   previousPageUrl: string | undefined
+  disabled?: boolean
 }
 
-export default function BackButton({ previousPageUrl }: Props) {
+export default function BackButton({ previousPageUrl, disabled }: Props) {
   const t = useTranslations('Buttons')
+  const router = useRouter()
   return (
     <Button
-      onClick={() => redirect(previousPageUrl!)}
-      disabled={previousPageUrl === undefined}
+      onClick={() => router.push(previousPageUrl!)}
+      disabled={disabled}
       icon="prev"
       iconPosition="left"
     >

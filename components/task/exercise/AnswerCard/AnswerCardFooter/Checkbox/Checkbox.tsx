@@ -6,5 +6,5 @@ interface Props {
 }
 
 export const Checkbox = ({ id, checked }: Props) => (
-  <input className="peer" type="checkbox" name={`choice_${id}`} defaultChecked={checked} />
+  <input className="peer" type="checkbox" name={id} defaultChecked={checked} />
 )
