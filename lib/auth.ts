@@ -1,6 +1,6 @@
 import NextAuth, { Account } from 'next-auth'
 import Keycloak from 'next-auth/providers/keycloak'
-import { TokenEndpointResponse } from 'oauth4webapi'
+import { OAuth2Error, TokenEndpointResponse } from 'oauth4webapi'
 import { JWT } from '@auth/core/jwt'
 
 export const accountManagementUrl = `${process.env.AUTH_KEYCLOAK_ISSUER_EXTERNAL}/account?referrer=${process.env.AUTH_KEYCLOAK_ID}`
@@ -29,14 +29,20 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       } else if (Date.now() + 1000 < token.expires_at * 1000) {
         // Access token still valid
         return token
-      } else {
-        // Access token expired
-        const newTokens = await refreshAccessToken(token.refresh_token as string)
+      } else if (token?.refresh_token && tokenStillValid(token.refresh_token)) {
+        // Access token expired, refresh token still valid
+        const tokenResponse = await refreshAccessToken(token.refresh_token as string)
+        if (isError(tokenResponse)) {
+          return await signOut()
+        }
         return {
           ...token,
-          access_token: newTokens.access_token,
-          expires_at: Math.floor(Date.now() / 1000 + newTokens.expires_in!),
+          access_token: tokenResponse.access_token,
+          expires_at: Math.floor(Date.now() / 1000 + tokenResponse.expires_in!),
         }
+      } else {
+        // No valid tokens
+        return await signOut()
       }
     },
 
@@ -62,6 +68,15 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   },
 })
 
+function isError(response: TokenEndpointResponse | OAuth2Error): response is OAuth2Error {
+  return response.hasOwnProperty('error')
+}
+
+function tokenStillValid(jwt: string) {
+  const decoded = JSON.parse(atob(jwt.split('.')[1]))
+  return decoded.exp * 1000 > Date.now()
+}
+
 async function doFinalSignoutHandshake(jwt: JWT) {
   const { id_token } = jwt
 
@@ -80,7 +95,9 @@ async function doFinalSignoutHandshake(jwt: JWT) {
   }
 }
 
-async function refreshAccessToken(refreshToken: string): Promise<TokenEndpointResponse> {
+async function refreshAccessToken(
+  refreshToken: string,
+): Promise<TokenEndpointResponse | OAuth2Error> {
   const response = await fetch(
     `${process.env.AUTH_KEYCLOAK_ISSUER_INTERNAL}/protocol/openid-connect/token`,
     {
