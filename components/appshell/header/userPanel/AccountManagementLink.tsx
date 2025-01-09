@@ -1,6 +1,7 @@
 import AvatarIcon from '@/components/appshell/header/userPanel/AvatarIcon'
-import { auth, accountManagementUrl } from '@/lib/auth'
+import { accountManagementUrl, auth } from '@/lib/auth'
 import { getTranslations } from 'next-intl/server'
+import cx from 'classnames'
 
 export default async function AccountManagementLink() {
   const session = await auth()
@@ -11,9 +12,9 @@ export default async function AccountManagementLink() {
     <a
       href={accountManagementUrl}
       title={t('manageProfile')}
-      className="flex items-center gap-2 hover:drop-shadow-lg"
+      className={cx('flex', 'items-center', 'gap-2', 'hover:drop-shadow-lg')}
     >
-      <span className="text-xs md:text-sm">{userName}</span>
+      <span className={cx('text-xs', 'md:text-sm')}>{userName}</span>
       <AvatarIcon />
     </a>
   )

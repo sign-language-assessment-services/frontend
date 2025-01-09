@@ -20,7 +20,7 @@ export default function Header({ children }: PropsWithChildren) {
     >
       <h1>{children}</h1>
 
-      <div className="shrink-0 ml-5">
+      <div className={cx('shrink-0', 'ml-5')}>
         <UserPanel />
       </div>
     </header>

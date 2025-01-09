@@ -2,10 +2,21 @@ import cx from 'classnames'
 
 export default function Spinner() {
   return (
-    <div role="status" className="flex flex-col justify-center items-center absolute inset-0 gap-8">
+    <div
+      role="status"
+      className={cx(
+        'flex',
+        'flex-col',
+        'justify-center',
+        'items-center',
+        'absolute',
+        'inset-0',
+        'gap-8',
+      )}
+    >
       <svg
         aria-hidden="true"
-        className="w-16 h-16 mr-2 text-gray-200 animate-spin fill-blue-600"
+        className={cx('w-16', 'h-16', 'mr-2', 'text-gray-200', 'animate-spin', 'fill-blue-600')}
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

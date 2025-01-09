@@ -22,7 +22,7 @@ export default function AnswerCard({ checked, choice, choicePosition }: Props) {
         'group',
       )}
     >
-      <div className="group w-full">
+      <div className={cx('group', 'w-full')}>
         <label
           className={cx(
             'flex',

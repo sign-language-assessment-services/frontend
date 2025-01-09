@@ -55,12 +55,12 @@ export default function Button({
   const elements = icon ? (
     iconPosition === 'right' ? (
       <>
-        <span className="hidden lg:block">{children}</span> <Icon type={icon} />
+        <span className={cx('hidden', 'lg:block')}>{children}</span> <Icon type={icon} />
       </>
     ) : (
       <>
         <Icon type={icon} />
-        <span className="hidden lg:block">{children}</span>
+        <span className={cx('hidden', 'lg:block')}>{children}</span>
       </>
     )
   ) : (
@@ -78,12 +78,20 @@ export default function Button({
 function Icon({ type }: { type: IconType }) {
   return {
     prev: (
-      <svg className="fill-current w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+      <svg
+        className={cx('fill-current', 'w-8', 'h-8')}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+      >
         <path d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z" />
       </svg>
     ),
     next: (
-      <svg className="fill-current w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+      <svg
+        className={cx('fill-current', 'w-8', 'h-8')}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+      >
         <path d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" />
       </svg>
     ),
@@ -94,7 +102,7 @@ function Icon({ type }: { type: IconType }) {
         viewBox="0 0 24 24"
         strokeWidth={2.2}
         stroke="currentColor"
-        className="w-6 h-6"
+        className={cx('w-6', 'h-6')}
       >
         <path
           strokeLinecap="round"
