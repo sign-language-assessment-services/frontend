@@ -1,7 +1,6 @@
 import cx from 'classnames'
 import { Primer } from '@/lib/models'
 import MultimediaComponent from '@/app/assessments/[assessmentId]/[taskId]/_components/multimedia/MultimediaComponent'
-import React from 'react'
 
 interface Props {
   primer: Primer

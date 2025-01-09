@@ -1,7 +1,6 @@
-import React from 'react'
 import cx from 'classnames'
-import { ChoiceContentContainer } from './ChoiceLabel/ChoiceContentContainer'
-import { AnswerCardFooter } from './AnswerCardFooter/AnswerCardFooter'
+import ChoiceContentContainer from './ChoiceLabel/ChoiceContentContainer'
+import AnswerCardFooter from './AnswerCardFooter/AnswerCardFooter'
 import { Choice } from '@/lib/models'
 
 interface Props {
@@ -10,7 +9,7 @@ interface Props {
   choicePosition: number
 }
 
-export const AnswerCard = async ({ checked, choice, choicePosition }: Props) => {
+export default function AnswerCard({ checked, choice, choicePosition }: Props) {
   return (
     <div
       className={cx(

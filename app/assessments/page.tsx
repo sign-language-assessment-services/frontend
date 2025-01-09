@@ -1,8 +1,7 @@
 import { getAssessments } from '@/lib/apiClient'
-import { AssessmentSummaryComponent } from '@/app/assessments/_components/AssessmentSummaryComponent'
-import React from 'react'
-import { Header } from '@/components/appshell/header/Header'
-import { Main } from '@/components/appshell/main/Main'
+import AssessmentSummaryComponent from '@/app/assessments/_components/AssessmentSummaryComponent'
+import Header from '@/components/appshell/header/Header'
+import Main from '@/components/appshell/main/Main'
 import cx from 'classnames'
 import { getTranslations } from 'next-intl/server'
 

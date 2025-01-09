@@ -1,5 +1,4 @@
-import { AnswerCard } from './AnswerCard/AnswerCard'
-import React from 'react'
+import AnswerCard from './AnswerCard/AnswerCard'
 import cx from 'classnames'
 import QuestionCard from './QuestionCard/QuestionCard'
 import { Exercise } from '@/lib/models'
@@ -8,7 +7,7 @@ interface Props {
   exercise: Exercise
 }
 
-export default async function ExerciseComponent({ exercise }: Props) {
+export default function ExerciseComponent({ exercise }: Props) {
   // TODO: Fetch selected choices from the server
   const selectedChoiceIds: string[] = []
 

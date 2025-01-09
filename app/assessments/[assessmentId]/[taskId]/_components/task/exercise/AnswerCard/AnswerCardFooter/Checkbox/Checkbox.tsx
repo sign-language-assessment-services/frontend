@@ -1,10 +1,8 @@
-import React from 'react'
-
 interface Props {
   checked: boolean
   id: string
 }
 
-export const Checkbox = ({ id, checked }: Props) => (
-  <input className="peer" type="checkbox" name={id} defaultChecked={checked} />
-)
+export default function Checkbox({ id, checked }: Props) {
+  return <input className="peer" type="checkbox" name={id} defaultChecked={checked} />
+}

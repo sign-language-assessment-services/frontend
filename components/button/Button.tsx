@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import { ReactNode } from 'react'
 import cx from 'classnames'
 
 type IconType = 'prev' | 'next' | 'reload'
@@ -14,14 +14,14 @@ interface Props {
   style?: 'WARNING' | 'SUCCESS'
 }
 
-export const Button = ({
+export default function Button({
   children,
   icon,
   iconPosition = 'right',
   type = 'button',
   style,
   ...props
-}: Props) => {
+}: Props) {
   const classes = cx(
     'flex',
     'flex-row',
@@ -75,7 +75,7 @@ export const Button = ({
   )
 }
 
-const Icon = ({ type }: { type: IconType }) => {
+function Icon({ type }: { type: IconType }) {
   return {
     prev: (
       <svg className="fill-current w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">

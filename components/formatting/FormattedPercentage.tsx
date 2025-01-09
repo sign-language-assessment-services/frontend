@@ -1,4 +1,3 @@
-import React from 'react'
 import { getFormatter } from 'next-intl/server'
 
 interface Props {

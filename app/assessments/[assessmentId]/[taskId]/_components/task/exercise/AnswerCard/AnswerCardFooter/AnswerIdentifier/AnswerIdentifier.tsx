@@ -1,5 +1,4 @@
 import cx from 'classnames'
-import React from 'react'
 import { getTranslations } from 'next-intl/server'
 
 interface Props {

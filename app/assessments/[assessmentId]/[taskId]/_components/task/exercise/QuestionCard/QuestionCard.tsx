@@ -1,9 +1,8 @@
 import cx from 'classnames'
-import React from 'react'
 import { Multimedia } from '@/lib/models'
 import MultimediaComponent from '@/app/assessments/[assessmentId]/[taskId]/_components/multimedia/MultimediaComponent'
 
-export default async function QuestionCard({ question }: { question: Multimedia }) {
+export default function QuestionCard({ question }: { question: Multimedia }) {
   return (
     <div
       className={cx(

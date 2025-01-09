@@ -1,7 +1,7 @@
 import './globals.css'
 import { auth } from '@/lib/auth'
 import Providers from '@/app/providers'
-import { AppShell } from '@/components/appshell/AppShell'
+import AppShell from '@/components/appshell/AppShell'
 import { getLocale, getMessages, getTimeZone } from 'next-intl/server'
 
 export default async function RootLayout({

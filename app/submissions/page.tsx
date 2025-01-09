@@ -1,12 +1,11 @@
 import { auth } from '@/lib/auth'
 import { getSubmissions } from '@/lib/apiClient'
-import { AppShell } from '@/components/appshell/AppShell'
-import { Header } from '@/components/appshell/header/Header'
-import { Main } from '@/components/appshell/main/Main'
+import AppShell from '@/components/appshell/AppShell'
+import Header from '@/components/appshell/header/Header'
+import Main from '@/components/appshell/main/Main'
 import cx from 'classnames'
 import FormattedPercentage from '@/components/formatting/FormattedPercentage'
 import FormattedDateTime from '@/components/formatting/FormattedDateTime'
-import React from 'react'
 import { getTranslations } from 'next-intl/server'
 
 export default async function Submissions() {

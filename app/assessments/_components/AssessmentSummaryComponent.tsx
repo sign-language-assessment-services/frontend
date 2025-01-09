@@ -1,8 +1,11 @@
-import React from 'react'
 import cx from 'classnames'
 import AssessmentSummary from '@/lib/models'
 
-export function AssessmentSummaryComponent({ assessment }: { assessment: AssessmentSummary }) {
+export default function AssessmentSummaryComponent({
+  assessment,
+}: {
+  assessment: AssessmentSummary
+}) {
   const url = `/assessments/${assessment.id}`
   return (
     <tr className={cx(['hover:bg-blue-100', 'hover:cursor-pointer'])}>

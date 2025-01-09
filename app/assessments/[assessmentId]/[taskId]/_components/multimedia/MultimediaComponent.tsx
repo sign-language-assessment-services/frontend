@@ -1,4 +1,3 @@
-import React from 'react'
 import { Multimedia } from '@/lib/models'
 import { getMultimediaFileUrl } from '@/lib/apiClient'
 import Image from 'next/image'
