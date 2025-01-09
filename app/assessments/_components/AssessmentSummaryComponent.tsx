@@ -10,7 +10,7 @@ export default function AssessmentSummaryComponent({
   return (
     <tr className={cx(['hover:bg-blue-100', 'hover:cursor-pointer'])}>
       <td className="text-center flex">
-        <a className="flex-1" href={url}>
+        <a className={cx('flex-1')} href={url}>
           {assessment.name}
         </a>
       </td>

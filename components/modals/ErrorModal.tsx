@@ -1,3 +1,5 @@
+import cx from 'classnames'
+
 type Props = {
   title: string
   message: string
@@ -37,7 +39,7 @@ export function ErrorModal({ message, title, closeLabel, onClose }: Props) {
                     <h3 className="text-lg font-medium leading-6 text-gray-900" id="modal-title">
                       {title}
                     </h3>
-                    <div className="mt-2">
+                    <div className={cx('mt-2')}>
                       <p className="text-sm text-gray-500">{message}</p>
                     </div>
                   </div>

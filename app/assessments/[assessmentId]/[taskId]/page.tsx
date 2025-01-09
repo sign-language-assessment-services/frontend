@@ -8,6 +8,7 @@ import PrimerComponent from '@/app/assessments/[assessmentId]/[taskId]/_componen
 import ExerciseComponent from '@/app/assessments/[assessmentId]/[taskId]/_components/task/exercise/ExerciseComponent'
 import { Exercise, Primer } from '@/lib/models'
 import { redirect } from 'next/navigation'
+import cx from 'classnames'
 
 export default async function Task({
   params,
@@ -43,7 +44,7 @@ export default async function Task({
         {assessment.name} – {t('page', { current: index + 1, total: assessment.tasks.length })}
       </Header>
       <Main>
-        <form id="task-form" action={submitTask} className="w-full">
+        <form id="task-form" action={submitTask} className={cx('w-full')}>
           {taskType === 'primer' ? (
             <PrimerComponent primer={item as Primer} />
           ) : (

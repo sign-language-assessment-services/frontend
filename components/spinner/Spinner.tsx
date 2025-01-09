@@ -1,3 +1,5 @@
+import cx from 'classnames'
+
 export default function Spinner() {
   return (
     <div role="status" className="flex flex-col justify-center items-center absolute inset-0 gap-8">
@@ -17,7 +19,7 @@ export default function Spinner() {
           fill="currentFill"
         />
       </svg>
-      <span className="sr-only">Wird geladen...</span>
+      <span className={cx('sr-only')}>Wird geladen...</span>
     </div>
   )
 }
