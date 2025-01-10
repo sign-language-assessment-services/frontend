@@ -5,10 +5,10 @@ import AnswerIdentifier from './AnswerIdentifier/AnswerIdentifier'
 interface Props {
   checked: boolean
   choiceId: string
-  choicePosition: number
+  choiceIndex: number
 }
 
-export default function AnswerCardFooter({ checked, choiceId, choicePosition }: Props) {
+export default function AnswerCardFooter({ checked, choiceId, choiceIndex }: Props) {
   return (
     <span
       className={cx(
@@ -23,7 +23,7 @@ export default function AnswerCardFooter({ checked, choiceId, choicePosition }: 
       )}
     >
       <Checkbox checked={checked} id={choiceId} />
-      <AnswerIdentifier choiceId={choicePosition} />
+      <AnswerIdentifier choiceIndex={choiceIndex} />
     </span>
   )
 }

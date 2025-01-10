@@ -34,7 +34,7 @@ export default function ExerciseComponent({ exercise }: Props) {
             key={index}
             checked={selectedChoiceIds.includes(choice.id)}
             choice={choice}
-            choicePosition={index + 1}
+            choiceIndex={index}
           />
         ))}
       </div>

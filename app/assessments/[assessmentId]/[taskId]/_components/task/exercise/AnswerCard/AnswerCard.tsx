@@ -6,10 +6,10 @@ import { Choice } from '@/lib/models'
 interface Props {
   checked: boolean
   choice: Choice
-  choicePosition: number
+  choiceIndex: number
 }
 
-export default function AnswerCard({ checked, choice, choicePosition }: Props) {
+export default function AnswerCard({ checked, choice, choiceIndex }: Props) {
   return (
     <div
       className={cx(
@@ -37,11 +37,7 @@ export default function AnswerCard({ checked, choice, choicePosition }: Props) {
           )}
         >
           <ChoiceContentContainer choice={choice} />
-          <AnswerCardFooter
-            checked={checked}
-            choiceId={choice.id}
-            choicePosition={choicePosition}
-          />
+          <AnswerCardFooter checked={checked} choiceId={choice.id} choiceIndex={choiceIndex} />
         </label>
       </div>
     </div>
