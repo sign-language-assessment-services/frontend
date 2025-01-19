@@ -42,6 +42,8 @@ export default function Button({
     'shadow-md',
     'hover:shadow-2xl',
     'focus:shadow-2xl',
+    'ring-1',
+    'ring-blue-900',
     {
       'bg-blue-500': !style,
       'bg-red-500': style === 'WARNING',
@@ -49,12 +51,20 @@ export default function Button({
       'opacity-50': props.disabled,
       'cursor-not-allowed': props.disabled,
       'text-white': !props.disabled,
-      'hover:bg-blue-700': !props.disabled,
+
+      'active:bg-blue-900': !props.disabled,
+      'active:bg-green-900': !props.disabled && style === 'SUCCESS',
+      'active:bg-red-900': !props.disabled && style === 'WARNING',
+
+      'focus:ring-4': !props.disabled,
       'focus:bg-blue-700': !props.disabled,
-      'hover:bg-green-700': !props.disabled && style === 'SUCCESS',
       'focus:bg-green-700': !props.disabled && style === 'SUCCESS',
-      'hover:bg-red-700': !props.disabled && style === 'WARNING',
       'focus:bg-red-700': !props.disabled && style === 'WARNING',
+
+      'hover:ring-4': !props.disabled,
+      'hover:bg-blue-700': !props.disabled,
+      'hover:bg-green-700': !props.disabled && style === 'SUCCESS',
+      'hover:bg-red-700': !props.disabled && style === 'WARNING',
     },
   )
 
