@@ -12,7 +12,7 @@ export default async function AccountManagementLink() {
     <a
       href={accountManagementUrl}
       title={t('manageProfile')}
-      className={cx('flex', 'items-center', 'gap-2', 'hover:drop-shadow-lg')}
+      className={cx('flex', 'items-center', 'gap-2', 'drop-shadow-sm', 'hover:drop-shadow-lg')}
     >
       <span className={cx('text-xs', 'md:text-sm')}>{userName}</span>
       <AvatarIcon />

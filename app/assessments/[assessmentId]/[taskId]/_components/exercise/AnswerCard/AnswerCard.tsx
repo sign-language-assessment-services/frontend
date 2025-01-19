@@ -35,6 +35,7 @@ export default function AnswerCard({ checked, choice, choiceIndex }: Props) {
             'group-hover:cursor-pointer',
             'group-hover:drop-shadow-lg',
             'group-focus:drop-shadow-lg',
+            'shadow-sm',
           )}
         >
           <ChoiceContentContainer choice={choice} />

@@ -39,6 +39,9 @@ export default function Button({
     'lg:h-20',
     'lg:py-6',
     'lg:px-4',
+    'shadow-md',
+    'hover:shadow-2xl',
+    'focus:shadow-2xl',
     {
       'bg-blue-500': !style,
       'bg-red-500': style === 'WARNING',

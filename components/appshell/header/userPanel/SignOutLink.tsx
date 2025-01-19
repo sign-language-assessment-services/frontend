@@ -8,7 +8,7 @@ export default function SignOutLink() {
   const t = useTranslations('UserPanel')
   return (
     <a
-      className={cx('font-bold', 'text-xs', 'md:text-sm', 'hover:drop-shadow-lg')}
+      className={cx('font-bold', 'text-xs', 'md:text-sm', 'drop-shadow-sm', 'hover:drop-shadow-lg')}
       href="#"
       onClick={async () => {
         await signOut()
