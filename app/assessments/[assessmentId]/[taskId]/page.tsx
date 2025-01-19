@@ -2,11 +2,12 @@ import { getAssessmentById, getExerciseById, getPrimerById } from '@/lib/apiClie
 import Main from '@/components/appshell/main/Main'
 import Header from '@/components/appshell/header/Header'
 import Footer from '@/components/appshell/footer/Footer'
-import Buttons from './_components/buttons/Buttons'
+import ButtonArray from './_components/buttons/ButtonArray'
 import { getTranslations } from 'next-intl/server'
 import PrimerComponent from '@/app/assessments/[assessmentId]/[taskId]/_components/primer/PrimerComponent'
 import ExerciseComponent from '@/app/assessments/[assessmentId]/[taskId]/_components/exercise/ExerciseComponent'
 import { Exercise, Primer } from '@/lib/models'
+import CloseButton from '@/app/assessments/[assessmentId]/[taskId]/_components/buttons/CloseButton'
 
 export default async function Task({
   params,
@@ -37,6 +38,7 @@ export default async function Task({
         {assessment.name} – {t('page', { current: index + 1, total: assessment.tasks.length })}
       </Header>
       <Main>
+        <CloseButton />
         {taskType === 'primer' ? (
           <PrimerComponent primer={item as Primer} nextPageUrl={nextPageUrl} />
         ) : (
@@ -48,7 +50,7 @@ export default async function Task({
         )}
       </Main>
       <Footer>
-        <Buttons previousPageUrl={previousPageUrl} isLastPage={isLastPage} />
+        <ButtonArray previousPageUrl={previousPageUrl} isLastPage={isLastPage} />
       </Footer>
     </>
   )
