@@ -4,7 +4,6 @@ import Header from '@/components/appshell/header/Header'
 import Footer from '@/components/appshell/footer/Footer'
 import { getTranslations } from 'next-intl/server'
 import Button from '@/components/button/Button'
-import { navigate } from 'next/dist/client/components/segment-cache/navigation'
 import { redirect } from 'next/navigation'
 
 export default async function AssessmentScore({
@@ -15,8 +14,8 @@ export default async function AssessmentScore({
   const t = await getTranslations('Score')
   const { assessmentId } = await params
   const { points } = await getScore(assessmentId)
-
   const assessment = await getAssessmentById(assessmentId)
+  const maxPoints = assessment.tasks.filter((task) => task.task_type === 'exercise').length
 
   async function retry() {
     'use server'
@@ -36,7 +35,9 @@ export default async function AssessmentScore({
       <Main center>
         <div className="flex flex-col lg:gap-6 items-center">
           <span>{t('result')}</span>
-          <span className="lg:text-6xl font-bold">{t('points', { points })}</span>
+          <span className="lg:text-6xl font-bold whitespace-pre-line text-center">
+            {t('points', { points, maxPoints })}
+          </span>
         </div>
       </Main>
       <Footer>

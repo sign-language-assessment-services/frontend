@@ -25,7 +25,7 @@
   "Score": {
     "title": "Ergebnis",
     "result": "Ergebnis:",
-    "points": "{points} Punkt(e)",
+    "points": "{points} / {maxPoints}\nPunkte",
     "retry": "Wiederholen",
     "overview": "Testübersicht"
   }

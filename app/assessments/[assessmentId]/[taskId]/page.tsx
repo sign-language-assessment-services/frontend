@@ -28,7 +28,7 @@ export default async function Task({
     ? undefined
     : `/assessments/${assessmentId}/${assessment.tasks[index - 1].id}`
   const nextPageUrl = isLastPage
-    ? `/assessments/${assessmentId}/submit`
+    ? `/assessments/${assessmentId}/score`
     : `/assessments/${assessmentId}/${assessment.tasks[index + 1].id}`
 
   return (
@@ -48,7 +48,7 @@ export default async function Task({
         )}
       </Main>
       <Footer>
-        <Buttons previousPageUrl={previousPageUrl} />
+        <Buttons previousPageUrl={previousPageUrl} isLastPage={isLastPage} />
       </Footer>
     </>
   )
