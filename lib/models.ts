@@ -52,3 +52,7 @@ export interface ExerciseSubmission {
 export interface SubmissionRequest {
   choices: string[]
 }
+
+export interface ScoreResponse {
+  points: number
+}

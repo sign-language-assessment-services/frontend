@@ -21,5 +21,12 @@
     "assessment": "Test",
     "score": "Punkte",
     "date": "Datum"
+  },
+  "Score": {
+    "title": "Ergebnis",
+    "result": "Ergebnis:",
+    "points": "{points} Punkt(e)",
+    "retry": "Wiederholen",
+    "overview": "Testübersicht"
   }
 }

@@ -5,6 +5,7 @@ import Footer from '@/components/appshell/footer/Footer'
 import SubmitButton from '@/app/assessments/[assessmentId]/submit/_components/SubmitButton'
 import BackButton from '@/app/assessments/[assessmentId]/[taskId]/_components/buttons/BackButton'
 import CancelButton from '@/app/assessments/[assessmentId]/[taskId]/_components/buttons/CancelButton'
+import { redirect } from 'next/navigation'
 
 export default async function Task({
   params,
@@ -15,9 +16,9 @@ export default async function Task({
   const assessment = await getAssessmentById(assessmentId)
   const lastTask = assessment.tasks[assessment.tasks.length - 1]
 
-  async function submitAssessment(formData: FormData) {
+  async function submitAssessment() {
     'use server'
-    console.log(formData)
+    redirect(`/assessments/${assessmentId}/score`)
   }
 
   return (

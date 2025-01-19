@@ -4,6 +4,7 @@ import AssessmentSummary, {
   ExerciseSubmission,
   ExerciseSubmissionSummary,
   Primer,
+  ScoreResponse,
   Submission,
 } from '@/lib/models'
 import { auth } from '@/lib/auth'
@@ -79,6 +80,10 @@ async function post<T>(path: string, body: unknown): Promise<T> {
     throw new Error(`Failed to fetch data: ${response.statusText}. Path: ${path}`)
   }
   return response.json()
+}
+
+export async function getScore(assessmentId: string): Promise<ScoreResponse> {
+  return get(`/assessments/${assessmentId}/score`)
 }
 
 async function get<T>(path: string): Promise<T> {
