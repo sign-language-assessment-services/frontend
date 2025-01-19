@@ -12,7 +12,6 @@ export default function ChoiceContentContainer({ choice }: Props) {
     'justify-center',
     'items-center',
     'aspect-video',
-    'bg-gray-50',
     'peer-checked:font-bold',
   )
 

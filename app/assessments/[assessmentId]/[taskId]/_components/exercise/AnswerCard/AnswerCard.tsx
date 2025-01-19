@@ -28,12 +28,13 @@ export default function AnswerCard({ checked, choice, choiceIndex }: Props) {
             'flex',
             'flex-col',
             'justify-around',
-            'border-2',
-            'bg-white',
-            'has-[:checked]:border-blue-200',
+            'border-4',
+            'bg-gray-50',
+            'has-[:checked]:border-blue-300',
             'has-[:checked]:bg-blue-200',
             'group-hover:cursor-pointer',
             'group-hover:drop-shadow-lg',
+            'group-focus:drop-shadow-lg',
           )}
         >
           <ChoiceContentContainer choice={choice} />

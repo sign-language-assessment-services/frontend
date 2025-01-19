@@ -25,7 +25,7 @@ export default function QuestionCard({ question }: { question: Multimedia }) {
           'items-center',
           'max-2xl:max-w-2xl',
           'aspect-video',
-          'border-2',
+          'border-4',
           'bg-gray-50',
         )}
       >
