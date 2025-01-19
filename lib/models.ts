@@ -36,6 +36,7 @@ export interface Submission {
   points: number
   maximum_points: number
   percentage: number
+  created_at: string
 }
 
 export interface ExerciseSubmissionSummary {
