@@ -47,8 +47,11 @@ export default function Button({
       'cursor-not-allowed': props.disabled,
       'text-white': !props.disabled,
       'hover:bg-blue-700': !props.disabled,
+      'focus:bg-blue-700': !props.disabled,
       'hover:bg-green-700': !props.disabled && style === 'SUCCESS',
+      'focus:bg-green-700': !props.disabled && style === 'SUCCESS',
       'hover:bg-red-700': !props.disabled && style === 'WARNING',
+      'focus:bg-red-700': !props.disabled && style === 'WARNING',
     },
   )
 
