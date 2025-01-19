@@ -20,7 +20,7 @@ export interface Multimedia {
 }
 
 export interface Choice extends Multimedia {
-  id: string // TODO: Not yet present in the API
+  id: string
 }
 
 export default interface AssessmentSummary {
@@ -30,11 +30,25 @@ export default interface AssessmentSummary {
 
 export interface Submission {
   id: string
-  created_at: string
   user_id: string
   assessment_id: string
   answers: Record<string, number[]>
   points: number
   maximum_points: number
   percentage: number
+}
+
+export interface ExerciseSubmissionSummary {
+  id: string
+}
+
+export interface ExerciseSubmission {
+  id: string
+  user_id: string
+  assessment_id: string
+  answers: string[]
+}
+
+export interface SubmissionRequest {
+  choices: string[]
 }
