@@ -1,5 +1,9 @@
 import { redirect } from 'next/navigation'
-import { getAssessmentById } from '@/lib/apiClient'
+import {
+  createAssessmentSubmission,
+  getAssessmentSubmissionById,
+  getAssessmentSubmissions,
+} from '@/lib/apiClient'
 
 export default async function Assessments({
   params,
@@ -7,6 +11,16 @@ export default async function Assessments({
   params: Promise<{ assessmentId: string }>
 }): Promise<string> {
   const { assessmentId } = await params
-  const assessment = await getAssessmentById(assessmentId)
-  redirect(`/assessments/${assessmentId}/${assessment.tasks[0].id}`)
+  const submissionIds = await getAssessmentSubmissions()
+  const existingSubmissions = await Promise.all(
+    submissionIds.map(({ id }) => getAssessmentSubmissionById(id)),
+  )
+  const existingSubmission = existingSubmissions.find(
+    (submission) => submission.assessment_id === assessmentId && !submission.finished,
+  )
+  const submissionId = existingSubmission
+    ? existingSubmission.id
+    : (await createAssessmentSubmission(assessmentId)).id!
+
+  redirect(`/assessments/${assessmentId}/${submissionId}`)
 }

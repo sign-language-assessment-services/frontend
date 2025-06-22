@@ -1,11 +1,10 @@
 import AssessmentSummary, {
   Assessment,
+  AssessmentSubmission,
+  AssessmentSubmissionSummary,
   Exercise,
   ExerciseSubmission,
-  ExerciseSubmissionSummary,
   Primer,
-  ScoreResponse,
-  Submission,
 } from '@/lib/models'
 import { auth } from '@/lib/auth'
 
@@ -27,8 +26,8 @@ export async function getAssessments(): Promise<AssessmentSummary[]> {
   return get('/assessments')
 }
 
-export async function getSubmissions(userId: string): Promise<Submission[]> {
-  return get(`/submissions?user_id=${userId}`)
+export async function getAssessmentSubmissions(): Promise<AssessmentSubmissionSummary[]> {
+  return get(`/assessment_submissions`)
 }
 
 export async function getMultimediaFileUrl(multimediaFileId: string): Promise<string> {
@@ -36,41 +35,58 @@ export async function getMultimediaFileUrl(multimediaFileId: string): Promise<st
   return response.url
 }
 
-export async function createAssessmentSubmission(
-  assessmentId: string,
-  userId: string,
-): Promise<void> {
-  const url = `/assessment_submissions/${assessmentId}/submissions/`
-  const body = { user_id: userId }
-  await post(url, body)
+interface CreateAssessmentSubmissionResponse {
+  id: string
 }
 
-export async function submitExercise(
+export async function createAssessmentSubmission(
   assessmentId: string,
+): Promise<CreateAssessmentSubmissionResponse> {
+  const url = `/assessments/${assessmentId}/submissions/`
+  return await post(url)
+}
+
+export async function createExerciseSubmission(
+  assessmentSubmissionId: string,
   exerciseId: string,
   choices: string[],
 ): Promise<void> {
-  const url = `/assessments/${assessmentId}/exercises/${exerciseId}/submissions/`
+  const url = `/assessment_submissions/${assessmentSubmissionId}/exercises/${exerciseId}/submissions/`
   const body = { choices: [...choices] }
   await post(url, body)
 }
 
-export async function getSubmissionsByExercise(
-  assessmentId: string,
-  exerciseId: string,
-): Promise<ExerciseSubmissionSummary[]> {
-  return get(`/assessments/${assessmentId}/exercises/${exerciseId}/submissions`)
+export async function getAssessmentSubmissionById(
+  submissionId: string,
+): Promise<AssessmentSubmission> {
+  return await get(`/assessment_submissions/${submissionId}`)
 }
 
 export async function getExerciseSubmissionById(submissionId: string): Promise<ExerciseSubmission> {
-  return get(`/submissions/${submissionId}`)
+  return get(`/exercise_submissions/${submissionId}`)
 }
 
-async function post<T>(path: string, body: unknown): Promise<T> {
+export async function getExerciseSubmissionByAssessmentSubmissionIdAndExerciseId(
+  assessmentSubmissionId: string,
+  exerciseId: string,
+): Promise<ExerciseSubmission | undefined> {
+  const submissionIds = await getExerciseSubmissions()
+  const submissions = await Promise.all(
+    submissionIds.map(async ({ id }) => await getExerciseSubmissionById(id)),
+  )
+  const filteredSubmissions = submissions.filter(
+    ({ assessment_submission_id, exercise_id }) =>
+      assessment_submission_id === assessmentSubmissionId && exercise_id === exerciseId,
+  )
+  console.log('filteredSubmissions:', filteredSubmissions)
+  return filteredSubmissions[0]
+}
+
+async function post<T>(path: string, body?: unknown): Promise<T> {
   const accessToken = await getAccessToken()
   const response = await fetch(`${BASE_URL}${path}`, {
     method: 'POST',
-    body: JSON.stringify(body),
+    body: body ? JSON.stringify(body) : undefined,
     headers: {
       Authorization: `Bearer ${accessToken}`,
       'Content-Type': 'application/json',
@@ -82,8 +98,31 @@ async function post<T>(path: string, body: unknown): Promise<T> {
   return response.json()
 }
 
-export async function getScore(assessmentId: string): Promise<ScoreResponse> {
-  return get(`/assessments/${assessmentId}/score`)
+async function put<T>(path: string, body?: unknown): Promise<T> {
+  const accessToken = await getAccessToken()
+  const response = await fetch(`${BASE_URL}${path}`, {
+    method: 'PUT',
+    body: body ? JSON.stringify(body) : undefined,
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    },
+  })
+  if (response.status >= 400) {
+    throw new Error(`Failed to fetch data: ${response.statusText}. Path: ${path}`)
+  }
+  return response.json()
+}
+
+export async function getExerciseSubmissions(): Promise<{ id: string }[]> {
+  return get('/exercise_submissions/')
+}
+
+export async function markAssessmentSubmissionAsFinished(
+  assessmentSubmissionId: string,
+): Promise<void> {
+  const url = `/assessment_submissions/${assessmentSubmissionId}`
+  await put(url, { finished: true })
 }
 
 async function get<T>(path: string): Promise<T> {

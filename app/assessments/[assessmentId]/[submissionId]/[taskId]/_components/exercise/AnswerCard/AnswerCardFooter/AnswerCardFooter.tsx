@@ -6,9 +6,10 @@ interface Props {
   checked: boolean
   choiceId: string
   choiceIndex: number
+  readOnly: boolean
 }
 
-export default function AnswerCardFooter({ checked, choiceId, choiceIndex }: Props) {
+export default function AnswerCardFooter({ checked, choiceId, choiceIndex, readOnly }: Props) {
   return (
     <span
       className={cx(
@@ -22,7 +23,7 @@ export default function AnswerCardFooter({ checked, choiceId, choiceIndex }: Pro
         'group-hover:cursor-pointer',
       )}
     >
-      <Checkbox checked={checked} id={choiceId} />
+      <Checkbox checked={checked} id={choiceId} readOnly={readOnly} />
       <AnswerIdentifier choiceIndex={choiceIndex} />
     </span>
   )

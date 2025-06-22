@@ -1,6 +1,6 @@
 import cx from 'classnames'
 import { Multimedia } from '@/lib/models'
-import MultimediaComponent from '@/app/assessments/[assessmentId]/[taskId]/_components/multimedia/MultimediaComponent'
+import MultimediaComponent from '@/app/assessments/[assessmentId]/[submissionId]/[taskId]/_components/multimedia/MultimediaComponent'
 
 interface Props {
   choice: Multimedia

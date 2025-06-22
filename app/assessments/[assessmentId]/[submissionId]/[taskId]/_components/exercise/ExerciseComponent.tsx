@@ -3,28 +3,41 @@ import cx from 'classnames'
 import QuestionCard from './QuestionCard/QuestionCard'
 import { Exercise } from '@/lib/models'
 import {
-  getExerciseSubmissionById,
-  getSubmissionsByExercise,
-  submitExercise,
+  createExerciseSubmission,
+  getExerciseSubmissionByAssessmentSubmissionIdAndExerciseId,
 } from '@/lib/apiClient'
 import { redirect } from 'next/navigation'
 
 interface Props {
   assessmentId: string
+  assessmentSubmissionId: string
   exercise: Exercise
-  nextPageUrl: string
+  nextPageUrl: string | undefined
+  readOnly: boolean
 }
 
-export default async function ExerciseComponent({ exercise, assessmentId, nextPageUrl }: Props) {
-  const oldChoices = await getPreviouslySelectedChoices(assessmentId, exercise)
+export default async function ExerciseComponent({
+  exercise,
+  assessmentSubmissionId,
+  nextPageUrl,
+  readOnly,
+}: Props) {
+  const existingExerciseSubmission =
+    await getExerciseSubmissionByAssessmentSubmissionIdAndExerciseId(
+      assessmentSubmissionId,
+      exercise.id,
+    )
+  const oldChoices = existingExerciseSubmission?.answers
 
   async function submitTask(formData: FormData) {
     'use server'
-    const newChoices = extractSelectedChoices(formData)
-    if (submissionNeeded(newChoices, oldChoices)) {
-      await submitExercise(assessmentId, exercise.id, newChoices)
+    if (!readOnly) {
+      const newChoices = extractSelectedChoices(formData)
+      if (submissionNeeded(newChoices, oldChoices)) {
+        await createExerciseSubmission(assessmentSubmissionId, exercise.id, newChoices)
+      }
     }
-    redirect(nextPageUrl)
+    redirect(nextPageUrl!)
   }
 
   return (
@@ -52,27 +65,13 @@ export default async function ExerciseComponent({ exercise, assessmentId, nextPa
               checked={oldChoices?.includes(choice.id) ?? false}
               choice={choice}
               choiceIndex={index}
+              readOnly={readOnly}
             />
           ))}
         </div>
       </div>
     </form>
   )
-}
-
-async function getPreviouslySelectedChoices(
-  assessmentId: string,
-  exercise: Exercise,
-): Promise<string[] | undefined> {
-  const existingSubmissions = await getSubmissionsByExercise(assessmentId, exercise.id)
-  if (existingSubmissions.length === 0) {
-    return undefined
-  }
-
-  const submission = await getExerciseSubmissionById(
-    existingSubmissions[existingSubmissions.length - 1].id,
-  )
-  return submission.answers
 }
 
 function submissionNeeded(newChoices: string[], oldChoices: string[] | undefined) {

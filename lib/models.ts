@@ -28,18 +28,19 @@ export default interface AssessmentSummary {
   name: string
 }
 
-export interface Submission {
+export interface AssessmentSubmission {
   id: string
   user_id: string
   assessment_id: string
   answers: Record<string, number[]>
-  points: number
+  score: number
   maximum_points: number
   percentage: number
-  created_at: string
+  finished_at: string
+  finished: boolean
 }
 
-export interface ExerciseSubmissionSummary {
+export interface AssessmentSubmissionSummary {
   id: string
 }
 
@@ -48,12 +49,6 @@ export interface ExerciseSubmission {
   user_id: string
   assessment_id: string
   answers: string[]
-}
-
-export interface SubmissionRequest {
-  choices: string[]
-}
-
-export interface ScoreResponse {
-  points: number
+  assessment_submission_id: string
+  exercise_id: string
 }

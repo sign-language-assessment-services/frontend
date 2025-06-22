@@ -1,17 +1,17 @@
 import cx from 'classnames'
 import { Primer } from '@/lib/models'
-import MultimediaComponent from '@/app/assessments/[assessmentId]/[taskId]/_components/multimedia/MultimediaComponent'
+import MultimediaComponent from '@/app/assessments/[assessmentId]/[submissionId]/[taskId]/_components/multimedia/MultimediaComponent'
 import { redirect } from 'next/navigation'
 
 interface Props {
   primer: Primer
-  nextPageUrl: string
+  nextPageUrl: string | undefined
 }
 
 export default async function PrimerComponent({ primer, nextPageUrl }: Props) {
   async function submitTask() {
     'use server'
-    redirect(nextPageUrl)
+    redirect(nextPageUrl!)
   }
 
   return (

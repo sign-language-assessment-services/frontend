@@ -20,7 +20,8 @@
     "title": "Testergebnisse",
     "assessment": "Test",
     "score": "Punkte",
-    "date": "Datum"
+    "date": "Datum",
+    "show": "Anzeigen"
   },
   "Score": {
     "title": "Ergebnis",

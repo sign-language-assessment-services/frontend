@@ -8,7 +8,7 @@ interface Props {
 export default async function SubmitButton({ disabled }: Props) {
   const t = await getTranslations('Buttons')
   return (
-    <Button type="submit" form="task-form" style="SUCCESS" disabled={disabled}>
+    <Button type="submit" form="assessment-submit" style="SUCCESS" disabled={disabled}>
       {t('submit')}
     </Button>
   )

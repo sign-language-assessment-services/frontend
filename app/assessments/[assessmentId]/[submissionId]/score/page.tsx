@@ -1,4 +1,4 @@
-import { getAssessmentById, getScore } from '@/lib/apiClient'
+import { getAssessmentById, getAssessmentSubmissionById } from '@/lib/apiClient'
 import Main from '@/components/appshell/main/Main'
 import Header from '@/components/appshell/header/Header'
 import Footer from '@/components/appshell/footer/Footer'
@@ -9,11 +9,13 @@ import { redirect } from 'next/navigation'
 export default async function AssessmentScore({
   params,
 }: {
-  params: Promise<{ assessmentId: string; taskId: string }>
+  params: Promise<{ assessmentId: string; submissionId: string }>
 }) {
   const t = await getTranslations('Score')
-  const { assessmentId } = await params
-  const { points } = await getScore(assessmentId)
+  const { assessmentId, submissionId } = await params
+  const submission = await getAssessmentSubmissionById(submissionId)
+  console.log(submission)
+  const score = submission.score
   const assessment = await getAssessmentById(assessmentId)
   const maxPoints = assessment.tasks.filter((task) => task.task_type === 'exercise').length
 
@@ -36,7 +38,7 @@ export default async function AssessmentScore({
         <div className="flex flex-col lg:gap-6 items-center">
           <span>{t('result')}</span>
           <span className="lg:text-6xl font-bold whitespace-pre-line text-center">
-            {t('points', { points, maxPoints })}
+            {t('points', { points: score, maxPoints })}
           </span>
         </div>
       </Main>

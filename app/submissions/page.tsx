@@ -1,10 +1,9 @@
 import { auth } from '@/lib/auth'
-import { getSubmissions } from '@/lib/apiClient'
+import { getAssessmentSubmissionById, getAssessmentSubmissions } from '@/lib/apiClient'
 import AppShell from '@/components/appshell/AppShell'
 import Header from '@/components/appshell/header/Header'
 import Main from '@/components/appshell/main/Main'
 import cx from 'classnames'
-import FormattedPercentage from '@/components/formatting/FormattedPercentage'
 import FormattedDateTime from '@/components/formatting/FormattedDateTime'
 import { getTranslations } from 'next-intl/server'
 
@@ -13,7 +12,11 @@ export default async function Submissions() {
   if (!session?.user?.sub) {
     throw new Error('No user ID found in session')
   }
-  const submissions = await getSubmissions(session?.user?.sub)
+  const submissionIds = await getAssessmentSubmissions()
+  const submissions = await Promise.all(
+    submissionIds.map(({ id }) => getAssessmentSubmissionById(id)),
+  )
+  console.log('submissions:', submissions)
   const t = await getTranslations('Submissions')
   return (
     <AppShell>
@@ -35,15 +38,18 @@ export default async function Submissions() {
             <tbody>
               {submissions.map((submission) => (
                 <tr key={submission.id}>
-                  <td className={cx('border', 'p-2')}>{submission.assessment_id}</td>
                   <td className={cx('border', 'p-2')}>
-                    {submission.points}
-                    {' '}/{' '}
-                    {submission.maximum_points} (
-                    <FormattedPercentage value={submission.percentage} />)
+                    <a href={`/assessments/${submission.assessment_id}/${submission.id}`}>
+                      {t('show')}
+                    </a>
                   </td>
+                  <td className={cx('border', 'p-2')}>{submission.score ?? '–'}</td>
                   <td className={cx('border', 'p-2')}>
-                    <FormattedDateTime value={submission.created_at} />
+                    {submission.finished_at ? (
+                      <FormattedDateTime value={submission.finished_at} />
+                    ) : (
+                      <>–</>
+                    )}
                   </td>
                 </tr>
               ))}

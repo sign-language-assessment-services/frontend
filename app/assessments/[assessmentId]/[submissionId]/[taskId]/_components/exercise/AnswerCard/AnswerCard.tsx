@@ -7,9 +7,10 @@ interface Props {
   checked: boolean
   choice: Choice
   choiceIndex: number
+  readOnly: boolean
 }
 
-export default function AnswerCard({ checked, choice, choiceIndex }: Props) {
+export default function AnswerCard({ checked, choice, choiceIndex, readOnly }: Props) {
   return (
     <div
       className={cx(
@@ -39,7 +40,12 @@ export default function AnswerCard({ checked, choice, choiceIndex }: Props) {
           )}
         >
           <ChoiceContentContainer choice={choice} />
-          <AnswerCardFooter checked={checked} choiceId={choice.id} choiceIndex={choiceIndex} />
+          <AnswerCardFooter
+            checked={checked}
+            choiceId={choice.id}
+            choiceIndex={choiceIndex}
+            readOnly={readOnly}
+          />
         </label>
       </div>
     </div>
