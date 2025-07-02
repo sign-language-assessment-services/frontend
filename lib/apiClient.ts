@@ -46,6 +46,17 @@ export async function createAssessmentSubmission(
   return await post(url)
 }
 
+export async function updateExerciseSubmission(
+  exerciseSubmissionId: string,
+  assessmentSubmissionId: string,
+  exerciseId: string,
+  choices: string[],
+): Promise<void> {
+  const url = `/assessment_submissions/${assessmentSubmissionId}/exercises/${exerciseId}/submissions/?exercise_submission_id=${exerciseSubmissionId}`
+  const body = { choices: [...choices] }
+  await post(url, body)
+}
+
 export async function createExerciseSubmission(
   assessmentSubmissionId: string,
   exerciseId: string,
