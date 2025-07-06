@@ -24,7 +24,7 @@ export interface Choice extends Multimedia {
 }
 
 export default interface AssessmentSummary {
-  id: number
+  id: string
   name: string
 }
 

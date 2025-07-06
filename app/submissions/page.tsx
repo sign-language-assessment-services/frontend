@@ -1,5 +1,10 @@
 import { auth } from '@/lib/auth'
-import { getAssessmentSubmissionById, getAssessmentSubmissions } from '@/lib/apiClient'
+import {
+  getAssessmentById,
+  getAssessments,
+  getAssessmentSubmissionById,
+  getAssessmentSubmissions,
+} from '@/lib/apiClient'
 import AppShell from '@/components/appshell/AppShell'
 import Header from '@/components/appshell/header/Header'
 import Main from '@/components/appshell/main/Main'
@@ -16,11 +21,17 @@ export default async function Submissions() {
   const submissions = await Promise.all(
     submissionIds.map(({ id }) => getAssessmentSubmissionById(id)),
   )
+  const assessmentSummaries = await getAssessments()
+  const assessmentsById = Object.fromEntries(
+    await Promise.all(
+      assessmentSummaries.map(async (summary) => [summary.id, await getAssessmentById(summary.id)]),
+    ),
+  )
+
   const t = await getTranslations('Submissions')
   return (
     <AppShell>
       <Header>{t('title')}</Header>
-
       <Main>
         <section className={cx('flex', 'flex-col', 'gap-10')}>
           <h1 className={cx('font-bold', 'text-4xl', 'text-center')}>{t('title')}</h1>
@@ -39,7 +50,7 @@ export default async function Submissions() {
                 <tr key={submission.id}>
                   <td className={cx('border', 'p-2')}>
                     <a href={`/assessments/${submission.assessment_id}/${submission.id}`}>
-                      {t('show')}
+                      {assessmentsById[submission.assessment_id].name}
                     </a>
                   </td>
                   <td className={cx('border', 'p-2')}>{submission.score ?? '–'}</td>
