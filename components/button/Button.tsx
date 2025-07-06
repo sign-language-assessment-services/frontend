@@ -44,6 +44,7 @@ export default function Button({
     'focus:shadow-2xl',
     'ring-1',
     'ring-blue-900',
+    'hover:cursor-pointer',
     {
       'bg-blue-500': !style,
       'bg-red-500': style === 'WARNING',
