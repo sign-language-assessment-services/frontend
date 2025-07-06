@@ -18,6 +18,7 @@ export default function AnswerCardFooter({ checked, choiceId, choiceIndex, readO
         'p-1',
         'gap-2',
         'border-t-4',
+        'border-gray-200',
         'has-[:checked]:bg-blue-200',
         'has-[:checked]:border-blue-300',
         'group-hover:cursor-pointer',

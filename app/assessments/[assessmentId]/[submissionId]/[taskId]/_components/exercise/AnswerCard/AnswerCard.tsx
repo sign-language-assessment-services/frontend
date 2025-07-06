@@ -30,6 +30,7 @@ export default function AnswerCard({ checked, choice, choiceIndex, readOnly }: P
             'flex-col',
             'justify-around',
             'border-4',
+            'border-gray-200',
             'bg-gray-50',
             'has-[:checked]:border-blue-300',
             'has-[:checked]:bg-blue-200',

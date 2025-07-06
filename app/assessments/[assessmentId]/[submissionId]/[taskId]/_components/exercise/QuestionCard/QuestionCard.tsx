@@ -27,6 +27,7 @@ export default function QuestionCard({ question }: { question: Multimedia }) {
           'aspect-video',
           'border-4',
           'bg-gray-50',
+          'border-gray-200',
         )}
       >
         <span>
