@@ -93,6 +93,31 @@ export async function getExerciseSubmissionByAssessmentSubmissionIdAndExerciseId
   return filteredSubmissions[0]
 }
 
+export async function getExerciseSubmissions(): Promise<{ id: string }[]> {
+  return get('/exercise_submissions/')
+}
+
+export async function markAssessmentSubmissionAsFinished(
+  assessmentSubmissionId: string,
+): Promise<void> {
+  const url = `/assessment_submissions/${assessmentSubmissionId}`
+  await put(url, { finished: true })
+}
+
+async function get<T>(path: string): Promise<T> {
+  const accessToken = await getAccessToken()
+  const response = await fetch(`${BASE_URL}${path}`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  })
+  if (response.status >= 400) {
+    throw new Error(`Failed to fetch data: ${response.statusText}. Path: ${path}`)
+  }
+  return response.json()
+}
+
 async function post<T>(path: string, body?: unknown): Promise<T> {
   const accessToken = await getAccessToken()
   const response = await fetch(`${BASE_URL}${path}`, {
@@ -117,31 +142,6 @@ async function put<T>(path: string, body?: unknown): Promise<T> {
     headers: {
       Authorization: `Bearer ${accessToken}`,
       'Content-Type': 'application/json',
-    },
-  })
-  if (response.status >= 400) {
-    throw new Error(`Failed to fetch data: ${response.statusText}. Path: ${path}`)
-  }
-  return response.json()
-}
-
-export async function getExerciseSubmissions(): Promise<{ id: string }[]> {
-  return get('/exercise_submissions/')
-}
-
-export async function markAssessmentSubmissionAsFinished(
-  assessmentSubmissionId: string,
-): Promise<void> {
-  const url = `/assessment_submissions/${assessmentSubmissionId}`
-  await put(url, { finished: true })
-}
-
-async function get<T>(path: string): Promise<T> {
-  const accessToken = await getAccessToken()
-  const response = await fetch(`${BASE_URL}${path}`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
     },
   })
   if (response.status >= 400) {
