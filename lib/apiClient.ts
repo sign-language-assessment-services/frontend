@@ -89,7 +89,6 @@ export async function getExerciseSubmissionByAssessmentSubmissionIdAndExerciseId
     ({ assessment_submission_id, exercise_id }) =>
       assessment_submission_id === assessmentSubmissionId && exercise_id === exerciseId,
   )
-  console.log('filteredSubmissions:', filteredSubmissions)
   return filteredSubmissions[0]
 }
 

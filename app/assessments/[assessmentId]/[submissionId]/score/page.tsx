@@ -14,8 +14,6 @@ export default async function AssessmentScore({
   const t = await getTranslations('Score')
   const { assessmentId, submissionId } = await params
   const submission = await getAssessmentSubmissionById(submissionId)
-  console.log(submission)
-  const score = submission.score
   const assessment = await getAssessmentById(assessmentId)
   const maxPoints = assessment.tasks.filter((task) => task.task_type === 'exercise').length
 
@@ -38,7 +36,7 @@ export default async function AssessmentScore({
         <div className="flex flex-col lg:gap-6 items-center">
           <span>{t('result')}</span>
           <span className="lg:text-6xl font-bold whitespace-pre-line text-center">
-            {t('points', { points: score, maxPoints })}
+            {t('points', { points: submission.score, maxPoints })}
           </span>
         </div>
       </Main>

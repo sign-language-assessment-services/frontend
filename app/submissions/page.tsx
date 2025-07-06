@@ -16,7 +16,6 @@ export default async function Submissions() {
   const submissions = await Promise.all(
     submissionIds.map(({ id }) => getAssessmentSubmissionById(id)),
   )
-  console.log('submissions:', submissions)
   const t = await getTranslations('Submissions')
   return (
     <AppShell>
