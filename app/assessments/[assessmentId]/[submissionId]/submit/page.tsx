@@ -29,7 +29,7 @@ export default async function SubmitPage({
         {assessment.name} – {t('title')}
       </Header>
       <Main center>
-        Submit it!
+        {t('endOfAssessment')}
         <form id="assessment-submit" action={submitAssessment} />
       </Main>
       <Footer>

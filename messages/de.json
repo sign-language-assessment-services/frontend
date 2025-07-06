@@ -13,14 +13,15 @@
   "Buttons": {
     "next": "Weiter",
     "back": "Zurück",
-    "submit": "Test absenden",
+    "submit": "Absenden",
     "cancel": "Test abbrechen"
   },
   "Submissions": {
     "title": "Testergebnisse",
     "assessment": "Test",
     "score": "Punkte",
-    "date": "Datum"
+    "date": "Datum",
+    "endOfAssessment": "Klicken Sie auf 'Absenden', um den Test abzuschließen."
   },
   "Score": {
     "title": "Ergebnis",
