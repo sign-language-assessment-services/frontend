@@ -5,7 +5,6 @@ import { Exercise } from '@/lib/models'
 import {
   createExerciseSubmission,
   getExerciseSubmissionByAssessmentSubmissionIdAndExerciseId,
-  updateExerciseSubmission,
 } from '@/lib/apiClient'
 import { redirect } from 'next/navigation'
 
@@ -35,16 +34,7 @@ export default async function ExerciseComponent({
     if (!readOnly) {
       const newChoices = extractSelectedChoices(formData)
       if (submissionNeeded(newChoices, oldChoices)) {
-        if (existingExerciseSubmission) {
-          await updateExerciseSubmission(
-            existingExerciseSubmission.id,
-            assessmentSubmissionId,
-            exercise.id,
-            newChoices,
-          )
-        } else {
-          await createExerciseSubmission(assessmentSubmissionId, exercise.id, newChoices)
-        }
+        await createExerciseSubmission(assessmentSubmissionId, exercise.id, newChoices)
       }
     }
     redirect(nextPageUrl!)

@@ -31,7 +31,7 @@ export async function getAssessmentSubmissions(): Promise<AssessmentSubmissionSu
 }
 
 export async function getMultimediaFileUrl(multimediaFileId: string): Promise<string> {
-  const response = await get<{ url: string }>(`/object-storage/${multimediaFileId}`)
+  const response = await get<{ url: string }>(`/multimedia_files/${multimediaFileId}`)
   return response.url
 }
 
@@ -46,24 +46,13 @@ export async function createAssessmentSubmission(
   return await post(url)
 }
 
-export async function updateExerciseSubmission(
-  exerciseSubmissionId: string,
-  assessmentSubmissionId: string,
-  exerciseId: string,
-  choices: string[],
-): Promise<void> {
-  const url = `/assessment_submissions/${assessmentSubmissionId}/exercises/${exerciseId}/submissions/?exercise_submission_id=${exerciseSubmissionId}`
-  const body = { choices: [...choices] }
-  await post(url, body)
-}
-
 export async function createExerciseSubmission(
   assessmentSubmissionId: string,
   exerciseId: string,
-  choices: string[],
+  choiceIds: string[],
 ): Promise<void> {
   const url = `/assessment_submissions/${assessmentSubmissionId}/exercises/${exerciseId}/submissions/`
-  const body = { choices: [...choices] }
+  const body = { answer: [...choiceIds] }
   await post(url, body)
 }
 
