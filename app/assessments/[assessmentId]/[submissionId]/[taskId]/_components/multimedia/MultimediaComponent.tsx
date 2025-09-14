@@ -15,7 +15,7 @@ export default async function MultimediaComponent({ multimedia }: Props) {
       {multimedia.media_type === 'VIDEO' ? (
         <Video src={url} />
       ) : (
-        <Image alt="" draggable={false} src={url} />
+        <Image alt="" draggable={false} src={url} width={1000} height={1000} />
       )}
     </div>
   )
