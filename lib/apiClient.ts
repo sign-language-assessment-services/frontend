@@ -62,26 +62,14 @@ export async function getAssessmentSubmissionById(
   return await get(`/assessment_submissions/${submissionId}`)
 }
 
-export async function getExerciseSubmissionById(submissionId: string): Promise<ExerciseSubmission> {
-  return get(`/exercise_submissions/${submissionId}`)
-}
-
 export async function getExerciseSubmissionByAssessmentSubmissionIdAndExerciseId(
   assessmentSubmissionId: string,
   exerciseId: string,
 ): Promise<ExerciseSubmission | undefined> {
-  const submissionIds = await getExerciseSubmissions()
-  // Fetch sequentially to avoid spawning a burst of parallel backend requests (each opens a DB session)
-  for (const { id: submissionId } of submissionIds) {
-    const submission = await getExerciseSubmissionById(submissionId)
-    if (
-      submission.assessment_submission_id === assessmentSubmissionId &&
-      submission.exercise_id === exerciseId
-    ) {
-      return submission
-    }
-  }
-  return undefined
+  const exerciseSubmissions: ExerciseSubmission[] = await get(
+    `/exercise_submissions?assessment_submission_id=${assessmentSubmissionId}&exercise_id=${exerciseId}`,
+  )
+  return exerciseSubmissions[0]
 }
 
 export async function getExerciseSubmissions(): Promise<{ id: string }[]> {
