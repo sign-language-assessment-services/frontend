@@ -4,6 +4,7 @@ import {
   getExerciseById,
   getPrimerById,
 } from '@/lib/apiClient'
+import { auth } from '@/lib/auth'
 import Main from '@/components/appshell/main/Main'
 import Footer from '@/components/appshell/footer/Footer'
 import PrimerComponent from '@/app/assessments/[assessmentId]/[submissionId]/[taskId]/_components/primer/PrimerComponent'
@@ -19,9 +20,13 @@ export default async function Task({
   params: Promise<{ assessmentId: string; submissionId: string; taskId: string }>
 }) {
   const { assessmentId, submissionId, taskId } = await params
-  const assessment = await getAssessmentById(assessmentId)
+  const [assessment, submission, session] = await Promise.all([
+    getAssessmentById(assessmentId),
+    getAssessmentSubmissionById(submissionId),
+    auth(),
+  ])
 
-  const submission = await getAssessmentSubmissionById(submissionId)
+  const isTestTaker = session?.user?.roles?.includes('test-taker') ?? false
 
   const task = assessment.tasks.find((it) => it.id === taskId)
   const taskType = task!.task_type
@@ -34,11 +39,12 @@ export default async function Task({
   const previousPageUrl = isFirstPage
     ? undefined
     : `/assessments/${assessmentId}/${submissionId}/${assessment.tasks[index - 1].id}`
+  const canReachSubmit = isTestTaker && !submission.finished
   const nextPageUrl =
     submission.finished && isLastPage
       ? undefined
       : isLastPage
-        ? `/assessments/${assessmentId}/${submissionId}/submit`
+        ? (canReachSubmit ? `/assessments/${assessmentId}/${submissionId}/submit` : undefined)
         : `/assessments/${assessmentId}/${submissionId}/${assessment.tasks[index + 1].id}`
 
   return (
@@ -47,6 +53,7 @@ export default async function Task({
         assessmentName={assessment.name}
         current={index + 1}
         total={assessment.tasks.length}
+        confirmLeave={isTestTaker && !submission.finished}
       />
       <Main>
         {taskType === 'primer' ? (
@@ -57,13 +64,15 @@ export default async function Task({
             assessmentId={assessmentId}
             assessmentSubmissionId={submissionId}
             nextPageUrl={nextPageUrl}
-            readOnly={submission.finished}
+            readOnly={submission.finished || !isTestTaker}
           />
         )}
       </Main>
       <Footer>
         <BackButton previousPageUrl={previousPageUrl} disabled={!previousPageUrl} />
-        <NextButton disabled={submission.finished && isLastPage} />
+        <NextButton
+          disabled={isLastPage && (submission.finished || !isTestTaker)}
+        />
       </Footer>
     </>
   )

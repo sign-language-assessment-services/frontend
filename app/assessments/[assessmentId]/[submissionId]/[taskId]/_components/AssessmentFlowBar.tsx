@@ -7,9 +7,15 @@ interface Props {
   assessmentName: string
   current: number
   total: number
+  confirmLeave?: boolean
 }
 
-export default function AssessmentFlowBar({ assessmentName, current, total }: Props) {
+export default function AssessmentFlowBar({
+  assessmentName,
+  current,
+  total,
+  confirmLeave = true,
+}: Props) {
   const t = useTranslations('Assessment')
   const progressPercent = total > 0 ? (current / total) * 100 : 0
 
@@ -24,7 +30,7 @@ export default function AssessmentFlowBar({ assessmentName, current, total }: Pr
             {t('page', { current, total })}
           </span>
         </div>
-        <CloseButton />
+        <CloseButton confirmLeave={confirmLeave} />
       </div>
       <div
         className="h-0.5 w-full bg-slate-200"

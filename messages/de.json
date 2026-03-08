@@ -5,7 +5,8 @@
   },
   "Assessments": {
     "title": "Tests",
-    "startTest": "Test starten"
+    "startTest": "Test starten",
+    "viewTest": "Test ansehen"
   },
   "UserPanel": {
     "signOut": "Abmelden",
@@ -15,7 +16,8 @@
     "next": "Weiter",
     "back": "Zurück",
     "submit": "Absenden",
-    "cancel": "Test abbrechen"
+    "cancel": "Test abbrechen",
+    "backToOverview": "Zur Übersicht"
   },
   "LeaveTest": {
     "confirmTitle": "Test abbrechen?",
