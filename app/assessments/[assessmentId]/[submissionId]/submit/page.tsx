@@ -1,4 +1,5 @@
 import { getAssessmentById, markAssessmentSubmissionAsFinished } from '@/lib/apiClient'
+import { auth } from '@/lib/auth'
 import Main from '@/components/appshell/main/Main'
 import Footer from '@/components/appshell/footer/Footer'
 import { getTranslations } from 'next-intl/server'
@@ -12,6 +13,14 @@ export default async function SubmitPage({
   params: Promise<{ assessmentId: string; submissionId: string }>
 }) {
   const { assessmentId, submissionId } = await params
+  const session = await auth()
+  const isTestTaker = session?.user?.roles?.includes('test-taker') ?? false
+  if (!isTestTaker) {
+    const assessment = await getAssessmentById(assessmentId)
+    const lastTaskId = assessment.tasks[assessment.tasks.length - 1].id
+    redirect(`/assessments/${assessmentId}/${submissionId}/${lastTaskId}`)
+  }
+
   const t = await getTranslations('Submissions')
   const assessment = await getAssessmentById(assessmentId)
   const previousPageUrl = `/assessments/${assessmentId}/${submissionId}/${assessment.tasks[assessment.tasks.length - 1].id}`
