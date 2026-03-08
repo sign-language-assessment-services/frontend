@@ -27,7 +27,7 @@ export default async function TeacherSubmissions({
         {assessment.name} – {t('title')}
       </Header>
       <Main>
-        <section className={cx('flex', 'flex-col', 'gap-10')}>
+        <section className={cx('flex', 'flex-col', 'gap-10', 'p-10')}>
           <h1 className={cx('font-bold', 'text-4xl', 'text-center')}>
             {assessment.name} – {t('title')}
           </h1>
