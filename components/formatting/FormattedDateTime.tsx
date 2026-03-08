@@ -1,14 +1,13 @@
-import { getFormatter } from 'next-intl/server'
+'use client'
 
 interface Props {
   value: string
 }
 
-export default async function FormattedDateTime({ value }: Props) {
-  const formatter = await getFormatter()
-  const formattedDate = formatter.dateTime(Date.parse(value), {
+export default function FormattedDateTime({ value }: Props) {
+  const formattedDate = new Intl.DateTimeFormat(undefined, {
     dateStyle: 'short',
     timeStyle: 'short',
-  })
+  }).format(Date.parse(value))
   return <>{formattedDate}</>
 }
