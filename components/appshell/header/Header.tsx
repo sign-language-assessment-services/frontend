@@ -16,11 +16,11 @@ export default function Header({ children, breadcrumbs }: HeaderProps) {
       className={cx(
         'flex',
         'items-center',
-        'h-12',
-        'px-6',
+        'h-10',
+        'px-4',
         'bg-blue-100',
         'text-sm',
-        'border-b-4',
+        'border-b',
         'border-blue-200',
       )}
     >
