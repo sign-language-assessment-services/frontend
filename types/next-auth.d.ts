@@ -9,6 +9,7 @@ declare module 'next-auth' {
     user: {
       sub: string
       name: string
+      roles: string[]
     }
   }
 }
@@ -19,5 +20,6 @@ declare module '@auth/core/jwt' {
     id_token: string
     expires_at: number
     refresh_token?: string
+    roles: string[]
   }
 }

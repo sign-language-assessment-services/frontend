@@ -3,8 +3,6 @@ import Keycloak from 'next-auth/providers/keycloak'
 import { OAuth2Error, TokenEndpointResponse } from 'oauth4webapi'
 import { JWT } from '@auth/core/jwt'
 
-export const accountManagementUrl = `${process.env.AUTH_KEYCLOAK_ISSUER_EXTERNAL}/account?referrer=${process.env.AUTH_KEYCLOAK_ID}`
-
 export const { auth, handlers, signIn, signOut } = NextAuth({
   providers: [
     Keycloak({
@@ -19,12 +17,14 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     async jwt({ token, account }: { token: JWT; account: Account | null }) {
       if (account) {
         // First-time login
+        const decoded = JSON.parse(atob(account.access_token!.split('.')[1]))
         return {
           ...token,
           access_token: account.access_token,
           expires_at: account.expires_at,
           refresh_token: account.refresh_token,
           id_token: account.id_token,
+          roles: (decoded.realm_access?.roles ?? []) as string[],
         }
       } else if (Date.now() + 1000 < token.expires_at * 1000) {
         // Access token still valid
@@ -52,6 +52,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         user: {
           ...session.user,
           sub: token.sub,
+          roles: token.roles,
         },
         access_token: token.access_token,
         error: token.error,
