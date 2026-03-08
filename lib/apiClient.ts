@@ -1,5 +1,6 @@
 import AssessmentSummary, {
   Assessment,
+  AssessmentResults,
   AssessmentSubmission,
   AssessmentSubmissionSummary,
   Exercise,
@@ -74,6 +75,10 @@ export async function getExerciseSubmissionByAssessmentSubmissionIdAndExerciseId
 
 export async function getExerciseSubmissions(): Promise<{ id: string }[]> {
   return get('/exercise_submissions/')
+}
+
+export async function getAssessmentResults(assessmentId: string): Promise<AssessmentResults> {
+  return get(`/assessments/${assessmentId}/results`)
 }
 
 export async function markAssessmentSubmissionAsFinished(
