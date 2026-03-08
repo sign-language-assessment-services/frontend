@@ -1,6 +1,5 @@
 import { getAssessmentById, getAssessmentSubmissionById } from '@/lib/apiClient'
 import Main from '@/components/appshell/main/Main'
-import Header from '@/components/appshell/header/Header'
 import Footer from '@/components/appshell/footer/Footer'
 import { getTranslations } from 'next-intl/server'
 import Button from '@/components/button/Button'
@@ -11,8 +10,8 @@ export default async function AssessmentScore({
 }: {
   params: Promise<{ assessmentId: string; submissionId: string }>
 }) {
-  const t = await getTranslations('Score')
   const { assessmentId, submissionId } = await params
+  const t = await getTranslations('Score')
   const submission = await getAssessmentSubmissionById(submissionId)
   const assessment = await getAssessmentById(assessmentId)
   const maxPoints = assessment.tasks.filter((task) => task.task_type === 'exercise').length
@@ -29,9 +28,6 @@ export default async function AssessmentScore({
 
   return (
     <>
-      <Header>
-        {assessment.name} – {t('title')}
-      </Header>
       <Main center>
         <div className="flex flex-col lg:gap-6 items-center">
           <span>{t('result')}</span>

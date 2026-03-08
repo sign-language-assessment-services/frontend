@@ -1,6 +1,5 @@
 import { getAssessmentById, markAssessmentSubmissionAsFinished } from '@/lib/apiClient'
 import Main from '@/components/appshell/main/Main'
-import Header from '@/components/appshell/header/Header'
 import Footer from '@/components/appshell/footer/Footer'
 import { getTranslations } from 'next-intl/server'
 import { redirect } from 'next/navigation'
@@ -25,9 +24,6 @@ export default async function SubmitPage({
 
   return (
     <>
-      <Header>
-        {assessment.name} – {t('title')}
-      </Header>
       <Main center>
         {t('endOfAssessment')}
         <form id="assessment-submit" action={submitAssessment} />

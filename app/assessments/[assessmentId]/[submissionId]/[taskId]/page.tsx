@@ -5,13 +5,11 @@ import {
   getPrimerById,
 } from '@/lib/apiClient'
 import Main from '@/components/appshell/main/Main'
-import Header from '@/components/appshell/header/Header'
 import Footer from '@/components/appshell/footer/Footer'
-import { getTranslations } from 'next-intl/server'
 import PrimerComponent from '@/app/assessments/[assessmentId]/[submissionId]/[taskId]/_components/primer/PrimerComponent'
 import ExerciseComponent from '@/app/assessments/[assessmentId]/[submissionId]/[taskId]/_components/exercise/ExerciseComponent'
 import { Exercise, Primer } from '@/lib/models'
-import CloseButton from '@/app/assessments/[assessmentId]/[submissionId]/[taskId]/_components/buttons/CloseButton'
+import AssessmentFlowBar from '@/app/assessments/[assessmentId]/[submissionId]/[taskId]/_components/AssessmentFlowBar'
 import BackButton from '@/app/assessments/[assessmentId]/[submissionId]/[taskId]/_components/buttons/BackButton'
 import NextButton from '@/app/assessments/[assessmentId]/[submissionId]/[taskId]/_components/buttons/NextButton'
 
@@ -20,7 +18,6 @@ export default async function Task({
 }: {
   params: Promise<{ assessmentId: string; submissionId: string; taskId: string }>
 }) {
-  const t = await getTranslations('Assessment')
   const { assessmentId, submissionId, taskId } = await params
   const assessment = await getAssessmentById(assessmentId)
 
@@ -46,11 +43,12 @@ export default async function Task({
 
   return (
     <>
-      <Header>
-        {assessment.name} – {t('page', { current: index + 1, total: assessment.tasks.length })}
-      </Header>
+      <AssessmentFlowBar
+        assessmentName={assessment.name}
+        current={index + 1}
+        total={assessment.tasks.length}
+      />
       <Main>
-        <CloseButton />
         {taskType === 'primer' ? (
           <PrimerComponent primer={item as Primer} nextPageUrl={nextPageUrl} />
         ) : (
