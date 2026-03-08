@@ -28,33 +28,41 @@ export default async function Submissions() {
     ),
   )
 
-  const t = await getTranslations('Submissions')
+  const [t, tNav] = await Promise.all([
+    getTranslations('Submissions'),
+    getTranslations('Navigation'),
+  ])
   return (
     <AppShell>
-      <Header>{t('title')}</Header>
+      <Header breadcrumbs={[{ label: tNav('myResults') }]} />
       <Main>
-        <section className={cx('flex', 'flex-col', 'gap-10')}>
-          <h1 className={cx('font-bold', 'text-4xl', 'text-center')}>{t('title')}</h1>
-          <table
-            className={cx('border', 'border-spacing-1', 'border-separate', 'border-slate-500')}
-          >
-            <thead>
-              <tr>
-                <th className={cx('border', 'p-2', 'text-left')}>{t('assessment')}</th>
-                <th className={cx('border', 'p-2', 'text-left')}>{t('score')}</th>
-                <th className={cx('border', 'p-2', 'text-left')}>{t('date')}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {submissions.map((submission) => (
-                <tr key={submission.id}>
-                  <td className={cx('border', 'p-2')}>
-                    <a href={`/assessments/${submission.assessment_id}/${submission.id}`}>
+        <section className={cx('flex', 'flex-col', 'gap-10', 'p-10')}>
+          <div className={cx('border', 'border-slate-200', 'overflow-hidden')}>
+            <table className={cx('w-full', 'max-w-3xl')}>
+              <thead>
+                <tr className={cx('bg-slate-50', 'border-b', 'border-slate-200')}>
+                  <th className={cx('px-4', 'py-3', 'text-left', 'text-sm', 'font-medium', 'text-slate-700')}>
+                    {t('assessment')}
+                  </th>
+                  <th className={cx('px-4', 'py-3', 'text-left', 'text-sm', 'font-medium', 'text-slate-700')}>
+                    {t('score')}
+                  </th>
+                  <th className={cx('px-4', 'py-3', 'text-left', 'text-sm', 'font-medium', 'text-slate-700')}>
+                    {t('date')}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {submissions.map((submission) => (
+                  <tr
+                    key={submission.id}
+                    className={cx('border-b', 'border-slate-100', 'last:border-b-0', 'hover:bg-slate-50')}
+                  >
+                    <td className={cx('px-4', 'py-3')}>
                       {assessmentsById[submission.assessment_id].name}
-                    </a>
-                  </td>
-                  <td className={cx('border', 'p-2')}>{submission.score ?? '–'}</td>
-                  <td className={cx('border', 'p-2')}>
+                    </td>
+                    <td className={cx('px-4', 'py-3')}>{submission.score ?? '–'}</td>
+                    <td className={cx('px-4', 'py-3')}>
                     {submission.finished_at ? (
                       <FormattedDateTime value={submission.finished_at} />
                     ) : (
@@ -65,6 +73,7 @@ export default async function Submissions() {
               ))}
             </tbody>
           </table>
+          </div>
         </section>
       </Main>
     </AppShell>
