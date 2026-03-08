@@ -9,7 +9,7 @@ export default async function UserPanel() {
     return <></>
   }
   return (
-    <div className={cx('flex', 'items-center', 'gap-4', 'pl-4', 'border-l', 'border-slate-200')}>
+    <div className={cx('flex', 'items-center', 'h-full', 'gap-4', 'pl-4', 'border-l', 'border-slate-200')}>
       <AccountManagementLink />
       <SignOutLink />
     </div>
