@@ -5,9 +5,9 @@ interface Props {
 }
 
 export default function FormattedDateTime({ value }: Props) {
-  const formattedDate = new Intl.DateTimeFormat(undefined, {
-    dateStyle: 'short',
-    timeStyle: 'short',
-  }).format(Date.parse(value))
-  return <>{formattedDate}</>
+  return (
+    <>
+      {new Date(value).toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' })}
+    </>
+  )
 }
