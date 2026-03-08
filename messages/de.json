@@ -35,6 +35,7 @@
     "task": "Aufgabe {number}",
     "total": "Gesamt",
     "student": "Schüler/in",
+    "date": "Datum",
     "noSubmissions": "Keine abgeschlossenen Abgaben vorhanden."
   }
 }

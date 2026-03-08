@@ -2,6 +2,7 @@ import { getAssessmentById, getAssessmentResults } from '@/lib/apiClient'
 import AppShell from '@/components/appshell/AppShell'
 import Header from '@/components/appshell/header/Header'
 import Main from '@/components/appshell/main/Main'
+import FormattedDateTime from '@/components/formatting/FormattedDateTime'
 import cx from 'classnames'
 import { getTranslations } from 'next-intl/server'
 import { ExerciseScore } from '@/lib/models'
@@ -67,6 +68,9 @@ export default async function TeacherSubmissions({
                     >
                       {t('total')}
                     </th>
+                    <th className={cx('border', 'border-slate-500', 'p-2', 'text-left')}>
+                      {t('date')}
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -99,6 +103,9 @@ export default async function TeacherSubmissions({
                           )}
                         >
                           {submission.total_score ?? '–'}
+                        </td>
+                        <td className={cx('border', 'border-slate-500', 'p-2')}>
+                          <FormattedDateTime value={submission.finished_at} />
                         </td>
                       </tr>
                     )

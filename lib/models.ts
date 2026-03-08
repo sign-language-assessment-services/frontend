@@ -63,6 +63,7 @@ export interface SubmissionResult {
   user_id: string
   exercise_scores: ExerciseScore[]
   total_score: number | null
+  finished_at: string
 }
 
 export interface AssessmentResults {
