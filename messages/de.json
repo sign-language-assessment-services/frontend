@@ -26,8 +26,15 @@
   "Score": {
     "title": "Ergebnis",
     "result": "Ergebnis:",
-    "points": "{points} / {maxPoints}\nPunkte",
+    "points": "{points} / {maxPoints}\nPunkte",
     "retry": "Wiederholen",
     "overview": "Testübersicht"
+  },
+  "TeacherSubmissions": {
+    "title": "Abgaben",
+    "task": "Aufgabe {number}",
+    "total": "Gesamt",
+    "student": "Schüler/in",
+    "noSubmissions": "Keine abgeschlossenen Abgaben vorhanden."
   }
 }

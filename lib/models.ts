@@ -52,3 +52,19 @@ export interface ExerciseSubmission {
   assessment_submission_id: string
   exercise_id: string
 }
+
+export interface ExerciseScore {
+  exercise_id: string
+  score: number | null
+}
+
+export interface SubmissionResult {
+  submission_id: string
+  user_id: string
+  exercise_scores: ExerciseScore[]
+  total_score: number | null
+}
+
+export interface AssessmentResults {
+  submissions: SubmissionResult[]
+}
