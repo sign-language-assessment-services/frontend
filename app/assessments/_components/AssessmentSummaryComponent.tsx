@@ -34,8 +34,10 @@ function PlaceholderImage() {
 
 export default function AssessmentSummaryComponent({
   assessment,
+  isTestTaker,
 }: {
   assessment: AssessmentSummary
+  isTestTaker: boolean
 }) {
   const t = useTranslations('Assessments')
   const url = `/assessments/${assessment.id}`
@@ -52,7 +54,7 @@ export default function AssessmentSummaryComponent({
               'group-hover:underline',
             )}
           >
-            {t('startTest')}
+            {isTestTaker ? t('startTest') : t('viewTest')}
             <svg
               className="w-4 h-4"
               fill="none"
