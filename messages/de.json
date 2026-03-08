@@ -1,10 +1,11 @@
 {
   "Assessment": {
-    "page": "Seite {current} / {total}",
+    "page": "{current} / {total}",
     "answer": "Antwort {number}"
   },
   "Assessments": {
-    "title": "Tests"
+    "title": "Tests",
+    "startTest": "Test starten"
   },
   "UserPanel": {
     "signOut": "Abmelden",
@@ -15,6 +16,12 @@
     "back": "Zurück",
     "submit": "Absenden",
     "cancel": "Test abbrechen"
+  },
+  "LeaveTest": {
+    "confirmTitle": "Test abbrechen?",
+    "confirmMessage": "Ihr Fortschritt bleibt gespeichert. Sie können den Test später fortsetzen.",
+    "stay": "Weiter im Test",
+    "leave": "Test abbrechen"
   },
   "Submissions": {
     "title": "Testergebnisse",
@@ -29,6 +36,14 @@
     "points": "{points} / {maxPoints}\nPunkte",
     "retry": "Wiederholen",
     "overview": "Testübersicht"
+  },
+  "Navigation": {
+    "assessments": "Tests",
+    "myResults": "Meine Ergebnisse",
+    "teacherSubmissions": "Abgaben"
+  },
+  "TeacherAssessments": {
+    "title": "Tests"
   },
   "TeacherSubmissions": {
     "title": "Abgaben",
