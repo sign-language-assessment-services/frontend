@@ -24,9 +24,9 @@ export default function AssessmentFlowAwareNav({ children }: PropsWithChildren) 
       className={cx(
         'flex',
         'justify-between',
-        'items-center',
+        'items-stretch',
         'h-10',
-        'px-6',
+        'px-4',
         'bg-blue-50',
         'text-sm',
         'border-b',

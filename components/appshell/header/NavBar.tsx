@@ -21,8 +21,10 @@ function NavLink({
     <a
       href={href}
       className={cx(
+        'flex',
+        'items-center',
+        'h-full',
         'px-3',
-        'py-1.5',
         'transition-colors',
         isActive
           ? 'bg-blue-200 font-semibold text-slate-800'
@@ -38,16 +40,19 @@ function NavLink({
 export default function NavBar() {
   const { data: session } = useSession()
   const t = useTranslations('Navigation')
+  const isTestTaker = session?.user?.roles?.includes('test-taker') ?? false
   const isTeacher = session?.user?.roles?.includes('test-scorer') ?? false
 
   return (
-    <nav className={cx('flex', 'items-center', 'gap-6')}>
+    <nav className={cx('flex', 'items-center', 'h-full', 'gap-6')}>
       <NavLink href="/assessments" activePaths={['/assessments']}>
         {t('assessments')}
       </NavLink>
-      <NavLink href="/submissions" activePaths={['/submissions']}>
-        {t('myResults')}
-      </NavLink>
+      {isTestTaker && (
+        <NavLink href="/submissions" activePaths={['/submissions']}>
+          {t('myResults')}
+        </NavLink>
+      )}
       {isTeacher && (
         <NavLink href="/teacher/assessments" activePaths={['/teacher/assessments']}>
           {t('teacherSubmissions')}
