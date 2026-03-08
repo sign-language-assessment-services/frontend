@@ -14,13 +14,28 @@ export default async function Assessments() {
 
   return (
     <>
-      <Header>{t('title')}</Header>
+      <Header breadcrumbs={[{ label: t('title') }]} />
       <Main>
-        <section className={cx('flex', 'flex-col', 'gap-10', 'p-4')}>
-          <h1 className={cx('font-bold', 'text-4xl', 'text-center')}>{t('title')}</h1>
-          <table className={cx('w-[600px]')}>
-            <tbody>{assessmentSummaryComponents}</tbody>
-          </table>
+        <section className={cx('w-full', 'max-w-5xl', 'mx-auto', 'p-6', 'md:p-10')}>
+          <ul
+            className={cx(
+              'grid',
+              'grid-cols-1',
+              'sm:grid-cols-2',
+              'lg:grid-cols-3',
+              'gap-6',
+              'list-none',
+              'p-0',
+              'm-0',
+              'justify-items-start',
+            )}
+          >
+            {assessmentSummaryComponents.map((el, i) => (
+              <li key={i} className="w-full max-w-sm">
+                {el}
+              </li>
+            ))}
+          </ul>
         </section>
       </Main>
     </>
