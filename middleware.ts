@@ -3,14 +3,8 @@ import { signIn, auth } from '@/lib/auth'
 
 export default auth(async (req) => {
   if (!req.auth) {
-    if (
-      req.nextUrl.pathname.startsWith('/api/auth') ||
-      req.nextUrl.pathname === '/logged-out'
-    ) {
-      return NextResponse.next()
-    }
-    const url = await getKeycloakSignInUrl(req.url)
-    return Response.redirect(url)
+    if (req.nextUrl.pathname === '/logged-out') return NextResponse.next()
+    return Response.redirect(await getKeycloakSignInUrl(req.url))
   }
   return NextResponse.next()
 })
@@ -21,5 +15,6 @@ async function getKeycloakSignInUrl(url: string) {
 }
 
 export const config = {
-  matcher: ['/((?!health|favicon.ico).*)'],
+  // Don't run auth middleware for static assets, auth API, or health checks
+  matcher: ['/((?!health|favicon\\.ico|_next|api/auth).*)'],
 }
