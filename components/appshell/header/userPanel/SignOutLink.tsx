@@ -22,7 +22,7 @@ export default function SignOutLink() {
       href="#"
       onClick={async (e) => {
         e.preventDefault()
-        await signOut()
+        await signOut({ callbackUrl: '/logged-out' })
       }}
     >
       {t('signOut')}
