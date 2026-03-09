@@ -9,14 +9,14 @@ function isInAssessmentFlow(pathname: string): boolean {
   return (
     segments[0] === 'assessments' &&
     segments.length >= 4 &&
-    segments[1] &&
-    segments[2]
+    Boolean(segments[1]) &&
+    Boolean(segments[2])
   )
 }
 
 export default function AssessmentFlowAwareNav({ children }: PropsWithChildren) {
   const pathname = usePathname()
-  if (isInAssessmentFlow(pathname)) {
+  if (isInAssessmentFlow(pathname) || pathname === '/logged-out') {
     return null
   }
   return (
