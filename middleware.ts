@@ -1,10 +1,18 @@
+import { NextResponse } from 'next/server'
 import { signIn, auth } from '@/lib/auth'
 
 export default auth(async (req) => {
-  if (!req.auth && !req.nextUrl.pathname.startsWith('/api/auth')) {
+  if (!req.auth) {
+    if (
+      req.nextUrl.pathname.startsWith('/api/auth') ||
+      req.nextUrl.pathname === '/logged-out'
+    ) {
+      return NextResponse.next()
+    }
     const url = await getKeycloakSignInUrl(req.url)
     return Response.redirect(url)
   }
+  return NextResponse.next()
 })
 
 async function getKeycloakSignInUrl(url: string) {
