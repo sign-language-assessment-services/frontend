@@ -12,6 +12,10 @@
     "signOut": "Abmelden",
     "manageProfile": "Profil verwalten"
   },
+  "LoggedOut": {
+    "message": "Sie wurden abgemeldet.",
+    "signInAgain": "Erneut anmelden"
+  },
   "Buttons": {
     "next": "Weiter",
     "back": "Zurück",
