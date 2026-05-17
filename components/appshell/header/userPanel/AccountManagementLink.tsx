@@ -1,12 +1,18 @@
-import { auth } from '@/lib/auth'
+import { accountManagementUrl, auth } from '@/lib/auth'
+import { getTranslations } from 'next-intl/server'
 import cx from 'classnames'
 
 export default async function AccountManagementLink() {
   const session = await auth()
   const userName = session!.user!.name
+  const t = await getTranslations('UserPanel')
 
   return (
-    <span className={cx('flex', 'items-center', 'gap-2', 'text-sm', 'text-slate-600')}>
+    <a
+      href={accountManagementUrl}
+      title={t('manageProfile')}
+      className={cx('flex', 'items-center', 'gap-2', 'text-sm', 'text-slate-600', 'hover:text-slate-900')}
+    >
       <svg
         className={cx('shrink-0', 'w-4', 'h-4', 'text-slate-500')}
         fill="currentColor"
@@ -21,6 +27,6 @@ export default async function AccountManagementLink() {
         />
       </svg>
       {userName}
-    </span>
+    </a>
   )
 }
